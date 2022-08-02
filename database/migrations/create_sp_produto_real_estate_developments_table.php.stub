@@ -1,0 +1,73 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = sprintf('%sreal_estate_developments', config('sp-produto.table_prefix'));
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+                $table->uuid('uuid')->unique();
+                $table->string('status')->nullable();
+                $table->string('address')->nullable();
+                $table->string('city')->nullable();
+                $table->string('complement')->nullable();
+                $table->string('construction_address')->nullable();
+                $table->string('construction_city')->nullable();
+                $table->string('construction_complement')->nullable();
+                $table->string('construction_neighborhood')->nullable();
+                $table->string('construction_phone')->nullable();
+                $table->string('construction_postal_code')->nullable();
+                $table->string('construction_state')->nullable();
+                $table->unsignedBigInteger('construction_street_number')->nullable();
+                $table->text('description')->nullable();
+                $table->string('document')->nullable();
+                $table->decimal('latitude', 10, 8)->nullable();
+                $table->decimal('longitude', 11, 8)->nullable();
+                $table->text('legal_text')->nullable();
+                $table->string('name')->nullable();
+                $table->string('neighborhood')->nullable();
+                $table->string('nickname')->nullable();
+                $table->string('nire')->nullable();
+                $table->string('nire_date')->nullable();
+                $table->string('postal_code')->nullable();
+                $table->string('real_estate')->nullable();
+                $table->string('real_estate_logo')->nullable();
+                $table->string('register_number')->nullable();
+                $table->unsignedBigInteger('registration_number')->nullable();
+                $table->string('registry_office')->nullable();
+                $table->string('state')->nullable();
+                $table->unsignedBigInteger('street_number')->nullable();
+                $table->unsignedBigInteger('has_empty_fields')->nullable();
+                $table->foreignId('hub_company_id')->nullable();
+                $table->string('external_code')->nullable();
+                $table->bigInteger('external_num_code')->nullable();
+                $table->bigInteger('external_company_code')->nullable();
+                $table->bigInteger('external_subsidiary_code')->nullable();
+                $table->foreignId('real_estate_development_type_id')->nullable();
+                $table->softDeletes();
+                $table->timestamps();
+
+                Schema::disableForeignKeyConstraints();
+                $table->foreign('hub_company_id')->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                Schema::enableForeignKeyConstraints();
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};
