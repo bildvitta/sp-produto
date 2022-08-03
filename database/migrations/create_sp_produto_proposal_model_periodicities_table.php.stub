@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('proposal_models');
+        $this->tableName = prefixTableName('proposal_model_periodicities');
     }
 
     public function up()
@@ -20,13 +20,21 @@ return new class extends Migration
                 $table->id();
 
                 $table->uuid('uuid')->unique();
-                $table->string('name');
+                $table->foreignId('proposal_model_id');
+
+                $table->boolean('update_installments_quantity')->nullable()->default(false);
+                $table->unsignedBigInteger('installments')->nullable();
+                $table->string('periodicity')->nullable();
+                $table->unsignedBigInteger('periodicity_quantity')->nullable();
+                $table->boolean('pin_value')->nullable()->default(false);
+                $table->string('add_on_type')->nullable();
+                $table->float('add_on_value')->nullable();
 
                 $table->softDeletes();
                 $table->timestamps();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id')->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('proposal_model_id')->references('id')->on(prefixTableName('proposal_models'))->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = sprintf('%sbuying_options', config('sp-produto.table_prefix'));
+        $this->tableName = prefixTableName('buying_options');
     }
 
     public function up()

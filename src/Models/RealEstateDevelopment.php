@@ -16,7 +16,7 @@ class RealEstateDevelopment extends BaseModel
     public function __construct()
     {
         parent::__construct();
-        $this->table = sprintf('%sreal_estate_developments', config('sp-produto.table_prefix'));
+        $this->table = prefixTableName('real_estate_developments');
     }
 
     /**

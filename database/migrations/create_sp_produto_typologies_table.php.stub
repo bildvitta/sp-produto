@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('proposal_models');
+        $this->tableName = prefixTableName('typologies');
     }
 
     public function up()
@@ -18,15 +18,16 @@ return new class extends Migration
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-
                 $table->uuid('uuid')->unique();
                 $table->string('name');
-
-                $table->softDeletes();
+                $table->foreignId('proposal_model_id')->nullable();
+                $table->foreignId('real_estate_development_id');
                 $table->timestamps();
+                $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id')->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('proposal_model_id')->references('id')->on(prefixTableName('proposal_models'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('real_estate_development_id')->references('id')->on(prefixTableName('real_estate_developments'))->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

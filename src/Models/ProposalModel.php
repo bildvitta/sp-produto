@@ -5,18 +5,18 @@ namespace BildVitta\SpProduto\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class BuyingOption.
+ * Class ProposalModel.
  *
  * @package BildVitta\SpProduto\Models
  */
-class BuyingOption extends BaseModel
+class ProposalModel extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('buying_options');
+        $this->table = prefixTableName('proposal_models');
     }
 
     /**
@@ -26,12 +26,6 @@ class BuyingOption extends BaseModel
      */
     protected $fillable = [
         'uuid',
-        'income_commitment',
         'name',
-        'when_flow_sent',
-        'when_flow_validated',
-        'when_make_sale',
-        'when_reserve_unit',
-        'hub_company_id',
     ];
 }
