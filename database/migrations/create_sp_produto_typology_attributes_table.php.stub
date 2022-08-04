@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('typologies');
+        $this->tableName = prefixTableName('typology_attributes');
     }
 
     public function up()
@@ -28,7 +28,9 @@ return new class extends Migration
                 $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('typology_id')->references('id')->on(prefixTableName('typologies'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('typology_id', 'produto_typology_attributes_typology_foreign')
+                    ->references('id')->on(prefixTableName('typologies'))
+                    ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

@@ -22,11 +22,13 @@ return new class extends Migration
                 $table->string('name')->nullable();
                 $table->text('description')->nullable();
                 $table->string('icon')->nullable();
+                $table->foreignId('hub_company_id')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id')->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('hub_company_id', 'produto_characteristics_hub_company_foreign')
+                    ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

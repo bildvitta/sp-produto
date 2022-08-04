@@ -18,15 +18,15 @@ return new class extends Migration
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-
                 $table->uuid('uuid')->unique();
-                $table->string('name');
-
+                $table->string('name')->nullable();
+                $table->foreignId('hub_company_id')->nullable();
                 $table->softDeletes();
                 $table->timestamps();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id')->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('hub_company_id', 'produto_proposal_models_hub_company_foreign')
+                    ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

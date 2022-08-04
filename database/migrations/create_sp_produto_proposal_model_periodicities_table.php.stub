@@ -34,7 +34,9 @@ return new class extends Migration
                 $table->timestamps();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('proposal_model_id')->references('id')->on(prefixTableName('proposal_models'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('proposal_model_id', 'produto_proposal_model_periodicities_foreign')
+                    ->references('id')->on(prefixTableName('proposal_models'))
+                    ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

@@ -33,7 +33,9 @@ return new class extends Migration
                 $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('real_estate_development_id')->references('id')->on(prefixTableName('real_estate_developments'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('real_estate_development_id', 'produto_r_e_d_accessories_foreign')
+                    ->references('id')->on(prefixTableName('real_estate_developments'))
+                    ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

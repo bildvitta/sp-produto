@@ -27,7 +27,8 @@ return new class extends Migration
                 $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('blueprint_id')->references('id')->on(prefixTableName('blueprints'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('blueprint_id', 'produto_blueprint_images_foreign')
+                    ->references('id')->on(prefixTableName('blueprints'))->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }
