@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Insurances.
+ * Class Insurance.
  *
  * @package BildVitta\SpProduto\Models
  */
-class Insurances extends BaseModel
+class Insurance extends BaseModel
 {
     use SoftDeletes;
 
