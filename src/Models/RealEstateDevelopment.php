@@ -14,6 +14,12 @@ class RealEstateDevelopment extends BaseModel
 {
     use SoftDeletes;
 
+    public const STATUS_LIST = [
+        'incomplete_registration' => 'Cadastro incompleto',
+        'ready_for_commercialization' => 'Pronto para comercialização',
+        'in_commercialization' => 'Em comercialização',
+    ];
+
     public function __construct()
     {
         parent::__construct();
