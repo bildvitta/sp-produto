@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProposalModelPeriodicities.
+ * Class Accessory.
  *
  * @package BildVitta\SpProduto\Models
  */
-class ProposalModelPeriodicities extends BaseModel
+class Accessory extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('proposal_model_periodicities');
+        $this->table = prefixTableName('accessory');
     }
 
     /**
@@ -27,32 +27,20 @@ class ProposalModelPeriodicities extends BaseModel
      */
     protected $fillable = [
         'uuid',
-        'proposal_model_id',
-        'update_installments_quantity',
-        'installments',
-        'periodicity',
-        'periodicity_quantity',
-        'pin_value',
-        'add_on_type',
-        'add_on_value',
+        'name',
+        'description',
+        'category_id',
+        'hub_company_id'
     ];
 
     /**
-     * The attributes that should be cast.
+     * Accessory category
      *
-     * @var array
-     */
-    protected $casts = [
-        'update_installments_quantity' => 'boolean',
-        'pin_value' => 'boolean',
-    ];
-
-    /**
      * @return BelongsTo
      */
-    public function proposalModel(): BelongsTo
+    public function accessory_categorization(): BelongsTo
     {
-        return $this->belongsTo(ProposalModel::class);
+        return $this->belongsTo(AccessoryCategory::class, 'category_id', 'id');
     }
 
     /**

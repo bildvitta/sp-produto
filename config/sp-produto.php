@@ -1,7 +1,12 @@
 <?php
 
+use BildVitta\Hub\Entities\HubCompany;
+
 return [
     'table_prefix' => env('MS_SP_PRODUTO_TABLE_PREFIX', 'produto_'),
+
+    'model_company' => env('MS_SP_PRODUTO_COMPANY', HubCompany::class),
+
     'db' => [
         'host' => env('PRODUTO_DB_HOST', '127.0.0.1'),
         'port' => env('PRODUTO_DB_PORT', '3306'),
@@ -9,6 +14,7 @@ return [
         'username' => env('PRODUTO_DB_USERNAME', 'forge'),
         'password' => env('PRODUTO_DB_PASSWORD', ''),
     ],
+
     'rabbitmq' => [
         'host' => env('RABBITMQ_HOST'),
         'port' => env('RABBITMQ_PORT', '5672'),

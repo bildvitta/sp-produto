@@ -2,6 +2,7 @@
 
 namespace BildVitta\SpProduto\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -64,4 +65,14 @@ class RealEstateDevelopment extends BaseModel
         'external_subsidiary_code',
         'real_estate_development_type_id',
     ];
+
+    /**
+     * Get hub company
+     *
+     * @return BelongsTo
+     */
+    public function hub_company(): BelongsTo
+    {
+        return $this->belongsTo(config('sp-produto.model_company'));
+    }
 }

@@ -1,23 +1,25 @@
 <?php
 
-namespace BildVitta\SpProduto\Models;
+namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
+use BildVitta\SpProduto\Models\BaseModel;
+use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class BuyingOption.
+ * Class Blueprints.
  *
  * @package BildVitta\SpProduto\Models
  */
-class BuyingOption extends BaseModel
+class Blueprint extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('buying_options');
+        $this->table = prefixTableName('blueprints');
     }
 
     /**
@@ -27,22 +29,16 @@ class BuyingOption extends BaseModel
      */
     protected $fillable = [
         'uuid',
-        'income_commitment',
         'name',
-        'when_flow_sent',
-        'when_flow_validated',
-        'when_make_sale',
-        'when_reserve_unit',
-        'hub_company_id',
+        'description',
+        'real_estate_development_id',
     ];
 
     /**
-     * Get hub company
-     *
      * @return BelongsTo
      */
-    public function hub_company(): BelongsTo
+    public function realEstateDevelopment(): BelongsTo
     {
-        return $this->belongsTo(config('sp-produto.model_company'));
+        return $this->belongsTo(RealEstateDevelopment::class);
     }
 }

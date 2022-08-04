@@ -2,6 +2,7 @@
 
 namespace BildVitta\SpProduto\Models;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -28,4 +29,14 @@ class ProposalModel extends BaseModel
         'uuid',
         'name',
     ];
+
+    /**
+     * Get hub company
+     *
+     * @return BelongsTo
+     */
+    public function hub_company(): BelongsTo
+    {
+        return $this->belongsTo(config('sp-produto.model_company'));
+    }
 }
