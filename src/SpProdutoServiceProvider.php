@@ -30,6 +30,10 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             ->hasConfigFile(['sp-produto'])
             ->hasMigrations([
                 'create_sp_produto_real_estate_developments_table', // must be the first
+                'create_sp_produto_insurance_companies_table', // must be before others insurance tables
+                'create_sp_produto_insurances_table',
+                'create_sp_produto_insurance_companies_table',
+                'create_sp_produto_insurances_table',
                 'create_sp_produto_accessory_categories_table', // must be before the accessories table
                 'create_sp_produto_accessories_table',
                 'create_sp_produto_blueprints', // must be before others blueprints tables
@@ -49,6 +53,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                 'create_sp_produto_typologies_table', // must be before others typologies tables
                 'create_sp_produto_typology_attributes_table',
                 'create_sp_produto_units_table',
+                'create_sp_produto_documents_table',
+                'create_sp_produto_media_table',
             ])
             ->runsMigrations();
 

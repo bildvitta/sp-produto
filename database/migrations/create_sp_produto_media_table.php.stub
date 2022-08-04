@@ -1,0 +1,45 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('media');
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+                $table->uuid('uuid')->unique();
+                $table->string('name')->nullable();
+                $table->text('description')->nullable();
+                $table->string('preview')->nullable();
+                $table->string('media_type')->nullable();
+                $table->text('url')->nullable();
+                $table->string('format')->nullable();
+                $table->boolean('active')->default(false)->nullable();
+                $table->foreignId('real_estate_development_id');
+                $table->softDeletes();
+                $table->timestamps();
+
+                Schema::disableForeignKeyConstraints();
+                $table->foreign('real_estate_development_id', 'produto_r_e_d_media_foreign')
+                    ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                Schema::enableForeignKeyConstraints();
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};

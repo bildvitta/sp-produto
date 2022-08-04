@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('insurance_companies');
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+                $table->uuid('uuid')->unique();
+                $table->string('name')->nullable();
+                $table->string('company_name')->nullable();
+                $table->string('document')->nullable();
+                $table->string('susep')->nullable();
+                $table->boolean('is_active')->nullable()->default(true);
+                $table->foreignId('hub_company_id')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+
+                Schema::disableForeignKeyConstraints();
+                $table->foreign('hub_company_id', 'produto_insurance_companies_hub_company_foreign')
+                    ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                Schema::enableForeignKeyConstraints();
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};
