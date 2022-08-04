@@ -32,8 +32,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                 'create_sp_produto_real_estate_developments_table', // must be the first
                 'create_sp_produto_insurance_companies_table', // must be before others insurance tables
                 'create_sp_produto_insurances_table',
-                'create_sp_produto_insurance_companies_table',
-                'create_sp_produto_insurances_table',
+                'create_sp_produto_insurance_company_real_estate_development_table',
+                'create_sp_produto_insurance_real_estate_development_table',
                 'create_sp_produto_accessory_categories_table', // must be before the accessories table
                 'create_sp_produto_accessories_table',
                 'create_sp_produto_blueprints', // must be before others blueprints tables
