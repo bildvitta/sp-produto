@@ -29,7 +29,7 @@ return new class extends Migration
 
                 Schema::disableForeignKeyConstraints();
                 $table->foreign('insurance_company_id', 'produto_insurance_company_foreign')
-                    ->references('id')->on('insurance_companies')->onUpdate('cascade')->onDelete('cascade');
+                    ->references('id')->on(prefixTableName('insurance_companies'))->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }
