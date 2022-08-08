@@ -233,6 +233,22 @@ class DataImportCommand extends Command
         );
 
         // Sync Accessories
+        $realEstateDevelopmentAccessories = $database->table('real_estate_development_accessories as ra')
+            ->join('real_estate_developments as red', 'ra.real_estate_development_id', '=', 'red.id')
+            ->join('categories as ca', 'ra.category_id', '=', 'ca.id')
+            ->select('ra.*', 'red.uuid as real_estate_development_uuid', 'ca.uuid as accessory_category_uuid')
+            ->whereNull('ra.deleted_at')
+            ->get();
+
+        $this->syncData(
+            $realEstateDevelopmentAccessories,
+            RealEstateDevelopment\Accessory::class,
+            'Accessories for Real Estate Development',
+            [
+                'real_estate_development' => RealEstateDevelopment::class,
+                'accessory_category' => AccessoryCategory::class,
+            ]
+        );
 
         // Sync Mirrors
 

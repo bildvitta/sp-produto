@@ -36,7 +36,8 @@ class Accessory extends BaseModel
         'end_at',
         'order',
         'accessory_category_id',
-        'category_id'
+        'category_id',
+        'real_estate_development_id',
     ];
 
     /**
