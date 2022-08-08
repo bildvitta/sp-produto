@@ -3,23 +3,22 @@
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
 use BildVitta\SpProduto\Models\BaseModel;
-use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Accessory.
+ * Class Mirror.
  *
  * @package BildVitta\SpProduto\Models
  */
-class Accessory extends BaseModel
+class MirrorGroup extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('real_estate_development_accessories');
+        $this->table = prefixTableName('mirror_groups');
     }
 
     /**
@@ -29,22 +28,15 @@ class Accessory extends BaseModel
      */
     protected $fillable = [
         'uuid',
-        'accessory_id',
-        'personalization',
-        'stock_quantity',
-        'start_at',
-        'end_at',
-        'order',
-        'accessory_category_id',
-        'category_id',
-        'real_estate_development_id',
+        'name',
+        'mirror_id'
     ];
 
     /**
      * @return BelongsTo
      */
-    public function realEstateDevelopment(): BelongsTo
+    public function mirror(): BelongsTo
     {
-        return $this->belongsTo(RealEstateDevelopment::class);
+        return $this->belongsTo(Mirror::class);
     }
 }

@@ -8,18 +8,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Accessory.
+ * Class Mirror.
  *
  * @package BildVitta\SpProduto\Models
  */
-class Accessory extends BaseModel
+class Mirror extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('real_estate_development_accessories');
+        $this->table = prefixTableName('mirrors');
     }
 
     /**
@@ -29,15 +29,10 @@ class Accessory extends BaseModel
      */
     protected $fillable = [
         'uuid',
-        'accessory_id',
-        'personalization',
-        'stock_quantity',
-        'start_at',
-        'end_at',
-        'order',
-        'accessory_category_id',
-        'category_id',
+        'name',
+        'mirror_type',
         'real_estate_development_id',
+        'parameter_id',
     ];
 
     /**
