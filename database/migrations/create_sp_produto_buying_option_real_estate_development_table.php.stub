@@ -17,7 +17,7 @@ return new class extends Migration
     {
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
-                $table->foreignId('buying_options_id');
+                $table->foreignId('buying_option_id');
                 $table->foreignId('real_estate_development_id');
             });
         }

@@ -3,6 +3,7 @@
 namespace BildVitta\SpProduto\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -80,5 +81,45 @@ class RealEstateDevelopment extends BaseModel
     public function hub_company(): BelongsTo
     {
         return $this->belongsTo(config('sp-produto.model_company'));
+    }
+
+    /**
+     * Real estate developments proposal models
+     *
+     * @return BelongsToMany
+     */
+    public function proposal_models(): BelongsToMany
+    {
+        return $this->belongsToMany(ProposalModel::class, prefixTableName('proposal_model_real_estate_development'));
+    }
+
+    /**
+     * Real estate developments buying options
+     *
+     * @return BelongsToMany
+     */
+    public function buying_options(): BelongsToMany
+    {
+        return $this->belongsToMany(BuyingOption::class, prefixTableName('buying_option_real_estate_development'));
+    }
+
+    /**
+     * Real estate development insurance companies
+     *
+     * @return BelongsToMany
+     */
+    public function insurance_companies(): BelongsToMany
+    {
+        return $this->belongsToMany(InsuranceCompany::class, prefixTableName('insurance_company_real_estate_development'));
+    }
+
+    /**
+     * Real estate development insurances
+     *
+     * @return BelongsToMany
+     */
+    public function insurances(): BelongsToMany
+    {
+        return $this->belongsToMany(Insurance::class, prefixTableName('insurance_real_estate_development'));
     }
 }

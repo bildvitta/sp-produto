@@ -17,7 +17,7 @@ class Accessory extends BaseModel
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('accessory');
+        $this->table = prefixTableName('accessories');
     }
 
     /**
@@ -38,9 +38,9 @@ class Accessory extends BaseModel
      *
      * @return BelongsTo
      */
-    public function accessory_categorization(): BelongsTo
+    public function category(): BelongsTo
     {
-        return $this->belongsTo(AccessoryCategory::class, 'category_id', 'id');
+        return $this->belongsTo(AccessoryCategory::class);
     }
 
     /**

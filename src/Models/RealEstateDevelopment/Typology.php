@@ -3,6 +3,7 @@
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
 use BildVitta\SpProduto\Models\BaseModel;
+use BildVitta\SpProduto\Models\ProposalModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -36,8 +37,16 @@ class Typology extends BaseModel
     /**
      * @return BelongsTo
      */
-    public function realEstateDevelopment(): BelongsTo
+    public function proposal_model(): BelongsTo
     {
-        return $this->belongsTo(RealEstateDevelopment::class);
+        return $this->belongsTo(ProposalModel::class, prefixTableName('proposal_models'));
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function real_estate_development(): BelongsTo
+    {
+        return $this->belongsTo(RealEstateDevelopment::class, prefixTableName('real_estate_developments'));
     }
 }

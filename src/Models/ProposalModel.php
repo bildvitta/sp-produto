@@ -28,6 +28,7 @@ class ProposalModel extends BaseModel
     protected $fillable = [
         'uuid',
         'name',
+        'hub_company_id',
     ];
 
     /**
