@@ -253,6 +253,18 @@ class DataImportCommand extends Command
         // Sync Mirrors
 
         // Sync Blueprints
+        $blueprints = $database->table('blueprints as bl')
+            ->join('real_estate_developments as red', 'bl.real_estate_development_id', '=', 'red.id')
+            ->select('bl.*', 'red.uuid as real_estate_development_uuid')
+            ->whereNull('bl.deleted_at')
+            ->get();
+
+        $this->syncData(
+            $blueprints,
+            RealEstateDevelopment\Blueprint::class,
+            'Blueprints for Real Estate Development',
+            ['real_estate_development' => RealEstateDevelopment::class]
+        );
 
         // Sync Units
 
