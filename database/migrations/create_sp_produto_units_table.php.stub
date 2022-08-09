@@ -37,6 +37,7 @@ return new class extends Migration
                 $table->foreignId('mirror_id')->nullable();
                 $table->foreignId('mirror_group_id')->nullable();
                 $table->foreignId('real_estate_development_id')->nullable();
+                $table->foreignId('blueprint_id')->nullable();
                 $table->string('external_code')->nullable();
                 $table->bigInteger('external_subsidiary_code')->nullable();
                 $table->timestamps();
@@ -45,6 +46,22 @@ return new class extends Migration
                 Schema::disableForeignKeyConstraints();
                 $table->foreign('real_estate_development_id', 'produto_unit_r_e_d_foreign')
                     ->references('id')->on(prefixTableName('real_estate_developments'))
+                    ->onUpdate('cascade')->onDelete('cascade');
+
+                $table->foreign('typology_id', 'produto_unit_typology_foreign')
+                    ->references('id')->on(prefixTableName('typologies'))
+                    ->onUpdate('cascade')->onDelete('cascade');
+
+                $table->foreign('mirror_id', 'produto_unit_mirror_foreign')
+                    ->references('id')->on(prefixTableName('mirrors'))
+                    ->onUpdate('cascade')->onDelete('cascade');
+
+                $table->foreign('mirror_group_id', 'produto_unit_mirror_group_foreign')
+                    ->references('id')->on(prefixTableName('mirror_groups'))
+                    ->onUpdate('cascade')->onDelete('cascade');
+
+                $table->foreign('blueprint_id', 'produto_unit_blueprint_foreign')
+                    ->references('id')->on(prefixTableName('blueprints'))
                     ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
