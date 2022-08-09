@@ -35,6 +35,7 @@ class Document extends BaseModel
         'preview',
         'url',
         'active',
+        'real_estate_development_id',
     ];
 
     /**
