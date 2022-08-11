@@ -31,6 +31,7 @@ class BlueprintImage extends BaseModel
         'name',
         'image',
         'format',
+        'blueprint_id',
     ];
 
     /**

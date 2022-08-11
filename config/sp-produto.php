@@ -21,7 +21,11 @@ return [
         'user' => env('RABBITMQ_USER'),
         'password' => env('RABBITMQ_PASSWORD'),
         'virtualhost' => env('RABBITMQ_VIRTUALHOST', '/'),
-        'exchange' => [],
-        'queue' => []
+        'exchange' => [
+            'real_estate_developments' => env('RABBITMQ_EXCHANGE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments'),
+        ],
+        'queue' => [
+            'real_estate_developments' => env('RABBITMQ_QUEUE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments.vendas'),
+        ]
     ],
 ];

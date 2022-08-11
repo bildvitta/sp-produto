@@ -3,23 +3,22 @@
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
 use BildVitta\SpProduto\Models\BaseModel;
-use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Document.
+ * Class StageImage.
  *
  * @package BildVitta\SpProduto\Models
  */
-class Media extends BaseModel
+class StageImage extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('media');
+        $this->table = prefixTableName('stage_images');
     }
 
     /**
@@ -30,27 +29,16 @@ class Media extends BaseModel
     protected $fillable = [
         'uuid',
         'name',
-        'description',
-        'preview',
-        'media_type',
+        'image',
         'format',
-        'url',
-        'active',
-        'real_estate_development_id',
+        'stage_id',
     ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = ['active' => 'boolean'];
 
     /**
      * @return BelongsTo
      */
-    public function realEstateDevelopment(): BelongsTo
+    public function stage(): BelongsTo
     {
-        return $this->belongsTo(RealEstateDevelopment::class);
+        return $this->belongsTo(Stage::class);
     }
 }

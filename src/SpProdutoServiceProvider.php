@@ -3,6 +3,7 @@
 namespace BildVitta\SpProduto;
 
 use BildVitta\SpProduto\Console\Commands\DataImportCommand;
+use BildVitta\SpProduto\Console\Commands\Messages\ProductsWorkerCommand;
 use BildVitta\SpProduto\Console\InstallSp;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -58,6 +59,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                 'create_sp_produto_units_table',
                 'create_sp_produto_documents_table',
                 'create_sp_produto_media_table',
+                'create_sp_produto_stage_images_table',
             ])
             ->runsMigrations();
 
@@ -66,6 +68,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             ->hasCommands([
                 InstallSp::class,
                 DataImportCommand::class,
+                ProductsWorkerCommand::class,
             ]);
     }
 }
