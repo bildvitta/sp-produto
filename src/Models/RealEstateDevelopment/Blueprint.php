@@ -6,6 +6,7 @@ use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Blueprints.
@@ -40,5 +41,26 @@ class Blueprint extends BaseModel
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function typologies(): BelongsToMany
+    {
+        return $this->belongsToMany(Typology::class, prefixTableName('blueprint_typology'));
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function real_estate_development_accessories(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Accessory::class, 
+            prefixTableName('blueprint_real_estate_development_accessory'),
+            'blueprint_id',
+            'real_estate_development_accessory_id'
+        );
     }
 }

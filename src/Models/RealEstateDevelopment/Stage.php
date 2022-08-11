@@ -6,6 +6,7 @@ use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * Class Stage.
@@ -35,6 +36,7 @@ class Stage extends BaseModel
         'masonry',
         'structure',
         'finishing',
+        'real_estate_development_id',
     ];
 
     /**
@@ -55,5 +57,13 @@ class Stage extends BaseModel
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(StageImage::class);
     }
 }

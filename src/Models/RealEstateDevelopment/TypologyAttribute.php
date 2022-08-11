@@ -18,7 +18,7 @@ class TypologyAttribute extends BaseModel
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('typology_attribute');
+        $this->table = prefixTableName('typology_attributes');
     }
 
     /**
@@ -32,6 +32,7 @@ class TypologyAttribute extends BaseModel
         'description',
         'type_increase',
         'value_increase',
+        'typology_id',
     ];
 
     /**
