@@ -40,6 +40,7 @@ class Parameter extends BaseModel
         'hand_over_keys_in',
         'in_financial_transfer',
         'launch_in',
+        'name',
         'pre_launch_in',
         'ready_to_live_in',
         'square_meter_price',

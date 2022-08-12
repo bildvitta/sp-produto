@@ -17,6 +17,7 @@ use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MirrorHelper
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ParameterHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ProposalModelHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\StageHelper;
+use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\Tools;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\TypologyHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\UnitHelper;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -25,6 +26,7 @@ use Throwable;
 
 class MessageProduct
 {
+    use Tools;
     use StageHelper;
     use ParameterHelper;
     use InsuranceHelper;
@@ -135,8 +137,8 @@ class MessageProduct
         if (isset($message->stages)) {
             $this->stages($realEstateDevelopment, $message);
         }
-        if (isset($message->last_parameter)) {
-            //$this->lastParameter($realEstateDevelopment, $message);
+        if (isset($message->parameters)) {
+            $this->parameters($realEstateDevelopment, $message);
         }
         if (isset($message->insurances[0], $message->insurance_companies[0])) {
             $this->insurances($realEstateDevelopment, $message);
