@@ -26,15 +26,6 @@ class DataImportCommand extends Command
     protected $signature = 'dataimport:produto_real_estate_developments';
 
     /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Call init sync real estate developments in database';
-
-    private int $selectLimit = 300;
-
-    /**
      * List of entities to sync.
      *
      * @var string[] $sync
@@ -48,19 +39,30 @@ class DataImportCommand extends Command
         'insurance_companies',
         'insurances',
         'real_estate_developments',
-        'parameters',
         'proposal_model_real_estate_development',
         'buying_option_real_estate_development',
         'insurance_company_real_estate_development',
         'insurance_real_estate_development',
         'typologies',
         'real_estate_development_accessories',
+        'parameters',
         'mirrors',
         'mirror_groups',
         'blueprints',
         'units',
         'documents',
+        'stages',
+        'media'
     ];
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Call init sync real estate developments in database';
+
+    private int $selectLimit = 300;
 
     /**
      * Execute the console command.
@@ -283,25 +285,6 @@ class DataImportCommand extends Command
             );
         }
 
-        // Sync Parameters
-        if (in_array('parameters', $this->sync)) {
-            $parameters = $database->table('parameters as pa')
-                ->leftJoin('real_estate_developments as red', 'pa.real_estate_development_id', '=', 'red.id')
-                ->join('buying_options as bo', 'pa.buying_option_id', '=', 'bo.id')
-                ->select('pa.*', 'red.uuid as real_estate_development_uuid', 'bo.uuid as buying_option_uuid')
-                ->whereNull('pa.deleted_at');
-
-            $this->syncData(
-                $parameters,
-                RealEstateDevelopment\Parameter::class,
-                'Parameters',
-                [
-                    'real_estate_development' => RealEstateDevelopment::class,
-                    'buying_option' => BuyingOption::class,
-                ]
-            );
-        }
-
         // Sync Characteristics
 
         // Sync Typologies
@@ -342,18 +325,41 @@ class DataImportCommand extends Command
             );
         }
 
+        // Sync Parameters
+        if (in_array('parameters', $this->sync)) {
+            $parameters = $database->table('parameters as pa')
+                ->leftJoin('real_estate_developments as red', 'pa.real_estate_development_id', '=', 'red.id')
+                ->leftJoin('buying_options as bo', 'pa.buying_option_id', '=', 'bo.id')
+                ->select('pa.*', 'red.uuid as real_estate_development_uuid', 'bo.uuid as buying_option_uuid')
+                ->whereNull('pa.deleted_at');
+
+            $this->syncData(
+                $parameters,
+                RealEstateDevelopment\Parameter::class,
+                'Parameters',
+                [
+                    'real_estate_development' => RealEstateDevelopment::class,
+                    'buying_option' => BuyingOption::class,
+                ]
+            );
+        }
+
         // Sync Mirrors
         if (in_array('mirrors', $this->sync)) {
             $mirrors = $database->table('mirrors as mi')
                 ->leftJoin('real_estate_developments as red', 'mi.real_estate_development_id', '=', 'red.id')
-                ->select('mi.*', 'red.uuid as real_estate_development_uuid')
+                ->join('parameters as pa', 'mi.parameter_id', '=', 'pa.id')
+                ->select('mi.*', 'red.uuid as real_estate_development_uuid', 'pa.uuid as parameter_uuid')
                 ->whereNull('mi.deleted_at');
 
             $this->syncData(
                 $mirrors,
                 RealEstateDevelopment\Mirror::class,
                 'Mirrors for Real Estate Development',
-                ['real_estate_development' => RealEstateDevelopment::class]
+                [
+                    'real_estate_development' => RealEstateDevelopment::class,
+                    'parameter' => RealEstateDevelopment\Parameter::class,
+                ]
             );
         }
 
@@ -435,9 +441,35 @@ class DataImportCommand extends Command
             );
         }
 
-        // Sync Media
-
         // Sync Stages
+        if (in_array('stages', $this->sync)) {
+            $stages = $database->table('stages as st')
+                ->join('real_estate_developments as red', 'st.real_estate_development_id', '=', 'red.id')
+                ->select('st.*', 'red.uuid as real_estate_development_uuid')
+                ->whereNull('st.deleted_at');
+
+            $this->syncData(
+                $stages,
+                RealEstateDevelopment\Stage::class,
+                'Stages for Real Estate Development',
+                ['real_estate_development' => RealEstateDevelopment::class]
+            );
+        }
+
+        // Sync Media
+        if (in_array('media', $this->sync)) {
+            $media = $database->table('media as md')
+                ->join('real_estate_developments as red', 'md.real_estate_development_id', '=', 'red.id')
+                ->select('md.*', 'red.uuid as real_estate_development_uuid')
+                ->whereNull('md.deleted_at');
+
+            $this->syncData(
+                $media,
+                RealEstateDevelopment\Media::class,
+                'Media for Real Estate Development',
+                ['real_estate_development' => RealEstateDevelopment::class]
+            );
+        }
 
         $this->newLine();
         $this->info('Import finished');
