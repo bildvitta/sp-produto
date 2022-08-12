@@ -15,6 +15,5 @@ trait ParameterHelper
      */
     private function lastParameter(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
-        
     }
 }

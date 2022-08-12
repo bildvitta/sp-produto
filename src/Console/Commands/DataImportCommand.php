@@ -48,6 +48,7 @@ class DataImportCommand extends Command
         'insurance_companies',
         'insurances',
         'real_estate_developments',
+        'parameters',
         'proposal_model_real_estate_development',
         'buying_option_real_estate_development',
         'insurance_company_real_estate_development',
@@ -283,6 +284,23 @@ class DataImportCommand extends Command
         }
 
         // Sync Parameters
+        if (in_array('parameters', $this->sync)) {
+            $parameters = $database->table('parameters as pa')
+                ->leftJoin('real_estate_developments as red', 'pa.real_estate_development_id', '=', 'red.id')
+                ->join('buying_options as bo', 'pa.buying_option_id', '=', 'bo.id')
+                ->select('pa.*', 'red.uuid as real_estate_development_uuid', 'bo.uuid as buying_option_uuid')
+                ->whereNull('pa.deleted_at');
+
+            $this->syncData(
+                $parameters,
+                RealEstateDevelopment\Parameter::class,
+                'Parameters',
+                [
+                    'real_estate_development' => RealEstateDevelopment::class,
+                    'buying_option' => BuyingOption::class,
+                ]
+            );
+        }
 
         // Sync Characteristics
 

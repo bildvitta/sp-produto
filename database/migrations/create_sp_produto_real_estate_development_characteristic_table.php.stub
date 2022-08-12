@@ -23,7 +23,7 @@ return new class extends Migration
                 $table->boolean('differential')->nullable();
                 $table->text('description')->nullable();
                 $table->foreignId('real_estate_development_id');
-                $table->foreignId('characteristic_id');
+                $table->foreignId('characteristic_id')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 

@@ -22,7 +22,7 @@ return new class extends Migration
                 $table->string('name')->nullable();
                 $table->text('description')->nullable();
                 $table->string('format')->nullable();
-                $table->text('url');
+                $table->text('url')->nullable();
                 $table->boolean('active')->default(true);
                 $table->foreignId('real_estate_development_id');
                 $table->string('preview')->nullable();

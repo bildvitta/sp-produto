@@ -1,0 +1,59 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('parameters');
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+                $table->uuid('uuid')->unique();
+                $table->boolean('allow_commercialization')->default(false)->nullable();
+                $table->date('blueprint_definition_deadline')->nullable();
+                $table->string('commercialization_status')->nullable();
+                $table->date('construction_over_in')->nullable();
+                $table->date('construction_prevision_in')->nullable();
+                $table->date('construction_start_in')->nullable();
+                $table->date('financial_transfer_deadline')->nullable();
+                $table->string('financial_transfer_status')->nullable();
+                $table->date('hand_over_keys_in')->nullable();
+                $table->boolean('in_financial_transfer')->default(false)->nullable();
+                $table->date('launch_in')->nullable();
+                $table->string('name')->nullable();
+                $table->date('pre_launch_in')->nullable();
+                $table->date('ready_to_live_in')->nullable();
+                $table->float('square_meter_price')->nullable();
+                $table->string('steps')->nullable();
+                $table->string('verge')->nullable();
+                $table->unsignedBigInteger('has_empty_fields')->nullable();
+                $table->foreignId('real_estate_development_id');
+                $table->foreignId('buying_option_id')->nullable();
+                $table->timestamps();
+                $table->softDeletes();
+
+                Schema::disableForeignKeyConstraints();
+                $table->foreign('real_estate_development_id', 'produto_r_e_d_parameters_foreign')
+                    ->references('id')->on(prefixTableName('real_estate_developments'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('buying_option_id', 'produto_buying_option_parameter_foreign')
+                    ->references('id')->on(prefixTableName('buying_options'))->onUpdate('cascade')->onDelete('cascade');
+                Schema::enableForeignKeyConstraints();
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};
