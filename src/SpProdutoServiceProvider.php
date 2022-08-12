@@ -32,6 +32,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             ->hasConfigFile(['sp-produto'])
             ->hasMigrations([
                 'create_sp_produto_real_estate_developments_table', // must be the first
+                'create_sp_produto_parameters_table',
                 'create_sp_produto_insurance_companies_table', // must be before others insurance tables
                 'create_sp_produto_insurances_table',
                 'create_sp_produto_insurance_company_real_estate_development_table',
