@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('buying_options');
+        $this->tableName = prefixTableName('typologies');
     }
 
     public function up()
@@ -19,19 +19,19 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->uuid('uuid')->unique();
-                $table->decimal('income_commitment', 12, 3)->nullable();
                 $table->string('name')->nullable();
-                $table->string('when_flow_sent')->nullable();
-                $table->string('when_flow_validated')->nullable();
-                $table->string('when_make_sale')->nullable();
-                $table->string('when_reserve_unit')->nullable();
-                $table->foreignId('hub_company_id')->nullable();
-                $table->softDeletes();
+                $table->foreignId('proposal_model_id')->nullable();
+                $table->foreignId('real_estate_development_id');
                 $table->timestamps();
+                $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id', 'produto_buying_options_hub_company_foreign')
-                    ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('proposal_model_id', 'produto_typology_proposal_model_foreign')
+                    ->references('id')->on(prefixTableName('proposal_models'))
+                    ->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('real_estate_development_id', 'produto_typology_r_e_d_foreign')
+                    ->references('id')->on(prefixTableName('real_estate_developments'))
+                    ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

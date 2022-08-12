@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('buying_options');
+        $this->tableName = prefixTableName('characteristics');
     }
 
     public function up()
@@ -19,18 +19,15 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->uuid('uuid')->unique();
-                $table->decimal('income_commitment', 12, 3)->nullable();
                 $table->string('name')->nullable();
-                $table->string('when_flow_sent')->nullable();
-                $table->string('when_flow_validated')->nullable();
-                $table->string('when_make_sale')->nullable();
-                $table->string('when_reserve_unit')->nullable();
+                $table->text('description')->nullable();
+                $table->string('icon')->nullable();
                 $table->foreignId('hub_company_id')->nullable();
-                $table->softDeletes();
                 $table->timestamps();
+                $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id', 'produto_buying_options_hub_company_foreign')
+                $table->foreign('hub_company_id', 'produto_characteristics_hub_company_foreign')
                     ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });

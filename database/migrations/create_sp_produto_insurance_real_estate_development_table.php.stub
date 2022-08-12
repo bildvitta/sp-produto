@@ -10,14 +10,14 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('buying_option_real_estate_development');
+        $this->tableName = prefixTableName('insurance_real_estate_development');
     }
 
     public function up()
     {
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
-                $table->foreignId('buying_option_id');
+                $table->foreignId('insurance_id');
                 $table->foreignId('real_estate_development_id');
             });
         }

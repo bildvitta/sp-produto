@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class BuyingOption.
+ * Class Accessory.
  *
  * @package BildVitta\SpProduto\Models
  */
-class BuyingOption extends BaseModel
+class Accessory extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('buying_options');
+        $this->table = prefixTableName('accessories');
     }
 
     /**
@@ -27,14 +27,21 @@ class BuyingOption extends BaseModel
      */
     protected $fillable = [
         'uuid',
-        'income_commitment',
         'name',
-        'when_flow_sent',
-        'when_flow_validated',
-        'when_make_sale',
-        'when_reserve_unit',
-        'hub_company_id',
+        'description',
+        'category_id',
+        'hub_company_id'
     ];
+
+    /**
+     * Accessory category
+     *
+     * @return BelongsTo
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(AccessoryCategory::class);
+    }
 
     /**
      * Get hub company

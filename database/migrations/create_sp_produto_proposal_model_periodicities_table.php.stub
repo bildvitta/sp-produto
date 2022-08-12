@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('proposal_model_periodicities');
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+
+                $table->uuid('uuid')->unique();
+                $table->foreignId('proposal_model_id');
+
+                $table->boolean('update_installments_quantity')->nullable()->default(false);
+                $table->unsignedBigInteger('installments')->nullable();
+                $table->string('periodicity')->nullable();
+                $table->unsignedBigInteger('periodicity_quantity')->nullable();
+                $table->boolean('pin_value')->nullable()->default(false);
+                $table->string('add_on_type')->nullable();
+                $table->float('add_on_value')->nullable();
+
+                $table->softDeletes();
+                $table->timestamps();
+
+                Schema::disableForeignKeyConstraints();
+                $table->foreign('proposal_model_id', 'produto_proposal_model_periodicities_foreign')
+                    ->references('id')->on(prefixTableName('proposal_models'))
+                    ->onUpdate('cascade')->onDelete('cascade');
+                Schema::enableForeignKeyConstraints();
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};

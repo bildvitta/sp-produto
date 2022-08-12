@@ -1,6 +1,6 @@
 <?php
 
-namespace BildVitta\MessagesProduct\Models;
+namespace BildVitta\SpProduto\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

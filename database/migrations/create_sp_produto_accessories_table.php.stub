@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('buying_options');
+        $this->tableName = prefixTableName('accessories');
     }
 
     public function up()
@@ -18,20 +18,20 @@ return new class extends Migration
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
-                $table->uuid('uuid')->unique();
-                $table->decimal('income_commitment', 12, 3)->nullable();
+                $table->uuid('uuid');
                 $table->string('name')->nullable();
-                $table->string('when_flow_sent')->nullable();
-                $table->string('when_flow_validated')->nullable();
-                $table->string('when_make_sale')->nullable();
-                $table->string('when_reserve_unit')->nullable();
+                $table->longText('description')->nullable();
                 $table->foreignId('hub_company_id')->nullable();
-                $table->softDeletes();
+                $table->foreignId('category_id')->nullable();
                 $table->timestamps();
+                $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id', 'produto_buying_options_hub_company_foreign')
+                $table->foreign('hub_company_id', 'produto_accessories_hub_company_foreign')
                     ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('category_id', 'produto_accessory_category_foreign')
+                    ->references('id')->on(prefixTableName('accessory_categories'))
+                    ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

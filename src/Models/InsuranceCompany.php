@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class BuyingOption.
+ * Class InsuranceCompany.
  *
  * @package BildVitta\SpProduto\Models
  */
-class BuyingOption extends BaseModel
+class InsuranceCompany extends BaseModel
 {
     use SoftDeletes;
 
     public function __construct()
     {
         parent::__construct();
-        $this->table = prefixTableName('buying_options');
+        $this->table = prefixTableName('insurance_companies');
     }
 
     /**
@@ -27,14 +27,20 @@ class BuyingOption extends BaseModel
      */
     protected $fillable = [
         'uuid',
-        'income_commitment',
         'name',
-        'when_flow_sent',
-        'when_flow_validated',
-        'when_make_sale',
-        'when_reserve_unit',
+        'company_name',
+        'document',
+        'susep',
+        'is_active',
         'hub_company_id',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = ['is_active' => 'boolean'];
 
     /**
      * Get hub company

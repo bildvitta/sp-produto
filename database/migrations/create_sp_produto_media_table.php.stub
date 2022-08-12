@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('buying_options');
+        $this->tableName = prefixTableName('media');
     }
 
     public function up()
@@ -19,18 +19,19 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->uuid('uuid')->unique();
-                $table->decimal('income_commitment', 12, 3)->nullable();
                 $table->string('name')->nullable();
-                $table->string('when_flow_sent')->nullable();
-                $table->string('when_flow_validated')->nullable();
-                $table->string('when_make_sale')->nullable();
-                $table->string('when_reserve_unit')->nullable();
-                $table->foreignId('hub_company_id')->nullable();
+                $table->text('description')->nullable();
+                $table->string('preview')->nullable();
+                $table->string('media_type')->nullable();
+                $table->text('url')->nullable();
+                $table->string('format')->nullable();
+                $table->boolean('active')->default(false)->nullable();
+                $table->foreignId('real_estate_development_id');
                 $table->softDeletes();
                 $table->timestamps();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id', 'produto_buying_options_hub_company_foreign')
+                $table->foreign('real_estate_development_id', 'produto_r_e_d_media_foreign')
                     ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });

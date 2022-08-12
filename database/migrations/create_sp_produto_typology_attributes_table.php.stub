@@ -10,7 +10,7 @@ return new class extends Migration
 
     public function __construct()
     {
-        $this->tableName = prefixTableName('buying_options');
+        $this->tableName = prefixTableName('typology_attributes');
     }
 
     public function up()
@@ -19,19 +19,18 @@ return new class extends Migration
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
                 $table->uuid('uuid')->unique();
-                $table->decimal('income_commitment', 12, 3)->nullable();
+                $table->foreignId('typology_id');
                 $table->string('name')->nullable();
-                $table->string('when_flow_sent')->nullable();
-                $table->string('when_flow_validated')->nullable();
-                $table->string('when_make_sale')->nullable();
-                $table->string('when_reserve_unit')->nullable();
-                $table->foreignId('hub_company_id')->nullable();
-                $table->softDeletes();
+                $table->text('description')->nullable();
+                $table->string('type_increase')->nullable();
+                $table->float('value_increase')->nullable();
                 $table->timestamps();
+                $table->softDeletes();
 
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('hub_company_id', 'produto_buying_options_hub_company_foreign')
-                    ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('typology_id', 'produto_typology_attributes_typology_foreign')
+                    ->references('id')->on(prefixTableName('typologies'))
+                    ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }
