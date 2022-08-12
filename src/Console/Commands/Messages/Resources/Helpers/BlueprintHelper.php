@@ -19,7 +19,7 @@ trait BlueprintHelper
     private function blueprints(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $blueprintIds = [];
-        foreach($message->blueprints as $messageBlueprint) {
+        foreach ($message->blueprints as $messageBlueprint) {
             $blueprint = Blueprint::updateOrCreate([
                 'uuid' => $messageBlueprint->uuid,
             ], [
@@ -46,7 +46,7 @@ trait BlueprintHelper
     private function blueprintImages(Blueprint $blueprint, array $messageBlueprintImages)
     {
         $blueprintImageIds = [];
-        foreach($messageBlueprintImages as $messageBlueprintImage) {
+        foreach ($messageBlueprintImages as $messageBlueprintImage) {
             $blueprintImage = BlueprintImage::updateOrCreate([
                 'uuid' => $messageBlueprintImage->uuid,
             ], [

@@ -14,8 +14,5 @@ trait UnitHelper
      */
     private function units(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
-       
     }
-
-   
 }

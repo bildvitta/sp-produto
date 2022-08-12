@@ -57,7 +57,7 @@ class Blueprint extends BaseModel
     public function real_estate_development_accessories(): BelongsToMany
     {
         return $this->belongsToMany(
-            Accessory::class, 
+            Accessory::class,
             prefixTableName('blueprint_real_estate_development_accessory'),
             'blueprint_id',
             'real_estate_development_accessory_id'

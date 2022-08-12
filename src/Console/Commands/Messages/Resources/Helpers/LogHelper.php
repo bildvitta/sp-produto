@@ -29,7 +29,7 @@ trait LogHelper
             ];
             $worker->schedule = now();
             $worker->save();
-        } catch(Throwable $throwable) {
+        } catch (Throwable $throwable) {
         }
     }
 }

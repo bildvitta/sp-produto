@@ -78,7 +78,7 @@ class MessageProduct
                 default:
                     break;
             }
-        } catch(Throwable $exception) {
+        } catch (Throwable $exception) {
             $this->logError($exception, $messageData);
             if (app()->isLocal()) {
                 throw $exception;

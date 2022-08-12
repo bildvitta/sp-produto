@@ -17,9 +17,9 @@ trait InsuranceHelper
     private function insurances(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $insuranceCompany = InsuranceCompany::updateOrCreate([
-            'uuid' => $message->insurance_companies[0]->uuid, 
+            'uuid' => $message->insurance_companies[0]->uuid,
         ], [
-            'uuid' => $message->insurance_companies[0]->uuid, 
+            'uuid' => $message->insurance_companies[0]->uuid,
             'hub_company_id' => $realEstateDevelopment->hub_company_id,
             'name' => $message->insurance_companies[0]->name,
             'company_name' => $message->insurance_companies[0]->company_name,
@@ -42,5 +42,5 @@ trait InsuranceHelper
 
         $realEstateDevelopment->insurance_companies()->sync($insuranceCompany);
         $realEstateDevelopment->insurances()->sync($insurance);
-}
+    }
 }

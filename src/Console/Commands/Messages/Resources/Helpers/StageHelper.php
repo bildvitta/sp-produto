@@ -18,7 +18,7 @@ trait StageHelper
     private function stages(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $stageIds = [];
-        foreach($message->stages as $messageStage) {
+        foreach ($message->stages as $messageStage) {
             $stage = Stage::updateOrCreate([
                 'uuid' => $messageStage->uuid,
             ], [
@@ -29,7 +29,7 @@ trait StageHelper
                 'masonry' => $messageStage->masonry,
                 'structure' => $messageStage->structure,
                 'finishing' => $messageStage->finishing,
-                'real_estate_development_id' => $realEstateDevelopment->id, 
+                'real_estate_development_id' => $realEstateDevelopment->id,
             ]);
             $this->stageImages($stage, $messageStage->images);
             $stageIds[] = $stage->id;
@@ -47,7 +47,7 @@ trait StageHelper
     private function stageImages(Stage $stage, array $messageStageImages): void
     {
         $stageImageIds = [];
-        foreach($messageStageImages as $messageStageImage) {
+        foreach ($messageStageImages as $messageStageImage) {
             $stageImage = StageImage::updateOrCreate([
                 'uuid' => $messageStageImage->uuid,
             ], [

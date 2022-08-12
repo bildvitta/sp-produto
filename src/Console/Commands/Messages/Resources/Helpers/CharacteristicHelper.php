@@ -17,7 +17,7 @@ trait CharacteristicHelper
     private function characteristics(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $characteristicIds = [];
-        foreach($message->characteristics as $messageCharacteristics) {
+        foreach ($message->characteristics as $messageCharacteristics) {
             $baseCharacteristic = BaseCharacteristic::updateOrCreate([
                 'uuid' => $messageCharacteristics->characteristic->uuid,
             ], [

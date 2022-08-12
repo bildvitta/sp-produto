@@ -14,6 +14,5 @@ trait MediaHelper
      */
     private function medias(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
-        
     }
 }

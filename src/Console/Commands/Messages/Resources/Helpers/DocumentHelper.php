@@ -14,6 +14,5 @@ trait DocumentHelper
      */
     private function documents(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
-              
     }
 }
