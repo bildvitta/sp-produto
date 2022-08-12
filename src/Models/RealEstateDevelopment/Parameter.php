@@ -45,6 +45,8 @@ class Parameter extends BaseModel
         'square_meter_price',
         'steps',
         'verge',
+        'real_estate_development_id',
+        'buying_option_id',
     ];
 
     /**
