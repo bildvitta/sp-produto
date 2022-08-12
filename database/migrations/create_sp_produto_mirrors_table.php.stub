@@ -29,6 +29,8 @@ return new class extends Migration
                 Schema::disableForeignKeyConstraints();
                 $table->foreign('real_estate_development_id', 'produto_r_e_d_mirror_foreign')
                     ->references('id')->on(prefixTableName('real_estate_developments'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('parameter_id', 'produto_parameter_mirror_foreign')
+                    ->references('id')->on(prefixTableName('parameters'))->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }
