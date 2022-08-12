@@ -21,7 +21,7 @@ trait UnitHelper
     private function units(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $unityIds = [];
-        foreach($message->units as $messageUnity) {
+        foreach ($message->units as $messageUnity) {
             $unit = Unit::updateOrCreate([
                 'uuid' => $messageUnity->uuid,
             ], [
@@ -52,7 +52,7 @@ trait UnitHelper
             try {
                 $unit->calculated_price = $unit->priceCalculated();
                 $unit->save();
-            } catch(Throwable $exception) {
+            } catch (Throwable $exception) {
             }
         }
         Unit::where('real_estate_development_id', $realEstateDevelopment->id)
@@ -107,5 +107,4 @@ trait UnitHelper
         }
         return null;
     }
-  
 }

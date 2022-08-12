@@ -16,7 +16,7 @@ trait MediaHelper
     private function medias(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $mediaIds = [];
-        foreach($message->medias as $messageMedia) {
+        foreach ($message->medias as $messageMedia) {
             $media = Media::updateOrCreate([
                 'uuid' => $messageMedia->uuid,
             ], [

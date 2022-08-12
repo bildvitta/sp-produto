@@ -16,7 +16,7 @@ trait DocumentHelper
     private function documents(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $documentIds = [];
-        foreach($message->documents as $messageDocument) {
+        foreach ($message->documents as $messageDocument) {
             $document = Document::updateOrCreate([
                 'uuid' => $messageDocument->uuid,
             ], [
@@ -32,6 +32,6 @@ trait DocumentHelper
         }
         Document::where('real_estate_development_id', $realEstateDevelopment->id)
             ->whereNotIn('id', $documentIds)
-            ->delete();  
+            ->delete();
     }
 }
