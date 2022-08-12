@@ -66,7 +66,7 @@ class MessageProduct
             $properties = $message->get_properties();
             $messageData = json_decode($message->getBody());
             $operation = $properties['type'];
-            
+
             switch ($operation) {
                 case self::CREATED:
                 case self::UPDATED:
@@ -92,16 +92,13 @@ class MessageProduct
      */
     private function updateOrCreate(stdClass $message): void
     {
-        $realEstateDevelopment = RealEstateDevelopment::firstOrCreate([
+        $realEstateDevelopment = RealEstateDevelopment::updateOrCreate([
             'uuid' => $message->uuid,
         ], [
             'uuid' => $message->uuid,
             'hub_company_id' => $this->getHubCompanyId($message->hub_company_uuid),
+            'name' => $message->real_estate,
         ]);
-
-        if (isset($message->real_estate)) {
-            $realEstateDevelopment->name = $message->real_estate;
-        }
         if (isset($message->construction_address)) {
             $realEstateDevelopment->address = $message->construction_address;
         }
@@ -165,15 +162,14 @@ class MessageProduct
         if (isset($message->blueprints)) {
             $this->blueprints($realEstateDevelopment, $message);
         }
-
         if (isset($message->units)) {
-            //$this->units($realEstateDevelopment, $message);
+            $this->units($realEstateDevelopment, $message);
         }
         if (isset($message->medias)) {
-            //$this->medias($realEstateDevelopment, $message);
+            $this->medias($realEstateDevelopment, $message);
         }
         if (isset($message->documents)) {
-            //$this->documents($realEstateDevelopment, $message);
+            $this->documents($realEstateDevelopment, $message);
         }
     }
 
