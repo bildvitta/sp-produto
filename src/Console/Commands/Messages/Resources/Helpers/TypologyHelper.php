@@ -71,7 +71,6 @@ trait TypologyHelper
             ]);
             $typologyAttributeIds[] = $typologyAttribute->id;
         }
-
         TypologyAttribute::where('typology_id', $typology->id)
             ->whereNotIn('id', $typologyAttributeIds)
             ->delete();
