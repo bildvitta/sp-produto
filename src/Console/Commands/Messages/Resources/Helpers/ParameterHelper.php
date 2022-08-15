@@ -16,7 +16,7 @@ trait ParameterHelper
     private function parameters(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $parameterIds = [];
-        foreach($message->parameters as $messageParameter) {
+        foreach ($message->parameters as $messageParameter) {
             $parameter = Parameter::updateOrCreate([
                 'uuid' => $messageParameter->uuid,
             ], [
@@ -26,7 +26,7 @@ trait ParameterHelper
                 'buying_option_id' => $messageParameter->buying_option_id,
                 'commercialization_status' => $messageParameter->commercialization_status,
                 'construction_over_in' =>  $this->toCarbon($messageParameter->construction_over_in),
-                'construction_prevision_in' => $this->toCarbon($messageParameter->construction_prevision_in), 
+                'construction_prevision_in' => $this->toCarbon($messageParameter->construction_prevision_in),
                 'construction_start_in' => $this->toCarbon($messageParameter->construction_start_in),
                 'financial_transfer_deadline' => $this->toCarbon($messageParameter->financial_transfer_deadline),
                 'financial_transfer_status' => $messageParameter->financial_transfer_status,
