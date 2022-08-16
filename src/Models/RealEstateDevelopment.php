@@ -2,6 +2,11 @@
 
 namespace BildVitta\SpProduto\Models;
 
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Document;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -74,7 +79,7 @@ class RealEstateDevelopment extends BaseModel
     ];
 
     /**
-     * Get hub company
+     * Get hub company.
      *
      * @return BelongsTo
      */
@@ -84,7 +89,7 @@ class RealEstateDevelopment extends BaseModel
     }
 
     /**
-     * Real estate developments proposal models
+     * Real estate developments proposal models.
      *
      * @return BelongsToMany
      */
@@ -94,7 +99,7 @@ class RealEstateDevelopment extends BaseModel
     }
 
     /**
-     * Real estate developments buying options
+     * Real estate developments buying options.
      *
      * @return BelongsToMany
      */
@@ -104,7 +109,7 @@ class RealEstateDevelopment extends BaseModel
     }
 
     /**
-     * Real estate development insurance companies
+     * Real estate development insurance companies.
      *
      * @return BelongsToMany
      */
@@ -114,12 +119,66 @@ class RealEstateDevelopment extends BaseModel
     }
 
     /**
-     * Real estate development insurances
+     * Real estate development insurances.
      *
      * @return BelongsToMany
      */
     public function insurances(): BelongsToMany
     {
         return $this->belongsToMany(Insurance::class, prefixTableName('insurance_real_estate_development'));
+    }
+
+    /**
+     * Real estate development characteristics.
+     *
+     * @return BelongsTo
+     */
+    public function characteristics(): BelongsTo
+    {
+        return $this->belongsTo(Characteristic::class, prefixTableName('characteristics'));
+    }
+
+    /**
+     * Real estate development groups.
+     */
+    public function groups()
+    {
+        return $this->belongsTo(MirrorGroup::class);
+    }
+
+    /**
+     * Real estate development stages.
+     *
+     * @return BelongsTo
+     */
+    public function stages(): BelongsTo
+    {
+        return $this->belongsTo(Stage::class, prefixTableName('stages'));
+    }
+
+    /**
+     * Real estate development documents.
+     *
+     * @return BelongsTo
+     */
+    public function documents(): BelongsTo
+    {
+        return $this->belongsTo(Document::class, prefixTableName('documents'));
+    }
+
+    /**
+     * Real estate developments unities.
+     */
+    public function unities()
+    {
+        return $this->hasMany(Unit::class);
+    }
+
+    /**
+     * Real estate developments mirrors.
+     */
+    public function mirrors()
+    {
+        return $this->hasMany(Mirror::class);
     }
 }

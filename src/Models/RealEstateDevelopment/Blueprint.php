@@ -5,6 +5,7 @@ namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -62,5 +63,20 @@ class Blueprint extends BaseModel
             'blueprint_id',
             'real_estate_development_accessory_id'
         );
+    }
+
+    /**
+     * Get real estate development blueprint images.
+     *
+     * @return HasMany
+     */
+    public function real_estate_developments_blueprint_images(): HasMany
+    {
+        return $this->hasMany(BlueprintImage::class);
+    }
+
+    public function images()
+    {
+        return $this->real_estate_developments_blueprint_images();
     }
 }

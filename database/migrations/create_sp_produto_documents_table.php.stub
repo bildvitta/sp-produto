@@ -31,7 +31,7 @@ return new class extends Migration
 
                 Schema::disableForeignKeyConstraints();
                 $table->foreign('real_estate_development_id', 'produto_r_e_d_document_foreign')
-                    ->references('id')->on('hub_companies')->onUpdate('cascade')->onDelete('cascade');
+                    ->references('id')->on(prefixTableName('real_estate_developments'))->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
         }

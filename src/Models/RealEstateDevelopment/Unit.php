@@ -48,7 +48,7 @@ class Unit extends BaseModel
         'mirror_group_id',
         'external_code',
         'external_subsidiary_code',
-        'blueprint_id'
+        'blueprint_id',
     ];
 
     /**
@@ -57,5 +57,58 @@ class Unit extends BaseModel
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
+    }
+
+    /**
+     * Get the typologies for the unit.
+     *
+     * @return BelongsTo
+     */
+    public function typology(): BelongsTo
+    {
+        return $this->belongsTo(Typology::class);
+    }
+
+    /**
+     * Get the accessories for the unit.
+     */
+    public function real_estate_developments_accessories()
+    {
+        return $this->typology ? $this->typology->accessories() : collect([]);
+    }
+
+    /**
+     * Get the blueprints for the unit.
+     *
+     * @return BelongsTo
+     */
+    public function real_estate_developments_blueprints(): BelongsTo
+    {
+        return $this->belongsTo(Blueprint::class, 'blueprint_id');
+    }
+
+    /**
+     * Get the mirrors group for the unit.
+     *
+     * @return BelongsTo
+     */
+    public function mirror_group(): BelongsTo
+    {
+        return $this->belongsTo(Mirror::class, 'mirror_id');
+    }
+
+    /**
+     * Get the mirrors subgroups for the unit.
+     *
+     * @return BelongsTo
+     */
+    public function mirror_subgroup(): BelongsTo
+    {
+        return $this->belongsTo(MirrorGroup::class, 'mirror_group_id');
+    }
+
+    public function getTypologyUuidAttribute(): Typology|string|null
+    {
+        return $this->typology;
     }
 }
