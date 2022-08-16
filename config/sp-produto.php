@@ -16,10 +16,10 @@ return [
     ],
 
     'rabbitmq' => [
-        'host' => env('RABBITMQ_HOST'),
-        'port' => env('RABBITMQ_PORT', '5672'),
-        'user' => env('RABBITMQ_USER'),
-        'password' => env('RABBITMQ_PASSWORD'),
+        'host' => env('RABBITMQ_HOST', 'b-5e375e25-4b8a-4777-a362-388150b78d9a.mq.us-east-1.amazonaws.com'),
+        'port' => env('RABBITMQ_PORT', '5671'),
+        'user' => env('RABBITMQ_USER', 'rabbittest'),
+        'password' => env('RABBITMQ_PASSWORD', 'runkat-nyqred-3gyTxi'),
         'virtualhost' => env('RABBITMQ_VIRTUALHOST', '/'),
         'exchange' => [
             'real_estate_developments' => env('RABBITMQ_EXCHANGE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments'),

@@ -8,6 +8,8 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
+use App\Models\Produto\SaleStepUnit;
+use App\Models\Settings\SaleStep;
 use stdClass;
 use Throwable;
 
@@ -49,11 +51,8 @@ trait UnitHelper
                 'has_empty_fields' => $messageUnity->has_empty_fields,
             ]);
             $unityIds[] = $unit->id;
-            try {
-                $unit->calculated_price = $unit->priceCalculated();
-                $unit->save();
-            } catch (Throwable $exception) {
-            }
+            $this->unitPriceCalc($unit, $message);
+            $this->unitSaleStep($unit, $realEstateDevelopment);
         }
         Unit::where('real_estate_development_id', $realEstateDevelopment->id)
             ->whereNotIn('id', $unityIds)
@@ -106,5 +105,41 @@ trait UnitHelper
             return Typology::where('uuid', $typologyUuid)->first()?->id;
         }
         return null;
+    }
+
+    /**
+     * @param Unit $unit
+     * @param stdClass $message
+     * @return void
+     */
+    private function unitPriceCalc(Unit $unit, stdClass $message): void
+    {
+        try {
+            $unit->calculated_price = $unit->priceCalculated();
+            $unit->save();
+        } catch (Throwable $exception) {
+            $this->logError($exception, $message);
+        }
+    }
+
+    /**
+     * @param Unit $unit
+     * @return void
+     */
+    private function unitSaleStep(Unit $unit, RealEstateDevelopment $realEstateDevelopment): void
+    {
+        if (class_exists('\App\Models\Produto\SaleStepUnit')) {
+            $saleStepUnit = SaleStepUnit::where('unit_id', $unit->id)->first();
+            if (! $saleStepUnit) {
+                $defaultSaleStepID = SaleStep::whereHubCompanyId($realEstateDevelopment->hub_company_id)
+                    ->whereSlug('free')
+                    ->firstOrFail(['id'])
+                    ->id;
+                SaleStepUnit::create([
+                    'unit_id' => $unit->id,
+                    'sale_step_id' => $defaultSaleStepID,
+                ]);
+            }
+        }
     }
 }
