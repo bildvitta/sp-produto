@@ -90,52 +90,42 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments proposal models.
-     *
-     * @return BelongsToMany
      */
-    public function proposal_models(): BelongsToMany
+    public function proposal_models()
     {
         return $this->belongsToMany(ProposalModel::class, prefixTableName('proposal_model_real_estate_development'));
     }
 
     /**
      * Real estate developments buying options.
-     *
-     * @return BelongsToMany
      */
-    public function buying_options(): BelongsToMany
+    public function buying_options()
     {
         return $this->belongsToMany(BuyingOption::class, prefixTableName('buying_option_real_estate_development'));
     }
 
     /**
      * Real estate development insurance companies.
-     *
-     * @return BelongsToMany
      */
-    public function insurance_companies(): BelongsToMany
+    public function insurance_companies()
     {
         return $this->belongsToMany(InsuranceCompany::class, prefixTableName('insurance_company_real_estate_development'));
     }
 
     /**
      * Real estate development insurances.
-     *
-     * @return BelongsToMany
      */
-    public function insurances(): BelongsToMany
+    public function insurances()
     {
         return $this->belongsToMany(Insurance::class, prefixTableName('insurance_real_estate_development'));
     }
 
     /**
      * Real estate development characteristics.
-     *
-     * @return BelongsTo
      */
-    public function characteristics(): BelongsTo
+    public function characteristics()
     {
-        return $this->belongsTo(Characteristic::class, prefixTableName('characteristics'));
+        return $this->belongsTo(Characteristic::class);
     }
 
     /**
@@ -148,22 +138,18 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate development stages.
-     *
-     * @return BelongsTo
      */
-    public function stages(): BelongsTo
+    public function stages()
     {
-        return $this->belongsTo(Stage::class, prefixTableName('stages'));
+        return $this->belongsTo(Stage::class);
     }
 
     /**
      * Real estate development documents.
-     *
-     * @return BelongsTo
      */
-    public function documents(): BelongsTo
+    public function documents()
     {
-        return $this->belongsTo(Document::class, prefixTableName('documents'));
+        return $this->belongsTo(Document::class);
     }
 
     /**

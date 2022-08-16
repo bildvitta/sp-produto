@@ -6,6 +6,7 @@ use App\Models\HubCompany;
 use BildVitta\SpProduto\Models\Accessory;
 use BildVitta\SpProduto\Models\AccessoryCategory;
 use BildVitta\SpProduto\Models\BuyingOption;
+use BildVitta\SpProduto\Models\Characteristic;
 use BildVitta\SpProduto\Models\Insurance;
 use BildVitta\SpProduto\Models\InsuranceCompany;
 use BildVitta\SpProduto\Models\ProposalModel;
@@ -33,6 +34,7 @@ class DataImportCommand extends Command
         'hub_companies',
         'accessory_categories',
         'accessories',
+        'characteristics',
         'proposal_models',
         'buying_options',
         'insurance_companies',
@@ -42,6 +44,7 @@ class DataImportCommand extends Command
         'buying_option_real_estate_development',
         'insurance_company_real_estate_development',
         'insurance_real_estate_development',
+        'characteristic_real_estate_development',
         'typologies',
         'real_estate_development_accessories',
         'parameters',
@@ -116,6 +119,20 @@ class DataImportCommand extends Command
                     'hub_company' => HubCompany::class,
                     'category' => AccessoryCategory::class,
                 ]
+            );
+        }
+
+        // Sync Characteristics
+        if (in_array('characteristics', $this->sync)) {
+            $characteristics = $database->table('characteristics as ch')
+                ->leftJoin('hub_companies as hc', 'ch.hub_company_id', '=', 'hc.id')
+                ->select('ch.*', 'hc.uuid as hub_company_uuid');
+
+            $this->syncData(
+                $characteristics,
+                Characteristic::class,
+                'Characteristics',
+                ['hub_company' => HubCompany::class]
             );
         }
 
@@ -277,7 +294,23 @@ class DataImportCommand extends Command
             );
         }
 
-        // Sync Characteristics
+        // Sync Characteristics with Real Estate Developments
+        if (in_array('characteristic_real_estate_development', $this->sync)) {
+            $realEstateDevelopmentCharacteristic = $database->table('real_estate_development_characteristics as rc')
+                ->leftJoin('characteristics as ch', 'rc.characteristic_id', '=', 'ch.id')
+                ->leftJoin('real_estate_developments as red', 'rc.real_estate_development_id', '=', 'red.id')
+                ->select('rc.*', 'red.uuid as real_estate_development_uuid', 'ch.uuid as characteristic_uuid');
+
+            $this->syncData(
+                $realEstateDevelopmentCharacteristic,
+                RealEstateDevelopment\Characteristic::class,
+                'Characteristics',
+                [
+                    'real_estate_development' => RealEstateDevelopment::class,
+                    'characteristic' => Characteristic::class,
+                ]
+            );
+        }
 
         // Sync Typologies
         if (in_array('typologies', $this->sync)) {

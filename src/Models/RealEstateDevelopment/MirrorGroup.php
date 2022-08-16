@@ -4,10 +4,11 @@ namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
 use BildVitta\SpProduto\Models\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class Mirror.
+ * Class MirrorGroup.
  *
  * @package BildVitta\SpProduto\Models
  */
@@ -38,5 +39,15 @@ class MirrorGroup extends BaseModel
     public function mirror(): BelongsTo
     {
         return $this->belongsTo(Mirror::class);
+    }
+
+    /**
+     * Define a one-to-many relationship.
+     *
+     * @return HasMany
+     */
+    public function units(): HasMany
+    {
+        return $this->hasMany(Unit::class);
     }
 }
