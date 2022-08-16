@@ -2,7 +2,7 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages;
 
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\MessageProduct;
+use BildVitta\SpProduto\Console\Commands\Messages\Resources\RealEstateDevelopmentMessageProcessor;
 use Exception;
 use Illuminate\Console\Command;
 use PhpAmqpLib\Connection\AMQPSSLConnection;
@@ -10,7 +10,7 @@ use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
 use PhpAmqpLib\Channel\AMQPChannel;
 
-class ProductsWorkerCommand extends Command
+class RealEstateDevelopmentWorkerCommand extends Command
 {
     /**
      * The name and signature of the console command.
@@ -37,17 +37,17 @@ class ProductsWorkerCommand extends Command
     private $channel;
 
     /**
-     * @var MessageProduct
+     * @var RealEstateDevelopmentMessageProcessor
      */
-    private MessageProduct $messageProduct;
+    private RealEstateDevelopmentMessageProcessor $realEstateDevelopmentMessageProcessor;
 
     /**
-     * @param MessageProduct $messageProduct
+     * @param RealEstateDevelopmentMessageProcessor $realEstateDevelopmentMessageProcessor
      */
-    public function __construct(MessageProduct $messageProduct)
+    public function __construct(RealEstateDevelopmentMessageProcessor $realEstateDevelopmentMessageProcessor)
     {
         parent::__construct();
-        $this->messageProduct = $messageProduct;
+        $this->realEstateDevelopmentMessageProcessor = $realEstateDevelopmentMessageProcessor;
     }
 
     /**
@@ -79,7 +79,7 @@ class ProductsWorkerCommand extends Command
         $this->channel = $this->connection->channel();
         
         $queueName = config('sp-produto.rabbitmq.queue.real_estate_developments');
-        $callback = [$this->messageProduct, 'process'];
+        $callback = [$this->realEstateDevelopmentMessageProcessor, 'process'];
         $this->channel->basic_consume(
             queue: $queueName,
             callback: $callback

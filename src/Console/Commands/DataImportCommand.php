@@ -13,7 +13,6 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class DataImportCommand extends Command
@@ -24,15 +23,6 @@ class DataImportCommand extends Command
      * @var string
      */
     protected $signature = 'dataimport:produto_real_estate_developments';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Call init sync real estate developments in database';
-
-    private int $selectLimit = 300;
 
     /**
      * List of entities to sync.
@@ -48,19 +38,31 @@ class DataImportCommand extends Command
         'insurance_companies',
         'insurances',
         'real_estate_developments',
-        'parameters',
         'proposal_model_real_estate_development',
         'buying_option_real_estate_development',
         'insurance_company_real_estate_development',
         'insurance_real_estate_development',
         'typologies',
         'real_estate_development_accessories',
+        'parameters',
         'mirrors',
         'mirror_groups',
         'blueprints',
         'units',
         'documents',
+        'stages',
+        'stage_images',
+        'media',
     ];
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Call init sync real estate developments in database';
+
+    private int $selectLimit = 300;
 
     /**
      * Execute the console command.
@@ -76,8 +78,7 @@ class DataImportCommand extends Command
 
         // Sync Hub Companies
         if (in_array('hub_companies', $this->sync)) {
-            $hub_companies = $database->table('hub_companies')
-                ->whereNull('deleted_at');
+            $hub_companies = $database->table('hub_companies');
 
             $this->syncData(
                 $hub_companies,
@@ -89,9 +90,8 @@ class DataImportCommand extends Command
         // Sync Accessories Categories
         if (in_array('accessory_categories', $this->sync)) {
             $accessoryCategories = $database->table('categories as ca')
-                ->join('hub_companies as hc', 'ca.hub_company_id', '=', 'hc.id')
-                ->select('ca.*', 'hc.uuid as hub_company_uuid')
-                ->whereNull('ca.deleted_at');
+                ->leftJoin('hub_companies as hc', 'ca.hub_company_id', '=', 'hc.id')
+                ->select('ca.*', 'hc.uuid as hub_company_uuid');
 
             $this->syncData(
                 $accessoryCategories,
@@ -104,10 +104,9 @@ class DataImportCommand extends Command
         // Sync Accessories
         if (in_array('accessories', $this->sync)) {
             $accessories = $database->table('accessories as ac')
-                ->join('hub_companies as hc', 'ac.hub_company_id', '=', 'hc.id')
-                ->join('categories as ca', 'ac.category_id', '=', 'ca.id')
-                ->select('ac.*', 'hc.uuid as hub_company_uuid', 'ac.uuid as category_uuid')
-                ->whereNull('ac.deleted_at');
+                ->leftJoin('hub_companies as hc', 'ac.hub_company_id', '=', 'hc.id')
+                ->leftJoin('categories as ca', 'ac.category_id', '=', 'ca.id')
+                ->select('ac.*', 'hc.uuid as hub_company_uuid', 'ac.uuid as category_uuid');
 
             $this->syncData(
                 $accessories,
@@ -123,9 +122,8 @@ class DataImportCommand extends Command
         // Sync Proposal Models
         if (in_array('proposal_models', $this->sync)) {
             $proposalModels = $database->table('proposal_models as pm')
-                ->join('hub_companies as hc', 'pm.hub_company_id', '=', 'hc.id')
-                ->select('pm.*', 'hc.uuid as hub_company_uuid')
-                ->whereNull('pm.deleted_at');
+                ->leftJoin('hub_companies as hc', 'pm.hub_company_id', '=', 'hc.id')
+                ->select('pm.*', 'hc.uuid as hub_company_uuid');
 
             $this->syncData(
                 $proposalModels,
@@ -138,9 +136,8 @@ class DataImportCommand extends Command
         // Sync Buying Options
         if (in_array('buying_options', $this->sync)) {
             $buyingOptions = $database->table('buying_options as bo')
-                ->join('hub_companies as hc', 'bo.hub_company_id', '=', 'hc.id')
-                ->select('bo.*', 'hc.uuid as hub_company_uuid')
-                ->whereNull('bo.deleted_at');
+                ->leftJoin('hub_companies as hc', 'bo.hub_company_id', '=', 'hc.id')
+                ->select('bo.*', 'hc.uuid as hub_company_uuid');
 
             $this->syncData(
                 $buyingOptions,
@@ -153,9 +150,8 @@ class DataImportCommand extends Command
         // Sync Insurance Companies
         if (in_array('insurance_companies', $this->sync)) {
             $insuranceCompanies = $database->table('insurance_companies as ic')
-                ->join('hub_companies as hc', 'ic.hub_company_id', '=', 'hc.id')
-                ->select('ic.*', 'hc.uuid as hub_company_uuid')
-                ->whereNull('ic.deleted_at');
+                ->leftJoin('hub_companies as hc', 'ic.hub_company_id', '=', 'hc.id')
+                ->select('ic.*', 'hc.uuid as hub_company_uuid');
 
             $this->syncData(
                 $insuranceCompanies,
@@ -167,10 +163,9 @@ class DataImportCommand extends Command
 
         // Sync Insurances
         if (in_array('insurances', $this->sync)) {
-            $insurances = $database->table('insurances as in')
-                ->join('insurance_companies as ic', 'in.insurance_company_id', '=', 'ic.id')
-                ->select('in.*', 'ic.uuid as insurance_company_uuid')
-                ->whereNull('in.deleted_at');
+            $insurances = $database->table('insurances as i')
+                ->leftJoin('insurance_companies as ic', 'i.insurance_company_id', '=', 'ic.id')
+                ->select('i.*', 'ic.uuid as insurance_company_uuid');
 
             $this->syncData(
                 $insurances,
@@ -183,9 +178,8 @@ class DataImportCommand extends Command
         // Sync Real Estate Developments
         if (in_array('real_estate_developments', $this->sync)) {
             $realEstateDevelopments = $database->table('real_estate_developments as red')
-                ->join('hub_companies as hc', 'red.hub_company_id', '=', 'hc.id')
-                ->select('red.*', 'hc.uuid as hub_company_uuid')
-                ->whereNull('red.deleted_at');
+                ->leftJoin('hub_companies as hc', 'red.hub_company_id', '=', 'hc.id')
+                ->select('red.*', 'hc.uuid as hub_company_uuid');
 
             $this->syncData(
                 $realEstateDevelopments,
@@ -198,8 +192,8 @@ class DataImportCommand extends Command
         // Sync Proposal Models with Real Estate Developments
         if (in_array('proposal_model_real_estate_development', $this->sync)) {
             $proposalModelRealEstateDevelopment = $database->table('proposal_model_real_estate_development as pr')
-                ->join('proposal_models as pm', 'pr.proposal_model_id', '=', 'pm.id')
-                ->join('real_estate_developments as red', 'pr.real_estate_development_id', '=', 'red.id')
+                ->leftJoin('proposal_models as pm', 'pr.proposal_model_id', '=', 'pm.id')
+                ->leftJoin('real_estate_developments as red', 'pr.real_estate_development_id', '=', 'red.id')
                 ->select('pm.uuid as foreign_uuid', 'red.uuid as model_uuid');
 
             $this->syncRelated(
@@ -220,8 +214,8 @@ class DataImportCommand extends Command
         // Sync Buying Options with Real Estate Developments
         if (in_array('buying_option_real_estate_development', $this->sync)) {
             $buyingOptionRealEstateDevelopment = $database->table('buying_option_real_estate_development as br')
-                ->join('buying_options as bo', 'br.buying_option_id', '=', 'bo.id')
-                ->join('real_estate_developments as red', 'br.real_estate_development_id', '=', 'red.id')
+                ->leftJoin('buying_options as bo', 'br.buying_option_id', '=', 'bo.id')
+                ->leftJoin('real_estate_developments as red', 'br.real_estate_development_id', '=', 'red.id')
                 ->select('bo.uuid as foreign_uuid', 'red.uuid as model_uuid');
 
             $this->syncRelated(
@@ -242,8 +236,8 @@ class DataImportCommand extends Command
         // Sync Insurance Companies with Real Estate Developments
         if (in_array('insurance_company_real_estate_development', $this->sync)) {
             $insuranceCompanyRealEstateDevelopment = $database->table('insurance_company_real_estate_development as icr')
-                ->join('insurance_companies as ic', 'icr.insurance_company_id', '=', 'ic.id')
-                ->join('real_estate_developments as red', 'icr.real_estate_development_id', '=', 'red.id')
+                ->leftJoin('insurance_companies as ic', 'icr.insurance_company_id', '=', 'ic.id')
+                ->leftJoin('real_estate_developments as red', 'icr.real_estate_development_id', '=', 'red.id')
                 ->select('ic.uuid as foreign_uuid', 'red.uuid as model_uuid');
 
             $this->syncRelated(
@@ -264,8 +258,8 @@ class DataImportCommand extends Command
         // Sync Insurances with Real Estate Developments
         if (in_array('insurance_real_estate_development', $this->sync)) {
             $insuranceRealEstateDevelopment = $database->table('insurance_real_estate_development as ir')
-                ->join('insurances as in', 'ir.insurance_id', '=', 'in.id')
-                ->join('real_estate_developments as red', 'ir.real_estate_development_id', '=', 'red.id')
+                ->leftJoin('insurances as in', 'ir.insurance_id', '=', 'in.id')
+                ->leftJoin('real_estate_developments as red', 'ir.real_estate_development_id', '=', 'red.id')
                 ->select('in.uuid as foreign_uuid', 'red.uuid as model_uuid');
 
             $this->syncRelated(
@@ -283,34 +277,14 @@ class DataImportCommand extends Command
             );
         }
 
-        // Sync Parameters
-        if (in_array('parameters', $this->sync)) {
-            $parameters = $database->table('parameters as pa')
-                ->leftJoin('real_estate_developments as red', 'pa.real_estate_development_id', '=', 'red.id')
-                ->join('buying_options as bo', 'pa.buying_option_id', '=', 'bo.id')
-                ->select('pa.*', 'red.uuid as real_estate_development_uuid', 'bo.uuid as buying_option_uuid')
-                ->whereNull('pa.deleted_at');
-
-            $this->syncData(
-                $parameters,
-                RealEstateDevelopment\Parameter::class,
-                'Parameters',
-                [
-                    'real_estate_development' => RealEstateDevelopment::class,
-                    'buying_option' => BuyingOption::class,
-                ]
-            );
-        }
-
         // Sync Characteristics
 
         // Sync Typologies
         if (in_array('typologies', $this->sync)) {
             $typologies = $database->table('typologies as ty')
                 ->leftJoin('real_estate_developments as red', 'ty.real_estate_development_id', '=', 'red.id')
-                ->join('proposal_models as pm', 'ty.proposal_model_id', '=', 'pm.id')
-                ->select('ty.*', 'red.uuid as real_estate_development_uuid', 'pm.uuid as proposal_model_uuid')
-                ->whereNull('ty.deleted_at');
+                ->leftJoin('proposal_models as pm', 'ty.proposal_model_id', '=', 'pm.id')
+                ->select('ty.*', 'red.uuid as real_estate_development_uuid', 'pm.uuid as proposal_model_uuid');
 
             $this->syncData(
                 $typologies,
@@ -327,9 +301,8 @@ class DataImportCommand extends Command
         if (in_array('real_estate_development_accessories', $this->sync)) {
             $realEstateDevelopmentAccessories = $database->table('real_estate_development_accessories as ra')
                 ->leftJoin('real_estate_developments as red', 'ra.real_estate_development_id', '=', 'red.id')
-                ->join('categories as ca', 'ra.category_id', '=', 'ca.id')
-                ->select('ra.*', 'red.uuid as real_estate_development_uuid', 'ca.uuid as accessory_category_uuid')
-                ->whereNull('ra.deleted_at');
+                ->leftJoin('categories as ca', 'ra.category_id', '=', 'ca.id')
+                ->select('ra.*', 'red.uuid as real_estate_development_uuid', 'ca.uuid as accessory_category_uuid');
 
             $this->syncData(
                 $realEstateDevelopmentAccessories,
@@ -342,27 +315,47 @@ class DataImportCommand extends Command
             );
         }
 
+        // Sync Parameters
+        if (in_array('parameters', $this->sync)) {
+            $parameters = $database->table('parameters as pa')
+                ->leftJoin('real_estate_developments as red', 'pa.real_estate_development_id', '=', 'red.id')
+                ->leftJoin('buying_options as bo', 'pa.buying_option_id', '=', 'bo.id')
+                ->select('pa.*', 'red.uuid as real_estate_development_uuid', 'bo.uuid as buying_option_uuid');
+
+            $this->syncData(
+                $parameters,
+                RealEstateDevelopment\Parameter::class,
+                'Parameters',
+                [
+                    'real_estate_development' => RealEstateDevelopment::class,
+                    'buying_option' => BuyingOption::class,
+                ]
+            );
+        }
+
         // Sync Mirrors
         if (in_array('mirrors', $this->sync)) {
             $mirrors = $database->table('mirrors as mi')
                 ->leftJoin('real_estate_developments as red', 'mi.real_estate_development_id', '=', 'red.id')
-                ->select('mi.*', 'red.uuid as real_estate_development_uuid')
-                ->whereNull('mi.deleted_at');
+                ->leftJoin('parameters as pa', 'mi.parameter_id', '=', 'pa.id')
+                ->select('mi.*', 'red.uuid as real_estate_development_uuid', 'pa.uuid as parameter_uuid');
 
             $this->syncData(
                 $mirrors,
                 RealEstateDevelopment\Mirror::class,
                 'Mirrors for Real Estate Development',
-                ['real_estate_development' => RealEstateDevelopment::class]
+                [
+                    'real_estate_development' => RealEstateDevelopment::class,
+                    'parameter' => RealEstateDevelopment\Parameter::class,
+                ]
             );
         }
 
         // Sync Mirror Groups
         if (in_array('mirror_groups', $this->sync)) {
             $mirrorGroups = $database->table('mirror_groups as mg')
-                ->join('mirrors as mi', 'mg.mirror_id', '=', 'mi.id')
-                ->select('mg.*', 'mi.uuid as mirror_uuid')
-                ->whereNull('mg.deleted_at');
+                ->leftJoin('mirrors as mi', 'mg.mirror_id', '=', 'mi.id')
+                ->select('mg.*', 'mi.uuid as mirror_uuid');
 
             $this->syncData(
                 $mirrorGroups,
@@ -376,8 +369,7 @@ class DataImportCommand extends Command
         if (in_array('blueprints', $this->sync)) {
             $blueprints = $database->table('blueprints as bl')
                 ->leftJoin('real_estate_developments as red', 'bl.real_estate_development_id', '=', 'red.id')
-                ->select('bl.*', 'red.uuid as real_estate_development_uuid')
-                ->whereNull('bl.deleted_at');
+                ->select('bl.*', 'red.uuid as real_estate_development_uuid');
 
             $this->syncData(
                 $blueprints,
@@ -391,10 +383,10 @@ class DataImportCommand extends Command
         if (in_array('units', $this->sync)) {
             $units = $database->table('units as un')
                 ->leftJoin('real_estate_developments as red', 'un.real_estate_development_id', '=', 'red.id')
-                ->join('typologies as ty', 'un.typology_id', '=', 'ty.id')
-                ->join('mirrors as mi', 'un.mirror_id', '=', 'mi.id')
-                ->join('mirror_groups as mg', 'un.mirror_group_id', '=', 'mg.id')
-                ->join('blueprints as bp', 'un.blueprint_id', '=', 'bp.id')
+                ->leftJoin('typologies as ty', 'un.typology_id', '=', 'ty.id')
+                ->leftJoin('mirrors as mi', 'un.mirror_id', '=', 'mi.id')
+                ->leftJoin('mirror_groups as mg', 'un.mirror_group_id', '=', 'mg.id')
+                ->leftJoin('blueprints as bp', 'un.blueprint_id', '=', 'bp.id')
                 ->select(
                     'un.*',
                     'red.uuid as real_estate_development_uuid',
@@ -402,8 +394,7 @@ class DataImportCommand extends Command
                     'mi.uuid as mirror_uuid',
                     'mg.uuid as mirror_group_uuid',
                     'bp.uuid as blueprint_uuid',
-                )
-                ->whereNull('un.deleted_at');
+                );
 
             $this->syncData(
                 $units,
@@ -423,9 +414,8 @@ class DataImportCommand extends Command
         // Sync Documents
         if (in_array('documents', $this->sync)) {
             $documents = $database->table('documents as dc')
-                ->join('real_estate_developments as red', 'dc.real_estate_development_id', '=', 'red.id')
-                ->select('dc.*', 'red.uuid as real_estate_development_uuid')
-                ->whereNull('dc.deleted_at');
+                ->leftJoin('real_estate_developments as red', 'dc.real_estate_development_id', '=', 'red.id')
+                ->select('dc.*', 'red.uuid as real_estate_development_uuid');
 
             $this->syncData(
                 $documents,
@@ -435,9 +425,47 @@ class DataImportCommand extends Command
             );
         }
 
-        // Sync Media
-
         // Sync Stages
+        if (in_array('stages', $this->sync)) {
+            $stages = $database->table('stages as st')
+                ->leftJoin('real_estate_developments as red', 'st.real_estate_development_id', '=', 'red.id')
+                ->select('st.*', 'red.uuid as real_estate_development_uuid');
+
+            $this->syncData(
+                $stages,
+                RealEstateDevelopment\Stage::class,
+                'Stages for Real Estate Development',
+                ['real_estate_development' => RealEstateDevelopment::class]
+            );
+        }
+
+        // Sync Stage Images
+        if (in_array('stage_images', $this->sync)) {
+            $stage_images = $database->table('stage_images as si')
+                ->leftJoin('stages as s', 'si.stage_id', '=', 's.id')
+                ->select('si.*', 's.uuid as stage_uuid');
+
+            $this->syncData(
+                $stage_images,
+                RealEstateDevelopment\StageImage::class,
+                'Stage Images for Real Estate Development',
+                ['stage' => RealEstateDevelopment\Stage::class]
+            );
+        }
+
+        // Sync Media
+        if (in_array('media', $this->sync)) {
+            $media = $database->table('media as md')
+                ->leftJoin('real_estate_developments as red', 'md.real_estate_development_id', '=', 'red.id')
+                ->select('md.*', 'red.uuid as real_estate_development_uuid');
+
+            $this->syncData(
+                $media,
+                RealEstateDevelopment\Media::class,
+                'Media for Real Estate Development',
+                ['real_estate_development' => RealEstateDevelopment::class]
+            );
+        }
 
         $this->newLine();
         $this->info('Import finished');
@@ -495,7 +523,7 @@ class DataImportCommand extends Command
 
             $bar->finish();
             $this->newLine();
-            $result = $model::whereNull('deleted_at')->count();
+            $result = $model::count();
             $this->info(sprintf('Imported %s of %s registers.', $result, $totalRecords));
         }
     }

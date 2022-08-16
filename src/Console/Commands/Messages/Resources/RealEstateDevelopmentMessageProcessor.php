@@ -2,8 +2,7 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources;
 
-use App\Components\Iss\IssComponent;
-use App\Models\HubCompany;
+use BildVitta\SpProduto\Console\Commands\Messages\Exceptions\MessageProcessorException;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\AccessoriesHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\BlueprintHelper;
@@ -16,15 +15,19 @@ use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MediaHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MirrorHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ParameterHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ProposalModelHelper;
+use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\RealEstateDevelopmentHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\StageHelper;
+use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\Tools;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\TypologyHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\UnitHelper;
 use PhpAmqpLib\Message\AMQPMessage;
 use stdClass;
 use Throwable;
 
-class MessageProduct
+class RealEstateDevelopmentMessageProcessor
 {
+    use Tools;
+    use RealEstateDevelopmentHelper;
     use StageHelper;
     use ParameterHelper;
     use InsuranceHelper;
@@ -66,7 +69,7 @@ class MessageProduct
             $properties = $message->get_properties();
             $messageData = json_decode($message->getBody());
             $operation = $properties['type'];
-            
+
             switch ($operation) {
                 case self::CREATED:
                 case self::UPDATED:
@@ -89,57 +92,19 @@ class MessageProduct
     /**
      * @param stdClass $message
      * @return void
+     * @throws MessageProcessorException
      */
     private function updateOrCreate(stdClass $message): void
     {
-        $realEstateDevelopment = RealEstateDevelopment::firstOrCreate([
-            'uuid' => $message->uuid,
-        ], [
-            'uuid' => $message->uuid,
-            'hub_company_id' => $this->getHubCompanyId($message->hub_company_uuid),
-        ]);
+        $realEstateDevelopment = $this->getRealEstateDevelopment($message);
 
-        if (isset($message->real_estate)) {
-            $realEstateDevelopment->name = $message->real_estate;
-        }
-        if (isset($message->construction_address)) {
-            $realEstateDevelopment->address = $message->construction_address;
-        }
-        if (isset($message->construction_street_number)) {
-            $realEstateDevelopment->street_number = $message->construction_street_number;
-        }
-        if (isset($message->construction_neighborhood)) {
-            $realEstateDevelopment->neighborhood = $message->construction_neighborhood;
-        }
-        if (isset($message->construction_city)) {
-            $realEstateDevelopment->city = $message->construction_city;
-        }
-        if (isset($message->construction_state)) {
-            $realEstateDevelopment->state = $message->construction_state;
-        }
-        if (isset($message->real_estate_logo)) {
-            $realEstateDevelopment->real_estate_logo = $message->real_estate_logo;
-        }
-        if (isset($message->external_code)) {
-            $realEstateDevelopment->external_code = $message->external_code;
-        }
-        if (isset($message->external_num_code)) {
-            $realEstateDevelopment->external_num_code = $message->external_num_code;
-        }
-        if (isset($message->external_company_code)) {
-            $realEstateDevelopment->external_company_code = $message->external_company_code;
-        }
-        if (isset($message->external_subsidiary_code)) {
-            $realEstateDevelopment->external_subsidiary_code = $message->external_subsidiary_code;
-        }
-
-        $realEstateDevelopment->save();
-        
+        $this->realEstateDevelopment($realEstateDevelopment, $message);
+                
         if (isset($message->stages)) {
             $this->stages($realEstateDevelopment, $message);
         }
-        if (isset($message->last_parameter)) {
-            //$this->lastParameter($realEstateDevelopment, $message);
+        if (isset($message->parameters)) {
+            $this->parameters($realEstateDevelopment, $message);
         }
         if (isset($message->insurances[0], $message->insurance_companies[0])) {
             $this->insurances($realEstateDevelopment, $message);
@@ -165,15 +130,14 @@ class MessageProduct
         if (isset($message->blueprints)) {
             $this->blueprints($realEstateDevelopment, $message);
         }
-
         if (isset($message->units)) {
-            //$this->units($realEstateDevelopment, $message);
+            $this->units($realEstateDevelopment, $message);
         }
         if (isset($message->medias)) {
-            //$this->medias($realEstateDevelopment, $message);
+            $this->medias($realEstateDevelopment, $message);
         }
         if (isset($message->documents)) {
-            //$this->documents($realEstateDevelopment, $message);
+            $this->documents($realEstateDevelopment, $message);
         }
     }
 
@@ -184,23 +148,5 @@ class MessageProduct
     private function delete(stdClass $message): void
     {
         RealEstateDevelopment::where('uuid', $message->uuid)->delete();
-    }
-
-    /**
-     * @param string $hubCompanyUuid
-     * @return int
-     */
-    private function getHubCompanyId(string $hubCompanyUuid): int
-    {
-        $hubCompany = HubCompany::whereUuid($hubCompanyUuid)->first();
-        if (!$hubCompany) {
-            $responseCompany = (new IssComponent())->hub()->findCompany($hubCompanyUuid);
-            $hubCompany = HubCompany::create([
-                'uuid' => $hubCompanyUuid,
-                'name' => $responseCompany->result->name
-            ]);
-        }
-
-        return $hubCompany->id;
     }
 }

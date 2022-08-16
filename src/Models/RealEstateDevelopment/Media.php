@@ -16,6 +16,8 @@ class Media extends BaseModel
 {
     use SoftDeletes;
 
+    public const MEDIA_TYPES = [];
+
     public function __construct()
     {
         parent::__construct();
@@ -37,6 +39,9 @@ class Media extends BaseModel
         'url',
         'active',
         'real_estate_development_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
