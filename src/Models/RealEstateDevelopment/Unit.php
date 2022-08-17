@@ -2,6 +2,7 @@
 
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
+use App\Models\Settings\SaleStep;
 use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -61,10 +62,8 @@ class Unit extends BaseModel
 
     /**
      * Get the typologies for the unit.
-     *
-     * @return BelongsTo
      */
-    public function typology(): BelongsTo
+    public function typology()
     {
         return $this->belongsTo(Typology::class);
     }
@@ -115,5 +114,10 @@ class Unit extends BaseModel
     public function blueprint()
     {
         return $this->belongsTo(Blueprint::class);
+    }
+
+    public function saleStep(): BelongsTo
+    {
+        return $this->belongsTo(SaleStep::class);
     }
 }
