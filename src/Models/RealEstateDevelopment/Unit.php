@@ -111,4 +111,9 @@ class Unit extends BaseModel
     {
         return $this->typology;
     }
+
+    public function blueprint()
+    {
+        return $this->belongsTo(Blueprint::class);
+    }
 }

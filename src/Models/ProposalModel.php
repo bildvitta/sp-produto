@@ -3,6 +3,7 @@
 namespace BildVitta\SpProduto\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -39,5 +40,15 @@ class ProposalModel extends BaseModel
     public function hub_company(): BelongsTo
     {
         return $this->belongsTo(config('sp-produto.model_company'));
+    }
+
+    /**
+     * Define a one-to-many relationship.
+     *
+     * @return HasMany
+     */
+    public function periodicities(): HasMany
+    {
+        return $this->hasMany(ProposalModelPeriodicities::class);
     }
 }
