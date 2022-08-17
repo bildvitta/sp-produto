@@ -53,6 +53,7 @@ class DataImportCommand extends Command
         'mirrors',
         'mirror_groups',
         'blueprints',
+        'blueprint_images',
         'units',
         'documents',
         'stages',
@@ -425,6 +426,20 @@ class DataImportCommand extends Command
                 RealEstateDevelopment\Blueprint::class,
                 'Blueprints for Real Estate Development',
                 ['real_estate_development' => RealEstateDevelopment::class]
+            );
+        }
+
+        // Sync Blueprint Images
+        if (in_array('blueprint_images', $this->sync)) {
+            $blueprint_images = $database->table('blueprint_images as bi')
+                ->leftJoin('blueprints as bp', 'bi.blueprint_id', '=', 'bp.id')
+                ->select('bi.*', 'bp.uuid as blueprint_uuid');
+
+            $this->syncData(
+                $blueprint_images,
+                RealEstateDevelopment\BlueprintImage::class,
+                'Blueprint Imagess for Real Estate Development',
+                ['blueprint' => RealEstateDevelopment\Blueprint::class]
             );
         }
 
