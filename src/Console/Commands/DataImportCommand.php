@@ -10,6 +10,7 @@ use BildVitta\SpProduto\Models\Characteristic;
 use BildVitta\SpProduto\Models\Insurance;
 use BildVitta\SpProduto\Models\InsuranceCompany;
 use BildVitta\SpProduto\Models\ProposalModel;
+use BildVitta\SpProduto\Models\ProposalModelPeriodicities;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Console\Command;
 use Illuminate\Database\Query\Builder;
@@ -36,6 +37,7 @@ class DataImportCommand extends Command
         'accessories',
         'characteristics',
         'proposal_models',
+        'proposal_model_periodicities',
         'buying_options',
         'insurance_companies',
         'insurances',
@@ -147,6 +149,20 @@ class DataImportCommand extends Command
                 ProposalModel::class,
                 'Proposal Models',
                 ['hub_company' => HubCompany::class]
+            );
+        }
+
+        // Sync Proposal Models Periodicities
+        if (in_array('proposal_model_periodicities', $this->sync)) {
+            $proposalModelsPeriodicities = $database->table('proposal_model_periodicities as pp')
+                ->leftJoin('proposal_models as pm', 'pp.proposal_model_id', '=', 'pm.id')
+                ->select('pp.*', 'pm.uuid as proposal_model_uuid');
+
+            $this->syncData(
+                $proposalModelsPeriodicities,
+                ProposalModelPeriodicities::class,
+                'Proposal Models Periodicities',
+                ['proposal_model' => ProposalModel::class]
             );
         }
 
