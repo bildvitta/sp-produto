@@ -48,6 +48,9 @@ class Parameter extends BaseModel
         'verge',
         'real_estate_development_id',
         'buying_option_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

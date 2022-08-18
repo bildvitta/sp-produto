@@ -34,6 +34,9 @@ class BuyingOption extends BaseModel
         'when_make_sale',
         'when_reserve_unit',
         'hub_company_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

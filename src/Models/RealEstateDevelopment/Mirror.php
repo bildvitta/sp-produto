@@ -33,6 +33,9 @@ class Mirror extends BaseModel
         'mirror_type',
         'real_estate_development_id',
         'parameter_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

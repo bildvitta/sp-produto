@@ -39,6 +39,9 @@ class Accessory extends BaseModel
         'category_id',
         'real_estate_development_id',
         'all_typologies',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

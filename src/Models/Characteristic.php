@@ -31,6 +31,9 @@ class Characteristic extends BaseModel
         'description',
         'icon',
         'hub_company_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

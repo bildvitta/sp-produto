@@ -18,7 +18,7 @@ return new class extends Migration
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->foreignId('proposal_model_id');
-                $table->foreignId('real_estate_development_id');
+                $table->foreignId('typology_id');
             });
         }
     }

@@ -34,6 +34,9 @@ class Blueprint extends BaseModel
         'name',
         'description',
         'real_estate_development_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

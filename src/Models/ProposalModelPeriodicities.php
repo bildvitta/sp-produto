@@ -35,6 +35,9 @@ class ProposalModelPeriodicities extends BaseModel
         'pin_value',
         'add_on_type',
         'add_on_value',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
