@@ -7,7 +7,7 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
+use App\Models\Produto\Unit;
 use App\Models\Produto\SaleStepUnit;
 use App\Models\Settings\SaleStep;
 use stdClass;
