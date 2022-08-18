@@ -33,6 +33,9 @@ class InsuranceCompany extends BaseModel
         'susep',
         'is_active',
         'hub_company_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
