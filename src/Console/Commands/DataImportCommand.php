@@ -13,6 +13,7 @@ use BildVitta\SpProduto\Models\ProposalModel;
 use BildVitta\SpProduto\Models\ProposalModelPeriodicities;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -54,6 +55,9 @@ class DataImportCommand extends Command
         'mirror_groups',
         'blueprints',
         'blueprint_images',
+        'blueprint_typology',
+        'proposal_model_typology',
+        'real_estate_development_accessory_blueprint',
         'units',
         'documents',
         'stages',
@@ -443,6 +447,72 @@ class DataImportCommand extends Command
             );
         }
 
+        // Sync Blueprint Typology
+        if (in_array('blueprint_typology', $this->sync)) {
+            $blueprint_typology = $database->table('blueprint_typology as bt')
+                ->leftJoin('blueprints as bp', 'bt.blueprint_id', '=', 'bp.id')
+                ->leftJoin('typologies as tp', 'bt.typology_id', '=', 'tp.id')
+                ->select('bp.uuid as foreign_uuid', 'tp.uuid as model_uuid');
+
+            $this->syncRelated(
+                $blueprint_typology,
+                [
+                    'class' => RealEstateDevelopment\Typology::class,
+                    'field' => 'typology',
+                ],
+                [
+                    'class' => RealEstateDevelopment\Blueprint::class,
+                    'field' => 'blueprint',
+                ],
+                'blueprint_typology',
+                'Blueprint Typology'
+            );
+        }
+
+        // Sync Proposal Model Typology
+        if (in_array('proposal_model_typology', $this->sync)) {
+            $proposal_model_typology = $database->table('proposal_model_typology as pt')
+                ->leftJoin('proposal_models as pm', 'pt.proposal_model_id', '=', 'pm.id')
+                ->leftJoin('typologies as tp', 'pt.typology_id', '=', 'tp.id')
+                ->select('pm.uuid as foreign_uuid', 'tp.uuid as model_uuid');
+
+            $this->syncRelated(
+                $proposal_model_typology,
+                [
+                    'class' => RealEstateDevelopment\Typology::class,
+                    'field' => 'typology',
+                ],
+                [
+                    'class' => ProposalModel::class,
+                    'field' => 'proposal_model',
+                ],
+                'proposal_model_typology',
+                'Proposal Model Typology'
+            );
+        }
+
+        // Sync Real Estate Developments Blueprints with Accessories
+        if (in_array('real_estate_development_accessory_blueprint', $this->sync)) {
+            $realEstateDevelopmentAccessoryBlueprint = $database->table('real_estate_development_accessory_blueprint as ab')
+                ->leftJoin('blueprints as bp', 'ab.blueprint_id', '=', 'bp.id')
+                ->leftJoin('real_estate_development_accessories as ra', 'ab.accessory_id', '=', 'ra.id')
+                ->select('bp.uuid as foreign_uuid', 'ra.uuid as model_uuid');
+
+            $this->syncRelated(
+                $realEstateDevelopmentAccessoryBlueprint,
+                [
+                    'class' => RealEstateDevelopment\Accessory::class,
+                    'field' => 'real_estate_development_accessory',
+                ],
+                [
+                    'class' => RealEstateDevelopment\Blueprint::class,
+                    'field' => 'blueprint',
+                ],
+                'blueprint_real_estate_development_accessory',
+                'Real Estate Developments Accessory Blueprint'
+            );
+        }
+
         // Sync Units
         if (in_array('units', $this->sync)) {
             $units = $database->table('units as un')
@@ -568,7 +638,11 @@ class DataImportCommand extends Command
 
                 $query->get()->each(function ($item) use ($model, $related, $dates, $bar) {
                     foreach ($related as $name => $object) {
-                        $relatedObject = $object::firstWhere('uuid', $item->{sprintf('%s_uuid', $name)});
+                        $relatedObject = $object::where('uuid', $item->{sprintf('%s_uuid', $name)});
+                        if (in_array(SoftDeletes::class, class_uses($object))) {
+                            $relatedObject->withTrashed();
+                        }
+                        $relatedObject = $relatedObject->first();
                         $item->{sprintf('%s_id', $name)} = $relatedObject?->id;
                     }
 
@@ -576,10 +650,19 @@ class DataImportCommand extends Command
                         $item->{$date} = Carbon::parse($item->{$date}) === true ? $item->{$date} : null;
                     }
 
-                    $model::updateOrCreate(
-                        ['uuid' => $item->uuid],
-                        collect($item)->toArray()
-                    );
+                    $newObj = $model::where('uuid', $item->uuid);
+
+                    if (in_array(SoftDeletes::class, class_uses($model))) {
+                        $newObj->withTrashed();
+                    }
+
+                    if (! $newObj = $newObj->first()) {
+                        $newObj = new $model();
+                    }
+
+                    $newObj->fill(collect($item)->toArray());
+
+                    $newObj->save();
 
                     $bar->advance(1);
                 });
@@ -587,7 +670,11 @@ class DataImportCommand extends Command
 
             $bar->finish();
             $this->newLine();
-            $result = $model::count();
+            $result = $model::query();
+            if (in_array(SoftDeletes::class, class_uses($model))) {
+                $result->withTrashed();
+            }
+            $result = $result->count();
             $this->info(sprintf('Imported %s of %s registers.', $result, $totalRecords));
         }
     }
@@ -623,8 +710,18 @@ class DataImportCommand extends Command
                 $query->limit($this->selectLimit)->offset($offset);
 
                 $query->get()->each(function ($item) use ($model, $foreign, $pivot, $bar) {
-                    $modelObject = $model['class']::firstWhere('uuid', $item->model_uuid);
-                    $foreignObject = $foreign['class']::firstWhere('uuid', $item->foreign_uuid);
+                    $modelObject = $model['class']::where('uuid', $item->model_uuid);
+                    $foreignObject = $foreign['class']::where('uuid', $item->foreign_uuid);
+
+                    if (in_array(SoftDeletes::class, class_uses($model['class']))) {
+                        $modelObject->withTrashed();
+                    }
+                    $modelObject = $modelObject->first();
+
+                    if (in_array(SoftDeletes::class, class_uses($foreign['class']))) {
+                        $foreignObject->withTrashed();
+                    }
+                    $foreignObject = $foreignObject->first();
 
                     if ($modelObject && $foreignObject) {
                         DB::table(prefixTableName($pivot))

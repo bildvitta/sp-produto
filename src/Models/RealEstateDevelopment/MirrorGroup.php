@@ -30,7 +30,10 @@ class MirrorGroup extends BaseModel
     protected $fillable = [
         'uuid',
         'name',
-        'mirror_id'
+        'mirror_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

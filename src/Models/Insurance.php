@@ -32,6 +32,9 @@ class Insurance extends BaseModel
         'external_code',
         'is_active',
         'insurance_company_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

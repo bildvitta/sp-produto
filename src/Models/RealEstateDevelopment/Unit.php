@@ -50,6 +50,9 @@ class Unit extends BaseModel
         'external_code',
         'external_subsidiary_code',
         'blueprint_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
@@ -114,10 +117,5 @@ class Unit extends BaseModel
     public function blueprint()
     {
         return $this->belongsTo(Blueprint::class);
-    }
-
-    public function saleStep(): BelongsTo
-    {
-        return $this->belongsTo(SaleStep::class);
     }
 }

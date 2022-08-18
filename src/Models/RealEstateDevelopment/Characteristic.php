@@ -34,6 +34,9 @@ class Characteristic extends BaseModel
         'description',
         'real_estate_development_id',
         'characteristic_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

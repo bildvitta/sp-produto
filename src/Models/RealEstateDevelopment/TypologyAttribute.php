@@ -33,6 +33,9 @@ class TypologyAttribute extends BaseModel
         'type_increase',
         'value_increase',
         'typology_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
