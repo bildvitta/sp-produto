@@ -7,7 +7,7 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
+use App\Models\Produto\Unit;
 use App\Models\Produto\SaleStepUnit;
 use App\Models\Settings\SaleStep;
 use stdClass;
@@ -45,7 +45,7 @@ trait UnitHelper
                 'ideal_fraction' => $messageUnity->ideal_fraction,
                 'factor' => $messageUnity->factor,
                 'observations' => $messageUnity->observations,
-                'ready_to_live_in' => $messageUnity->ready_to_live_in,
+                'ready_to_live_in' => $this->toCarbon($messageUnity->ready_to_live_in),
                 'notary_registration' => $messageUnity->notary_registration,
                 'property_tax_identification' => $messageUnity->property_tax_identification,
                 'has_empty_fields' => $messageUnity->has_empty_fields,
