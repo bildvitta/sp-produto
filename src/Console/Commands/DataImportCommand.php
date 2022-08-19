@@ -93,7 +93,9 @@ class DataImportCommand extends Command
             $this->syncData(
                 $hub_companies,
                 HubCompany::class,
-                'Hub companies'
+                'Hub companies',
+                [],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -107,7 +109,8 @@ class DataImportCommand extends Command
                 $accessoryCategories,
                 AccessoryCategory::class,
                 'Accessory Categories',
-                ['hub_company' => HubCompany::class]
+                ['hub_company' => HubCompany::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -125,7 +128,8 @@ class DataImportCommand extends Command
                 [
                     'hub_company' => HubCompany::class,
                     'category' => AccessoryCategory::class,
-                ]
+                ],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -139,7 +143,8 @@ class DataImportCommand extends Command
                 $characteristics,
                 Characteristic::class,
                 'Characteristics',
-                ['hub_company' => HubCompany::class]
+                ['hub_company' => HubCompany::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -153,7 +158,8 @@ class DataImportCommand extends Command
                 $proposalModels,
                 ProposalModel::class,
                 'Proposal Models',
-                ['hub_company' => HubCompany::class]
+                ['hub_company' => HubCompany::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -167,7 +173,8 @@ class DataImportCommand extends Command
                 $proposalModelsPeriodicities,
                 ProposalModelPeriodicities::class,
                 'Proposal Models Periodicities',
-                ['proposal_model' => ProposalModel::class]
+                ['proposal_model' => ProposalModel::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -181,7 +188,8 @@ class DataImportCommand extends Command
                 $buyingOptions,
                 BuyingOption::class,
                 'Buying Options',
-                ['hub_company' => HubCompany::class]
+                ['hub_company' => HubCompany::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -195,7 +203,8 @@ class DataImportCommand extends Command
                 $insuranceCompanies,
                 InsuranceCompany::class,
                 'Insurance Companies',
-                ['hub_company' => HubCompany::class]
+                ['hub_company' => HubCompany::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -209,7 +218,8 @@ class DataImportCommand extends Command
                 $insurances,
                 Insurance::class,
                 'Insurances',
-                ['insurance_company' => InsuranceCompany::class]
+                ['insurance_company' => InsuranceCompany::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -223,7 +233,8 @@ class DataImportCommand extends Command
                 $realEstateDevelopments,
                 RealEstateDevelopment::class,
                 'Real Estate Developments',
-                ['hub_company' => HubCompany::class]
+                ['hub_company' => HubCompany::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -329,7 +340,8 @@ class DataImportCommand extends Command
                 [
                     'real_estate_development' => RealEstateDevelopment::class,
                     'characteristic' => Characteristic::class,
-                ]
+                ],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -347,7 +359,8 @@ class DataImportCommand extends Command
                 [
                     'real_estate_development' => RealEstateDevelopment::class,
                     'proposal_model' => ProposalModel::class,
-                ]
+                ],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -365,7 +378,8 @@ class DataImportCommand extends Command
                 [
                     'real_estate_development' => RealEstateDevelopment::class,
                     'accessory_category' => AccessoryCategory::class,
-                ]
+                ],
+                ['created_at', 'updated_at', 'deleted_at', 'start_at', 'end_at']
             );
         }
 
@@ -383,6 +397,20 @@ class DataImportCommand extends Command
                 [
                     'real_estate_development' => RealEstateDevelopment::class,
                     'buying_option' => BuyingOption::class,
+                ],
+                [
+                    'created_at',
+                    'updated_at',
+                    'deleted_at',
+                    'blueprint_definition_deadline',
+                    'construction_over_in',
+                    'construction_prevision_in',
+                    'construction_start_in',
+                    'financial_transfer_deadline',
+                    'hand_over_keys_in',
+                    'launch_in',
+                    'pre_launch_in',
+                    'ready_to_live_in',
                 ]
             );
         }
@@ -401,7 +429,8 @@ class DataImportCommand extends Command
                 [
                     'real_estate_development' => RealEstateDevelopment::class,
                     'parameter' => RealEstateDevelopment\Parameter::class,
-                ]
+                ],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -415,7 +444,8 @@ class DataImportCommand extends Command
                 $mirrorGroups,
                 RealEstateDevelopment\MirrorGroup::class,
                 'Mirror Groups for Real Estate Development',
-                ['mirror' => RealEstateDevelopment\Mirror::class]
+                ['mirror' => RealEstateDevelopment\Mirror::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -429,7 +459,8 @@ class DataImportCommand extends Command
                 $blueprints,
                 RealEstateDevelopment\Blueprint::class,
                 'Blueprints for Real Estate Development',
-                ['real_estate_development' => RealEstateDevelopment::class]
+                ['real_estate_development' => RealEstateDevelopment::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -443,7 +474,8 @@ class DataImportCommand extends Command
                 $blueprint_images,
                 RealEstateDevelopment\BlueprintImage::class,
                 'Blueprint Imagess for Real Estate Development',
-                ['blueprint' => RealEstateDevelopment\Blueprint::class]
+                ['blueprint' => RealEstateDevelopment\Blueprint::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -541,7 +573,7 @@ class DataImportCommand extends Command
                     'mirror_group' => RealEstateDevelopment\MirrorGroup::class,
                     'blueprint' => RealEstateDevelopment\Blueprint::class,
                 ],
-                ['ready_to_live_in']
+                ['created_at', 'updated_at', 'deleted_at', 'ready_to_live_in']
             );
         }
 
@@ -555,7 +587,8 @@ class DataImportCommand extends Command
                 $documents,
                 RealEstateDevelopment\Document::class,
                 'Documents for Real Estate Development',
-                ['real_estate_development' => RealEstateDevelopment::class]
+                ['real_estate_development' => RealEstateDevelopment::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -569,7 +602,8 @@ class DataImportCommand extends Command
                 $stages,
                 RealEstateDevelopment\Stage::class,
                 'Stages for Real Estate Development',
-                ['real_estate_development' => RealEstateDevelopment::class]
+                ['real_estate_development' => RealEstateDevelopment::class],
+                ['created_at', 'updated_at', 'deleted_at', 'registered_at']
             );
         }
 
@@ -583,7 +617,8 @@ class DataImportCommand extends Command
                 $stage_images,
                 RealEstateDevelopment\StageImage::class,
                 'Stage Images for Real Estate Development',
-                ['stage' => RealEstateDevelopment\Stage::class]
+                ['stage' => RealEstateDevelopment\Stage::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -597,7 +632,8 @@ class DataImportCommand extends Command
                 $media,
                 RealEstateDevelopment\Media::class,
                 'Media for Real Estate Development',
-                ['real_estate_development' => RealEstateDevelopment::class]
+                ['real_estate_development' => RealEstateDevelopment::class],
+                ['created_at', 'updated_at', 'deleted_at']
             );
         }
 
@@ -647,7 +683,7 @@ class DataImportCommand extends Command
                     }
 
                     foreach ($dates as $date) {
-                        $item->{$date} = Carbon::parse($item->{$date}) === true ? $item->{$date} : null;
+                        $item->{$date} = Carbon::parse($item->{$date})->greaterThan('0001-01-01 23:59:59') ? $item->{$date} : null;
                     }
 
                     $newObj = $model::where('uuid', $item->uuid);
