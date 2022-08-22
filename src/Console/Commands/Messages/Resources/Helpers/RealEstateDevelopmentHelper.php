@@ -12,6 +12,64 @@ trait RealEstateDevelopmentHelper
 {
     /**
      * @param stdClass $message
+     * @return void
+     * @throws MessageProcessorException
+     */
+    private function realEstateDevelopmentUpdateOrCreate(stdClass $message): void
+    {
+        $realEstateDevelopment = $this->getRealEstateDevelopment($message);
+
+        $this->realEstateDevelopment($realEstateDevelopment, $message);
+                
+        if (isset($message->stages)) {
+            $this->stages($realEstateDevelopment, $message);
+        }
+        if (isset($message->parameters)) {
+            $this->parameters($realEstateDevelopment, $message);
+        }
+        if (isset($message->insurances[0], $message->insurance_companies[0])) {
+            $this->insurances($realEstateDevelopment, $message);
+        }
+        if (isset($message->real_estate_proposal_models)) {
+            $this->proposalModels($realEstateDevelopment, $message);
+        }
+        if (isset($message->buying_options)) {
+            $this->buyingOptions($realEstateDevelopment, $message);
+        }
+        if (isset($message->typologies)) {
+            $this->typologies($realEstateDevelopment, $message);
+        }
+        if (isset($message->mirrors)) {
+            $this->mirrors($realEstateDevelopment, $message);
+        }
+        if (isset($message->characteristics)) {
+            $this->characteristics($realEstateDevelopment, $message);
+        }
+        if (isset($message->accessories)) {
+            $this->accessories($realEstateDevelopment, $message);
+        }
+        if (isset($message->blueprints)) {
+            $this->blueprints($realEstateDevelopment, $message);
+        }
+        if (isset($message->medias)) {
+            $this->medias($realEstateDevelopment, $message);
+        }
+        if (isset($message->documents)) {
+            $this->documents($realEstateDevelopment, $message);
+        }
+    }
+
+    /**
+     * @param stdClass $message
+     * @return void
+     */
+    private function realEstateDevelopmentDelete(stdClass $message): void
+    {
+        RealEstateDevelopment::where('uuid', $message->uuid)->delete();
+    }
+
+    /**
+     * @param stdClass $message
      * @return RealEstateDevelopment
      */
     private function getRealEstateDevelopment(stdClass $message): RealEstateDevelopment

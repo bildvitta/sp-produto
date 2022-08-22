@@ -14,47 +14,50 @@ use Throwable;
 trait UnitHelper
 {
     /**
-     * @param RealEstateDevelopment $realEstateDevelopment
      * @param stdClass $message
      * @return void
      */
-    private function units(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
+    private function unitUpdateOrCreate(stdClass $message): void
     {
-        $unityIds = [];
-        foreach ($message->units as $messageUnity) {
-            $unit = BaseUnit::updateOrCreate([
-                'uuid' => $messageUnity->uuid,
-            ], [
-                'uuid' => $messageUnity->uuid,
-                'real_estate_development_id' => $realEstateDevelopment->id,
-                'mirror_id' => $this->getUnitMirrorId($messageUnity->mirror_uuid),
-                'mirror_group_id' => $this->getUnitMirrorGroupId($messageUnity->mirror_group_uuid),
-                'blueprint_id' => $this->getUnitBlueprintId($messageUnity->blueprint_uuid),
-                'typology_id' => $this->getUnitTypologyId($messageUnity->typology_uuid),
-                'name' => $messageUnity->name,
-                'code' => $messageUnity->code,
-                'square_meters' => $messageUnity->square_meters,
-                'fixed_price' => $messageUnity->fixed_price,
-                'special_needs' => $messageUnity->special_needs,
-                'floor' => $messageUnity->floor,
-                'unit_type' => $messageUnity->unit_type,
-                'external_code' => $messageUnity->external_code,
-                'external_subsidiary_code' => $messageUnity->external_subsidiary_code,
-                'ideal_fraction' => $messageUnity->ideal_fraction,
-                'factor' => $messageUnity->factor,
-                'observations' => $messageUnity->observations,
-                'ready_to_live_in' => $this->toCarbon($messageUnity->ready_to_live_in),
-                'notary_registration' => $messageUnity->notary_registration,
-                'property_tax_identification' => $messageUnity->property_tax_identification,
-                'has_empty_fields' => $messageUnity->has_empty_fields,
-            ]);
-            $unityIds[] = $unit->id;
-            $this->unitPriceCalc($unit, $message);
-            $this->unitSaleStep($unit, $realEstateDevelopment);
-        }
-        BaseUnit::where('real_estate_development_id', $realEstateDevelopment->id)
-            ->whereNotIn('id', $unityIds)
-            ->delete();
+        $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->real_estate_development_uuid)->first();
+
+        $unit = BaseUnit::updateOrCreate([
+            'uuid' => $message->uuid,
+        ], [
+            'uuid' => $message->uuid,
+            'real_estate_development_id' => $realEstateDevelopment->id,
+            'mirror_id' => $this->getUnitMirrorId($message->mirror_uuid),
+            'mirror_group_id' => $this->getUnitMirrorGroupId($message->mirror_group_uuid),
+            'blueprint_id' => $this->getUnitBlueprintId($message->blueprint_uuid),
+            'typology_id' => $this->getUnitTypologyId($message->typology_uuid),
+            'name' => $message->name,
+            'code' => $message->code,
+            'square_meters' => $message->square_meters,
+            'fixed_price' => $message->fixed_price,
+            'special_needs' => $message->special_needs,
+            'floor' => $message->floor,
+            'unit_type' => $message->unit_type,
+            'external_code' => $message->external_code,
+            'external_subsidiary_code' => $message->external_subsidiary_code,
+            'ideal_fraction' => $message->ideal_fraction,
+            'factor' => $message->factor,
+            'observations' => $message->observations,
+            'ready_to_live_in' => $this->toCarbon($message->ready_to_live_in),
+            'notary_registration' => $message->notary_registration,
+            'property_tax_identification' => $message->property_tax_identification,
+            'has_empty_fields' => $message->has_empty_fields,
+        ]);
+        $this->unitPriceCalc($unit, $message);
+        $this->unitSaleStep($unit, $realEstateDevelopment);
+    }
+
+    /**
+     * @param stdClass $message
+     * @return void
+     */
+    private function unitDelete(stdClass $message): void
+    {
+        BaseUnit::where('uuid', $message->uuid)->delete();
     }
 
     /**
