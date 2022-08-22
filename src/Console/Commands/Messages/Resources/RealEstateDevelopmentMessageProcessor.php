@@ -2,8 +2,6 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources;
 
-use BildVitta\SpProduto\Console\Commands\Messages\Exceptions\MessageProcessorException;
-use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\AccessoriesHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\BlueprintHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\BuyingOptionHelper;
@@ -46,17 +44,27 @@ class RealEstateDevelopmentMessageProcessor
     /**
      * @var string
      */
-    public const UPDATED = 'real_estate_developments.updated';
+    public const REAL_ESTATE_DEVELOPMENTS = 'real_estate_developments';
 
     /**
      * @var string
      */
-    public const CREATED = 'real_estate_developments.created';
+    public const UNITS = 'units';
 
     /**
      * @var string
      */
-    public const DELETED = 'real_estate_developments.deleted';
+    public const UPDATED = 'updated';
+
+    /**
+     * @var string
+     */
+    public const CREATED = 'created';
+
+    /**
+     * @var string
+     */
+    public const DELETED = 'deleted';
 
     /**
      * @param AMQPMessage $message
@@ -66,24 +74,24 @@ class RealEstateDevelopmentMessageProcessor
     {
         $message->ack();
         $messageData = null;
+        $messageBody = null;
         try {
             $properties = $message->get_properties();
-            $messageData = json_decode($message->getBody());
-            $operation = $properties['type'];
-
-            switch ($operation) {
-                case self::CREATED:
-                case self::UPDATED:
-                    $this->updateOrCreate($messageData);
+            $properties = explode('.', $properties['type']);
+            $type = $properties[0];
+            $operation = $properties[1];
+            $messageBody = $message->getBody();
+            $messageData = json_decode($messageBody);
+            switch ($type) {
+                case self::REAL_ESTATE_DEVELOPMENTS:
+                    $this->processRealEstateDevelopment($operation, $messageData);
                     break;
-                case self::DELETED:
-                    $this->delete($messageData);
-                    break;
-                default:
+                case self::UNITS:
+                    $this->processUnit($operation, $messageData);
                     break;
             }
         } catch (Throwable $exception) {
-            $this->logError($exception, $messageData);
+            $this->logError($exception, $messageBody);
             if (app()->isLocal()) {
                 throw $exception;
             }
@@ -91,63 +99,38 @@ class RealEstateDevelopmentMessageProcessor
     }
 
     /**
-     * @param stdClass $message
+     * @param string $operation
+     * @param stdClass $messageData
      * @return void
-     * @throws MessageProcessorException
      */
-    private function updateOrCreate(stdClass $message): void
+    private function processRealEstateDevelopment(string $operation, stdClass $messageData): void
     {
-        $realEstateDevelopment = $this->getRealEstateDevelopment($message);
-
-        $this->realEstateDevelopment($realEstateDevelopment, $message);
-                
-        if (isset($message->stages)) {
-            $this->stages($realEstateDevelopment, $message);
-        }
-        if (isset($message->parameters)) {
-            $this->parameters($realEstateDevelopment, $message);
-        }
-        if (isset($message->insurances[0], $message->insurance_companies[0])) {
-            $this->insurances($realEstateDevelopment, $message);
-        }
-        if (isset($message->real_estate_proposal_models)) {
-            $this->proposalModels($realEstateDevelopment, $message);
-        }
-        if (isset($message->buying_options)) {
-            $this->buyingOptions($realEstateDevelopment, $message);
-        }
-        if (isset($message->typologies)) {
-            $this->typologies($realEstateDevelopment, $message);
-        }
-        if (isset($message->mirrors)) {
-            $this->mirrors($realEstateDevelopment, $message);
-        }
-        if (isset($message->characteristics)) {
-            $this->characteristics($realEstateDevelopment, $message);
-        }
-        if (isset($message->accessories)) {
-            $this->accessories($realEstateDevelopment, $message);
-        }
-        if (isset($message->blueprints)) {
-            $this->blueprints($realEstateDevelopment, $message);
-        }
-        if (isset($message->units)) {
-            $this->units($realEstateDevelopment, $message);
-        }
-        if (isset($message->medias)) {
-            $this->medias($realEstateDevelopment, $message);
-        }
-        if (isset($message->documents)) {
-            $this->documents($realEstateDevelopment, $message);
+        switch ($operation) {
+            case self::CREATED:
+            case self::UPDATED:
+                $this->realEstateDevelopmentUpdateOrCreate($messageData);
+                break;
+            case self::DELETED:
+                $this->realEstateDevelopmentDelete($messageData);
+                break;
         }
     }
 
     /**
-     * @param stdClass $message
+     * @param string $operation
+     * @param stdClass $messageData
      * @return void
      */
-    private function delete(stdClass $message): void
+    private function processUnit(string $operation, stdClass $messageData): void
     {
-        RealEstateDevelopment::where('uuid', $message->uuid)->delete();
+        switch ($operation) {
+            case self::CREATED:
+            case self::UPDATED:
+                $this->unitUpdateOrCreate($messageData);
+                break;
+            case self::DELETED:
+                $this->unitDelete($messageData);
+                break;
+        }
     }
 }
