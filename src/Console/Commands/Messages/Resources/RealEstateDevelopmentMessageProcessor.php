@@ -64,8 +64,9 @@ class RealEstateDevelopmentMessageProcessor
      */
     public function process(AMQPMessage $message): void
     {
+        $message->ack();
+        $messageData = null;
         try {
-            $message->ack();
             $properties = $message->get_properties();
             $messageData = json_decode($message->getBody());
             $operation = $properties['type'];
