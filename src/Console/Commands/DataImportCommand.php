@@ -119,7 +119,7 @@ class DataImportCommand extends Command
             $accessories = $database->table('accessories as ac')
                 ->leftJoin('hub_companies as hc', 'ac.hub_company_id', '=', 'hc.id')
                 ->leftJoin('categories as ca', 'ac.category_id', '=', 'ca.id')
-                ->select('ac.*', 'hc.uuid as hub_company_uuid', 'ac.uuid as category_uuid');
+                ->select('ac.*', 'hc.uuid as hub_company_uuid', 'ca.uuid as category_uuid');
 
             $this->syncData(
                 $accessories,
