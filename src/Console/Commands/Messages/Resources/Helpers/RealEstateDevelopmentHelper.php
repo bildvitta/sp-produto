@@ -42,9 +42,6 @@ trait RealEstateDevelopmentHelper
         if (isset($message->mirrors)) {
             $this->mirrors($realEstateDevelopment, $message);
         }
-        if (isset($message->characteristics)) {
-            $this->characteristics($realEstateDevelopment, $message);
-        }
         if (isset($message->accessories)) {
             $this->accessories($realEstateDevelopment, $message);
         }
