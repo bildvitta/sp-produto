@@ -10,37 +10,40 @@ use stdClass;
 trait CharacteristicHelper
 {
     /**
-     * @param RealEstateDevelopment $realEstateDevelopment
      * @param stdClass $message
      * @return void
      */
-    private function characteristics(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
+    private function characteristicUpdateOrCreate(stdClass $message): void
     {
-        $characteristicIds = [];
-        foreach ($message->characteristics as $messageCharacteristics) {
-            $baseCharacteristic = BaseCharacteristic::updateOrCreate([
-                'uuid' => $messageCharacteristics->characteristic->uuid,
-            ], [
-                'uuid' => $messageCharacteristics->characteristic->uuid,
-                'name' => $messageCharacteristics->characteristic->name,
-                'description' => $messageCharacteristics->characteristic->description,
-                'icon' => $messageCharacteristics->characteristic->icon,
-                'hub_company_id' => $realEstateDevelopment->hub_company_id,
-            ]);
-            $characteristic = Characteristic::updateOrCreate([
-                'uuid' => $messageCharacteristics->uuid,
-            ], [
-                'uuid' => $messageCharacteristics->uuid,
-                'real_estate_development_id' => $realEstateDevelopment->id,
-                'description' => $messageCharacteristics->description,
-                'order' => $messageCharacteristics->order,
-                'differential' => $messageCharacteristics->differential,
-                'characteristic_id' => $baseCharacteristic->id,
-            ]);
-            $characteristicIds[] = $characteristic->id;
-        }
-        Characteristic::where('real_estate_development_id', $realEstateDevelopment->id)
-            ->whereNotIn('id', $characteristicIds)
-            ->delete();
+        $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->real_estate_development_uuid)->first();
+
+        $baseCharacteristic = BaseCharacteristic::updateOrCreate([
+            'uuid' => $message->characteristic->uuid,
+        ], [
+            'uuid' => $message->characteristic->uuid,
+            'name' => $message->characteristic->name,
+            'description' => $message->characteristic->description,
+            'icon' => $message->characteristic->icon,
+            'hub_company_id' => $realEstateDevelopment->hub_company_id,
+        ]);
+        $characteristic = Characteristic::updateOrCreate([
+            'uuid' => $message->uuid,
+        ], [
+            'uuid' => $message->uuid,
+            'real_estate_development_id' => $realEstateDevelopment->id,
+            'description' => $message->description,
+            'order' => $message->order,
+            'differential' => $message->differential,
+            'characteristic_id' => $baseCharacteristic->id,
+        ]);
+    }
+
+    /**
+     * @param stdClass $message
+     * @return void
+     */
+    private function characteristicDelete(stdClass $message): void
+    {
+        Characteristic::where('uuid', $message->uuid)->delete();
     }
 }
