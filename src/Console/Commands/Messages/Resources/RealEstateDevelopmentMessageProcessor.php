@@ -54,6 +54,11 @@ class RealEstateDevelopmentMessageProcessor
     /**
      * @var string
      */
+    public const CHARACTERISTICS = 'characteristics';
+
+    /**
+     * @var string
+     */
     public const UPDATED = 'updated';
 
     /**
@@ -89,6 +94,9 @@ class RealEstateDevelopmentMessageProcessor
                 case self::UNITS:
                     $this->processUnit($operation, $messageData);
                     break;
+                case self::CHARACTERISTICS:
+                    $this->processCharacteristic($operation, $messageData);
+                    break;    
             }
         } catch (Throwable $exception) {
             $this->logError($exception, $messageBody);
@@ -130,6 +138,24 @@ class RealEstateDevelopmentMessageProcessor
                 break;
             case self::DELETED:
                 $this->unitDelete($messageData);
+                break;
+        }
+    }
+
+    /**
+     * @param string $operation
+     * @param stdClass $messageData
+     * @return void
+     */
+    private function processCharacteristic(string $operation, stdClass $messageData): void
+    {
+        switch ($operation) {
+            case self::CREATED:
+            case self::UPDATED:
+                $this->characteristicUpdateOrCreate($messageData);
+                break;
+            case self::DELETED:
+                $this->characteristicDelete($messageData);
                 break;
         }
     }
