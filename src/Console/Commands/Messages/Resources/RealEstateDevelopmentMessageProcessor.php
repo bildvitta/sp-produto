@@ -96,7 +96,7 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::CHARACTERISTICS:
                     $this->processCharacteristic($operation, $messageData);
-                    break;    
+                    break;
             }
         } catch (Throwable $exception) {
             $this->logError($exception, $messageBody);
