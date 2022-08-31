@@ -2,7 +2,7 @@
 
 namespace BildVitta\SpProduto;
 
-use BildVitta\SpProduto\Console\Commands\DataImportCommand;
+use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\RealEstateDevelopmentImportCommand;
 use BildVitta\SpProduto\Console\Commands\Messages\RealEstateDevelopmentWorkerCommand;
 use BildVitta\SpProduto\Console\InstallSp;
 use Spatie\LaravelPackageTools\Package;
@@ -68,7 +68,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             ->name('sp-produto')
             ->hasCommands([
                 InstallSp::class,
-                DataImportCommand::class,
+                RealEstateDevelopmentImportCommand::class,
                 RealEstateDevelopmentWorkerCommand::class,
             ]);
     }
