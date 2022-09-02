@@ -2,9 +2,14 @@
 
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
+use BildVitta\SpProduto\Factories\RealEstateDevelopment\ParameterFactory;
 use BildVitta\SpProduto\Models\BaseModel;
+use BildVitta\SpProduto\Models\BuyingOption;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -14,13 +19,58 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Parameter extends BaseModel
 {
+    use HasFactory;
     use SoftDeletes;
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
-        $this->table = prefixTableName('parameters');
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'parameters';
     }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return ParameterFactory::new();
+    }
+
+    public const COMMERCIALIZATION_STATUS_LIST = [
+        'holding' => 'Aguardando',
+        'in_commercialization' => 'Em comercialização',
+        'ready_to_commercializate' => 'Pronto para comercialização',
+    ];
+
+    public const FINANCIAL_TRANSFER_STATUS_LIST = [
+        'holding' => 'Aguardando',
+        'in_transfer' => 'Em repasse',
+    ];
+
+    public const STEPS_LIST = [
+        'pre_launch' => 'Pré-lançamento',
+        'launch' => 'Lançamento',
+        'under_construction' => 'Em construção',
+        'ready_to_live' => 'Pronto para viver',
+    ];
+
+    public const VERGE_LIST = [
+        '1' => 'Nível 1',
+        '2' => 'Nível 2',
+        '3' => 'Nível 3',
+        '4' => 'Nível 4',
+        '5' => 'Nível 5',
+    ];
+
+    public const REQUIRED_DATES = [
+        'pre_launch_in',
+        'launch_in',
+        'blueprint_definition_deadline',
+        'construction_over_in',
+        'construction_start_in'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -93,5 +143,15 @@ class Parameter extends BaseModel
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
+    }
+
+    /**
+     * Get the buying options for the parameter.
+     *
+     * @return BelongsToMany
+     */
+    public function buying_options(): BelongsToMany
+    {
+        return $this->belongsToMany(BuyingOption::class, config('sp-produto.prefix_table') . 'buying_options');
     }
 }

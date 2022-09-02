@@ -2,8 +2,11 @@
 
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
+use BildVitta\SpProduto\Factories\RealEstateDevelopment\BlueprintFactory;
 use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,12 +19,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Blueprint extends BaseModel
 {
+    use HasFactory;
     use SoftDeletes;
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
-        $this->table = prefixTableName('blueprints');
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'blueprints';
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return BlueprintFactory::new();
     }
 
     /**
@@ -61,7 +75,7 @@ class Blueprint extends BaseModel
     public function real_estate_development_accessories(): BelongsToMany
     {
         return $this->belongsToMany(
-            Accessory::class,
+            RealEstateDevelopment\Accessory::class,
             prefixTableName('blueprint_real_estate_development_accessory'),
             'blueprint_id',
             'real_estate_development_accessory_id'
@@ -81,5 +95,15 @@ class Blueprint extends BaseModel
     public function images()
     {
         return $this->real_estate_developments_blueprint_images();
+    }
+
+    /**
+     * Get real estate development blueprint typologies.
+     *
+     * @return BelongsToMany
+     */
+    public function real_estate_developments_typologies(): BelongsToMany
+    {
+        return $this->belongsToMany(Typology::class, config('sp-produto.table_prefix') . 'blueprint_typology');
     }
 }

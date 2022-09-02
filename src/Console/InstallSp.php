@@ -78,6 +78,16 @@ class InstallSp extends Command
 
         $this->runMigrations();
 
+        $this->info('Publishing database seeders...');
+
+        if ($this->shouldRunSeeders()) {
+            $this->publishSeeders();
+        }
+
+        $this->runSeeders();
+
+        $this->info('Finish database seeders!');
+
         $this->info('Installed SPPackage');
     }
 
@@ -92,11 +102,11 @@ class InstallSp extends Command
     }
 
     /**
-     * @param  bool|false  $forcePublish
+     * @param bool|false $forcePublish
      *
      * @return void
      */
-    private function publishConfiguration($forcePublish = false): void
+    private function publishConfiguration(bool $forcePublish = false): void
     {
         $params = self::VENDOR_PUBLISH_CONFIG_PARAMS;
 
@@ -122,6 +132,11 @@ class InstallSp extends Command
         return $this->confirm('Run migrations of SP package? If you have already done this step, do not do it again!');
     }
 
+    private function shouldRunSeeders(): bool
+    {
+        return $this->confirm('Run seeders of SP package? If you have already done this step, do not do it again!');
+    }
+
     /**
      * @return void
      */
@@ -135,5 +150,23 @@ class InstallSp extends Command
         $this->info('Run migrations.');
         $this->call('migrate');
         $this->info('Finish migrations.');
+    }
+
+    private function publishSeeders()
+    {
+        $this->call('vendor:publish', [
+            '--provider' => SpProdutoServiceProvider::class,
+            '--tag' => 'seeders'
+        ]);
+    }
+
+    private function runSeeders()
+    {
+        $this->info('Run seeders.');
+        $this->call('db:seed', [
+            '--class' => 'SpProdutoSeeder'
+        ]);
+        $this->newLine();
+        $this->info('Finish seeders.');
     }
 }
