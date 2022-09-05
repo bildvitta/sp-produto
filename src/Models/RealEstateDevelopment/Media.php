@@ -2,8 +2,11 @@
 
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
+use BildVitta\SpProduto\Factories\RealEstateDevelopment\MediaFactory;
 use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,15 +17,32 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Media extends BaseModel
 {
+    use HasFactory;
     use SoftDeletes;
 
-    public const MEDIA_TYPES = [];
-
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
-        $this->table = prefixTableName('media');
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'media';
     }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return MediaFactory::new();
+    }
+
+    /**
+     * @const array MEDIA_TYPE_LIST
+     */
+    public const MEDIA_TYPE_LIST = [
+        'image' => 'Imagem',
+        'video' => 'Vídeo',
+    ];
 
     /**
      * The attributes that are mass assignable.
