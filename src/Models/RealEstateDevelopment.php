@@ -2,14 +2,24 @@
 
 namespace BildVitta\SpProduto\Models;
 
+use BildVitta\SpProduto\Factories\RealEstateDevelopmentFactory;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Document;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Media;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Parameter;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 /**
  * Class RealEstateDevelopment.
@@ -18,6 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class RealEstateDevelopment extends BaseModel
 {
+    use HasFactory;
     use SoftDeletes;
 
     public const STATUS_LIST = [
@@ -26,10 +37,20 @@ class RealEstateDevelopment extends BaseModel
         'in_commercialization' => 'Em comercialização',
     ];
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
-        $this->table = prefixTableName('real_estate_developments');
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'real_estate_developments';
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return RealEstateDevelopmentFactory::new();
     }
 
     /**
@@ -82,7 +103,7 @@ class RealEstateDevelopment extends BaseModel
     ];
 
     /**
-     * Get hub company.
+     * Real estate developments hub company
      *
      * @return BelongsTo
      */
@@ -92,82 +113,208 @@ class RealEstateDevelopment extends BaseModel
     }
 
     /**
-     * Real estate developments proposal models.
+     * Real estate developments proposal models
+     *
+     * @return BelongsToMany
      */
-    public function proposal_models()
+    public function proposal_models(): BelongsToMany
     {
-        return $this->belongsToMany(ProposalModel::class, prefixTableName('proposal_model_real_estate_development'));
+        return $this->belongsToMany(ProposalModel::class, config('sp-produto.table_prefix') . 'proposal_model_real_estate_development')
+            ->with('periodicities');
     }
 
     /**
-     * Real estate developments buying options.
+     * Real estate developments buying options
+     *
+     * @return BelongsToMany
      */
-    public function buying_options()
+    public function buying_options(): BelongsToMany
     {
-        return $this->belongsToMany(BuyingOption::class, prefixTableName('buying_option_real_estate_development'));
+        return $this->belongsToMany(BuyingOption::class, config('sp-produto.table_prefix') . 'buying_option_real_estate_development');
     }
 
     /**
-     * Real estate development insurance companies.
+     * Real estate development insurance companies
+     *
+     * @return BelongsToMany
      */
-    public function insurance_companies()
+    public function insurance_companies(): BelongsToMany
     {
-        return $this->belongsToMany(InsuranceCompany::class, prefixTableName('insurance_company_real_estate_development'));
+        return $this->belongsToMany(InsuranceCompany::class, config('sp-produto.table_prefix') . 'insurance_company_real_estate_development');
     }
 
     /**
-     * Real estate development insurances.
+     * Real estate development insurances
+     *
+     * @return BelongsToMany
      */
-    public function insurances()
+    public function insurances(): BelongsToMany
     {
-        return $this->belongsToMany(Insurance::class, prefixTableName('insurance_real_estate_development'));
+        return $this->belongsToMany(Insurance::class, config('sp-produto.table_prefix') . 'insurance_real_estate_development');
     }
 
     /**
-     * Real estate development characteristics.
+     * Real estate developments characteristics
+     *
+     * @return HasMany
      */
-    public function characteristics()
+    public function characteristics(): HasMany
     {
-        return $this->belongsTo(Characteristic::class);
+        return $this->hasMany(Characteristic::class);
     }
 
     /**
-     * Real estate development groups.
+     * Real estate developments accessories
+     *
+     * @return HasMany
      */
-    public function groups()
+    public function accessories(): HasMany
     {
-        return $this->belongsTo(MirrorGroup::class);
+        return $this->hasMany(RealEstateDevelopment\Accessory::class);
     }
 
     /**
-     * Real estate development stages.
+     * Real estate developments documents
+     *
+     * @return HasMany
      */
-    public function stages()
+    public function documents(): HasMany
     {
-        return $this->belongsTo(Stage::class);
+        return $this->hasMany(Document::class);
     }
 
     /**
-     * Real estate development documents.
+     * Real estate developments medias
+     *
+     * @return HasMany
      */
-    public function documents()
+    public function medias(): HasMany
     {
-        return $this->belongsTo(Document::class);
+        return $this->hasMany(Media::class);
+    }
+
+    public function lastStages(): HasMany
+    {
+        return $this->hasMany(Stage::class);
     }
 
     /**
-     * Real estate developments unities.
+     * Real estate developments typologies
+     *
+     * @return HasMany
      */
-    public function unities()
+    public function typologies(): HasMany
+    {
+        return $this->hasMany(Typology::class);
+    }
+
+    /**
+     * Real estate developments mirrors
+     *
+     * @return HasMany
+     */
+    public function mirrors(): HasMany
+    {
+        return $this->hasMany(Mirror::class);
+    }
+
+    /**
+     * Define a one-to-many relationship.
+     *
+     * @return HasMany
+     */
+    public function unities(): HasMany
     {
         return $this->hasMany(Unit::class);
     }
 
     /**
-     * Real estate developments mirrors.
+     * Define a one-to-many relationship.
+     *
+     * @return HasMany
      */
-    public function mirrors()
+    public function blueprints(): HasMany
     {
-        return $this->hasMany(Mirror::class);
+        return $this->hasMany(Blueprint::class);
+    }
+
+    public function getLaunchInAttribute()
+    {
+        if ($parameter = $this->parameters()->latest('created_at')->first()) {
+            if ($parameter->launch_in) {
+                return $parameter->launch_in;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Real estate developments paramenters
+     *
+     * @return HasMany
+     */
+    public function parameters(): HasMany
+    {
+        return $this->hasMany(Parameter::class);
+    }
+
+    public function getPreLaunchInAttribute()
+    {
+        if ($parameter = $this->parameters()->latest('created_at')->first()) {
+            if ($parameter->pre_launch_in) {
+                if ($parameter->pre_launch_in->gt(Carbon::now())) {
+                    return $parameter->pre_launch_in;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public function last_stage()
+    {
+        try {
+            return $this->stages()->with(['images'])->latest('registered_at')->firstOrFail();
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return null;
+        }
+    }
+
+    /**
+     * Real estate developments stages
+     *
+     * @return HasMany
+     */
+    public function stages(): HasMany
+    {
+        return $this->hasMany(Stage::class);
+    }
+
+    public function last_parameter()
+    {
+        try {
+            return $this->parameters()->latest('created_at')->firstOrFail();
+        } catch (ModelNotFoundException $modelNotFoundException) {
+            return null;
+        }
+    }
+
+    public function real_estate_proposal_models()
+    {
+        return $this->proposal_models;
+    }
+
+    public function real_estate_accessories()
+    {
+        return $this->accessories()
+            ->with(['accessory_categorization', 'accessory'])
+            ->get()
+            ->toArray();
+    }
+
+    public function getHubCompanyUuidAttribute(): ?string
+    {
+        return $this->hub_company?->uuid;
     }
 }

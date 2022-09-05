@@ -2,8 +2,11 @@
 
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
+use BildVitta\SpProduto\Factories\RealEstateDevelopment\DocumentFactory;
 use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,12 +17,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Document extends BaseModel
 {
+    use HasFactory;
     use SoftDeletes;
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
-        $this->table = prefixTableName('documents');
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'documents';
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return DocumentFactory::new();
     }
 
     /**

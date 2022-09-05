@@ -1,7 +1,6 @@
 <?php
 
 if (! function_exists('prefixTableName')) {
-
     /**
      * Set table name with prefix.
      * @param string $name

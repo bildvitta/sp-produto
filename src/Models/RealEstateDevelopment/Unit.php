@@ -2,9 +2,11 @@
 
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
-use App\Models\Settings\SaleStep;
+use BildVitta\SpProduto\Factories\RealEstateDevelopment\UnitFactory;
 use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,13 +17,36 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Unit extends BaseModel
 {
+    use HasFactory;
     use SoftDeletes;
 
-    public function __construct()
+    public function __construct(array $attributes = [])
     {
-        parent::__construct();
-        $this->table = prefixTableName('units');
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'units';
     }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return UnitFactory::new();
+    }
+
+    /**
+     * Type of unity.
+     *
+     * @const string
+     */
+    public const UNIT_TYPE_LIST = [
+        'residential' => 'Residencial',
+        'commercial' => 'Comercial',
+        'garage' => 'Garagem',
+        'storage' => 'Armazém',
+    ];
 
     /**
      * The attributes that are mass assignable.

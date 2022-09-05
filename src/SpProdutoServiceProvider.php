@@ -16,6 +16,56 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 class SpProdutoServiceProvider extends PackageServiceProvider
 {
     /**
+     * @var array $migrations
+     */
+    protected array $migrations = [
+        'create_sp_produto_real_estate_developments_table', // must be the first
+        'create_sp_produto_buying_options_table', // must be before others buying options tables
+        'create_sp_produto_buying_option_real_estate_development_table',
+        'create_sp_produto_parameters_table',
+        'create_sp_produto_insurance_companies_table', // must be before others insurance tables
+        'create_sp_produto_insurances_table',
+        'create_sp_produto_insurance_company_real_estate_development_table',
+        'create_sp_produto_insurance_real_estate_development_table',
+        'create_sp_produto_accessory_categories_table', // must be before the accessories table
+        'create_sp_produto_accessories_table',
+        'create_sp_produto_mirrors_table', // must be before the mirrors table
+        'create_sp_produto_mirror_groups_table',
+        'create_sp_produto_blueprints', // must be before others blueprints tables
+        'create_sp_produto_blueprint_images_table',
+        'create_sp_produto_blueprint_real_estate_development_accessory_table',
+        'create_sp_produto_blueprint_typology_table',
+        'create_sp_produto_characteristics_table',
+        'create_sp_produto_proposal_models_table', // must be before others proposal models tables
+        'create_sp_produto_proposal_model_periodicities_table',
+        'create_sp_produto_proposal_model_real_estate_development_table',
+        'create_sp_produto_proposal_model_typology_table',
+        'create_sp_produto_real_estate_development_accessories_table',
+        'create_sp_produto_real_estate_development_characteristic_table',
+        'create_sp_produto_stages_table',
+        'create_sp_produto_typologies_table', // must be before others typologies tables
+        'create_sp_produto_typology_attributes_table',
+        'create_sp_produto_units_table',
+        'create_sp_produto_documents_table',
+        'create_sp_produto_media_table',
+        'create_sp_produto_stage_images_table',
+    ];
+
+    /**
+     * @var array $commands
+     */
+    protected array $commands = [
+        InstallSp::class,
+        RealEstateDevelopmentImportCommand::class,
+        RealEstateDevelopmentWorkerCommand::class,
+    ];
+
+    /**
+     * @var string $seeder
+     */
+    protected string $seeder = 'SpProdutoSeeder';
+
+    /**
      * @param  Package  $package
      *
      * @return void
@@ -30,46 +80,16 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         $package
             ->name('sp-produto')
             ->hasConfigFile(['sp-produto'])
-            ->hasMigrations([
-                'create_sp_produto_real_estate_developments_table', // must be the first
-                'create_sp_produto_buying_options_table', // must be before others buying options tables
-                'create_sp_produto_buying_option_real_estate_development_table',
-                'create_sp_produto_parameters_table',
-                'create_sp_produto_insurance_companies_table', // must be before others insurance tables
-                'create_sp_produto_insurances_table',
-                'create_sp_produto_insurance_company_real_estate_development_table',
-                'create_sp_produto_insurance_real_estate_development_table',
-                'create_sp_produto_accessory_categories_table', // must be before the accessories table
-                'create_sp_produto_accessories_table',
-                'create_sp_produto_mirrors_table', // must be before the mirrors table
-                'create_sp_produto_mirror_groups_table',
-                'create_sp_produto_blueprints', // must be before others blueprints tables
-                'create_sp_produto_blueprint_images_table',
-                'create_sp_produto_blueprint_real_estate_development_accessory_table',
-                'create_sp_produto_blueprint_typology_table',
-                'create_sp_produto_characteristics_table',
-                'create_sp_produto_proposal_models_table', // must be before others proposal models tables
-                'create_sp_produto_proposal_model_periodicities_table',
-                'create_sp_produto_proposal_model_real_estate_development_table',
-                'create_sp_produto_proposal_model_typology_table',
-                'create_sp_produto_real_estate_development_accessories_table',
-                'create_sp_produto_real_estate_development_characteristic_table',
-                'create_sp_produto_stages_table',
-                'create_sp_produto_typologies_table', // must be before others typologies tables
-                'create_sp_produto_typology_attributes_table',
-                'create_sp_produto_units_table',
-                'create_sp_produto_documents_table',
-                'create_sp_produto_media_table',
-                'create_sp_produto_stage_images_table',
-            ])
+            ->hasMigrations($this->migrations)
             ->runsMigrations();
 
         $package
             ->name('sp-produto')
-            ->hasCommands([
-                InstallSp::class,
-                RealEstateDevelopmentImportCommand::class,
-                RealEstateDevelopmentWorkerCommand::class,
-            ]);
+            ->hasCommands($this->commands);
+
+        $this->publishes([
+            $package->basePath("/../database/seeders/{$this->seeder}.php.stub")
+            => database_path("seeders/{$this->seeder}.php")
+        ], 'seeders');
     }
 }
