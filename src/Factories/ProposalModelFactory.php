@@ -29,7 +29,7 @@ class ProposalModelFactory extends Factory
         return [
             'uuid' => fake()->uuid(),
             'name' => fake()->words(5, true),
-            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()->id
+            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id
         ];
     }
 }

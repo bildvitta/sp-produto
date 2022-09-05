@@ -34,7 +34,7 @@ class BuyingOptionFactory extends Factory
             'when_flow_validated' => fake()->randomKey(BuyingOption::WHEN_FLOW_VALIDATED_LIST),
             'when_make_sale' => fake()->randomKey(BuyingOption::WHEN_MAKE_SALE_LIST),
             'when_reserve_unit' => fake()->randomKey(BuyingOption::WHEN_RESERVE_UNIT_LIST),
-            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()->id,
+            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }
 }

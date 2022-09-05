@@ -27,7 +27,7 @@ class AccessoryFactory extends Factory
             'name' => fake()->words(5, true),
             'description' => fake()->text,
             'category_id' => Category::inRandomOrder()->first(),
-            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()->id,
+            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }
 }

@@ -31,7 +31,7 @@ class CharacteristicFactory extends Factory
             'name' => fake()->words(5, true),
             'description' => fake()->text,
             'icon' => 'https://placeimg.com/640/480/any?' . fake()->uuid,
-            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()->id,
+            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }
 }
