@@ -28,7 +28,7 @@ class InsuranceCompanyFactory extends Factory
             'document' => fake()->cnpj(false),
             'susep' => fake()->numerify('#####'),
             'is_active' => fake()->boolean(),
-            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()->id,
+            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }
 }

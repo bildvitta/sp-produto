@@ -64,7 +64,7 @@ class RealEstateDevelopmentFactory extends Factory
             'registry_office' => fake()->words(5, true),
             'state' => fake()->state,
             'street_number' => fake()->numberBetween(1, 300),
-            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()->id,
+            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
             'external_code' => fake()->unique()->numberBetween(1, 300),
             'external_num_code' => fake()->numberBetween(50, 300),
             'external_company_code' => fake()->numberBetween(2, 300),
