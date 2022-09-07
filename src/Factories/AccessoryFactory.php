@@ -2,7 +2,6 @@
 
 namespace BildVitta\SpProduto\Factories;
 
-use App\Models\Settings\Category;
 use BildVitta\SpProduto\Models\Accessory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,10 +22,10 @@ class AccessoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
-            'description' => fake()->text,
-            'category_id' => Category::inRandomOrder()->first(),
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
+            'description' => $this->faker->text,
+            'category_id' => 1,
             'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }

@@ -27,12 +27,12 @@ class AccessoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
+            'uuid' => $this->faker->uuid(),
             'accessory_id' => Accessory::inRandomOrder()->first(),
-            'stock_quantity' => fake()->numberBetween(1, 50),
-            'order' => fake()->randomNumber(1, 100),
+            'stock_quantity' => $this->faker->numberBetween(1, 50),
+            'order' => $this->faker->randomNumber(1, 100),
             'start_at' => now(),
-            'end_at' => now()->addDays(fake()->numerify('##')),
+            'end_at' => now()->addDays($this->faker->numerify('##')),
         ];
     }
 }

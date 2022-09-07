@@ -27,14 +27,14 @@ class MediaFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->word,
-            'description' => fake()->paragraph,
-            'preview' => 'https://placeimg.com/640/480/any?' . fake()->uuid,
-            'media_type' => fake()->randomKey(Media::MEDIA_TYPE_LIST),
-            'url' => fake()->imageUrl(),
-            'format' => fake()->fileExtension,
-            'active' => fake()->boolean,
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->word,
+            'description' => $this->faker->paragraph,
+            'preview' => 'https://placeimg.com/640/480/any?' . $this->faker->uuid,
+            'media_type' => $this->faker->randomKey(Media::MEDIA_TYPE_LIST),
+            'url' => $this->faker->imageUrl(),
+            'format' => $this->faker->fileExtension,
+            'active' => $this->faker->boolean,
         ];
     }
 }

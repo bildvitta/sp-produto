@@ -18,4 +18,17 @@ trait Tools
 
         return null;
     }
+
+    /**
+     * @param string $relation
+     * @return bool
+     */
+    private function configHas(string $relation): bool
+    {
+        $syncRelations = config('sp-produto.sync_relations');
+        if (is_array($syncRelations)) {
+            return in_array($relation, $syncRelations);
+        }
+        return false;
+    }
 }

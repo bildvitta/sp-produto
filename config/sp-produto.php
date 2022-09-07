@@ -25,7 +25,23 @@ return [
             'real_estate_developments' => env('RABBITMQ_EXCHANGE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments'),
         ],
         'queue' => [
-            'real_estate_developments' => env('RABBITMQ_QUEUE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments.vendas'),
+            'real_estate_developments' => env('RABBITMQ_QUEUE_REAL_ESTATE_DEVELOPMENTS'),
         ]
+    ],
+
+    'sync_relations' => [
+        'buying_options',
+        'parameters',
+        'insurances',
+        'accessories',
+        'mirrors', // need parameters
+        'blueprints', // need typologies, accessories
+        'characteristics',
+        'proposal_models',
+        'stages',
+        'typologies', // need proposal_models
+        'units', // need typologies, blueprints, mirrors
+        'documents',
+        'media',
     ],
 ];

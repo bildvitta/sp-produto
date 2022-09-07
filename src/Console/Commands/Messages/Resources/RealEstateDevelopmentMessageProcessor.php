@@ -131,14 +131,16 @@ class RealEstateDevelopmentMessageProcessor
      */
     private function processUnit(string $operation, stdClass $messageData): void
     {
-        switch ($operation) {
-            case self::CREATED:
-            case self::UPDATED:
-                $this->unitUpdateOrCreate($messageData);
-                break;
-            case self::DELETED:
-                $this->unitDelete($messageData);
-                break;
+        if ($this->configHas('units')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->unitUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->unitDelete($messageData);
+                    break;
+            }
         }
     }
 
@@ -149,14 +151,16 @@ class RealEstateDevelopmentMessageProcessor
      */
     private function processCharacteristic(string $operation, stdClass $messageData): void
     {
-        switch ($operation) {
-            case self::CREATED:
-            case self::UPDATED:
-                $this->characteristicUpdateOrCreate($messageData);
-                break;
-            case self::DELETED:
-                $this->characteristicDelete($messageData);
-                break;
+        if ($this->configHas('characteristics')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->characteristicUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->characteristicDelete($messageData);
+                    break;
+            }
         }
     }
 }

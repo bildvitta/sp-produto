@@ -27,8 +27,8 @@ class MirrorGroupFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
         ];
     }
 }

@@ -27,13 +27,13 @@ class BuyingOptionFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
-            'income_commitment' => fake()->numberBetween(1, 80),
-            'when_flow_sent' => fake()->randomKey(BuyingOption::WHEN_FLOW_SENT_LIST),
-            'when_flow_validated' => fake()->randomKey(BuyingOption::WHEN_FLOW_VALIDATED_LIST),
-            'when_make_sale' => fake()->randomKey(BuyingOption::WHEN_MAKE_SALE_LIST),
-            'when_reserve_unit' => fake()->randomKey(BuyingOption::WHEN_RESERVE_UNIT_LIST),
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
+            'income_commitment' => $this->faker->numberBetween(1, 80),
+            'when_flow_sent' => $this->faker->randomKey(BuyingOption::WHEN_FLOW_SENT_LIST),
+            'when_flow_validated' => $this->faker->randomKey(BuyingOption::WHEN_FLOW_VALIDATED_LIST),
+            'when_make_sale' => $this->faker->randomKey(BuyingOption::WHEN_MAKE_SALE_LIST),
+            'when_reserve_unit' => $this->faker->randomKey(BuyingOption::WHEN_RESERVE_UNIT_LIST),
             'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }

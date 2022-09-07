@@ -3,11 +3,11 @@
 namespace BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources;
 
 use Illuminate\Support\Facades\DB;
-use App\Models\HubCompany;
 use BildVitta\SpProduto\Models\Accessory;
 use BildVitta\SpProduto\Models\AccessoryCategory;
 use BildVitta\SpProduto\Models\BuyingOption;
 use BildVitta\SpProduto\Models\Characteristic;
+use BildVitta\SpProduto\Models\HubCompany;
 use BildVitta\SpProduto\Models\Insurance;
 use BildVitta\SpProduto\Models\InsuranceCompany;
 use BildVitta\SpProduto\Models\ProposalModel;

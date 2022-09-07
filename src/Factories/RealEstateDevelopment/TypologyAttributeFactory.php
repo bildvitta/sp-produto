@@ -27,11 +27,11 @@ class TypologyAttributeFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
-            'description' => fake()->text(),
-            'type_increase' => fake()->randomKey(TypologyAttribute::ADDITION_TYPE),
-            'value_increase' => fake()->randomFloat(2, 0, 9999)
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
+            'description' => $this->faker->text(),
+            'type_increase' => $this->faker->randomKey(TypologyAttribute::ADDITION_TYPE),
+            'value_increase' => $this->faker->randomFloat(2, 0, 9999)
         ];
     }
 }

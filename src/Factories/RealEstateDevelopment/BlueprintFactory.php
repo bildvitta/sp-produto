@@ -27,9 +27,9 @@ class BlueprintFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->company,
-            'description' => fake()->text(),
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->company,
+            'description' => $this->faker->text(),
         ];
     }
 }

@@ -27,10 +27,10 @@ class CharacteristicFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
-            'description' => fake()->text,
-            'icon' => 'https://placeimg.com/640/480/any?' . fake()->uuid,
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
+            'description' => $this->faker->text,
+            'icon' => 'https://placeimg.com/640/480/any?' . $this->faker->uuid,
             'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }
