@@ -27,10 +27,10 @@ class StageImageFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
-            'image' => 'https://placeimg.com/640/480/any?' . fake()->uuid,
-            'format' => fake()->mimeType(),
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
+            'image' => 'https://placeimg.com/640/480/any?' . $this->faker->uuid,
+            'format' => $this->faker->mimeType(),
         ];
     }
 }

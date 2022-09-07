@@ -33,18 +33,28 @@ class SpProdutoSeeder extends Seeder
      */
     public function run(): void
     {
-        AccessoryCategory::factory(10)->create();
-        Accessory::factory(10)->create();
-        BuyingOption::factory(10)->create();
-        Characteristic::factory(10)->create();
-        ProposalModel::factory(10)
-            ->has(ProposalModelPeriodicities::factory(5), 'periodicities')
-            ->create();
-        InsuranceCompany::factory(10)->create()->each(function (InsuranceCompany $insuranceCompany) {
-            Insurance::factory([
-                'insurance_company_id' => $insuranceCompany->id
-            ])->count(10)->create();
-        });
+        if ($this->configHas('accessories')) {
+            AccessoryCategory::factory(10)->create();
+            Accessory::factory(10)->create();
+        }
+        if ($this->configHas('buying_options')) {
+            BuyingOption::factory(10)->create();
+        }
+        if ($this->configHas('characteristics')) {
+            Characteristic::factory(10)->create();
+        }
+        if ($this->configHas('proposal_models')) {
+            ProposalModel::factory(10)
+                ->has(ProposalModelPeriodicities::factory(5), 'periodicities')
+                ->create();
+        }
+        if ($this->configHas('insurances')) {
+            InsuranceCompany::factory(10)->create()->each(function (InsuranceCompany $insuranceCompany) {
+                Insurance::factory([
+                    'insurance_company_id' => $insuranceCompany->id
+                ])->count(10)->create();
+            });
+        }
 
         $bar = $this->command->getOutput()->createProgressBar(10);
         $bar->start();
@@ -54,141 +64,192 @@ class SpProdutoSeeder extends Seeder
             $hub_company_id = $realEstateDevelopment->hub_company_id;
 
             // Initial register proposal models
-            $realEstateDevelopment->proposal_models()->saveMany(
-                ProposalModel::whereHubCompanyId($hub_company_id)->inRandomOrder()->take(5)->get()
-            );
+            if ($this->configHas('proposal_models')) {
+                $realEstateDevelopment->proposal_models()->saveMany(
+                    ProposalModel::whereHubCompanyId($hub_company_id)->inRandomOrder()->take(5)->get()
+                );
+            }
 
             // Initial register buying options
-            $realEstateDevelopment->buying_options()->saveMany(
-                BuyingOption::whereHubCompanyId($hub_company_id)->inRandomOrder()->take(5)->get()
-            );
+            if ($this->configHas('buying_options')) {
+                $realEstateDevelopment->buying_options()->saveMany(
+                    BuyingOption::whereHubCompanyId($hub_company_id)->inRandomOrder()->take(5)->get()
+                );
+            }
 
             // Initial register insurance companies
-            $realEstateDevelopment->insurance_companies()->saveMany(
-                InsuranceCompany::whereHubCompanyId($hub_company_id)->inRandomOrder()->take(1)->get()
-            );
+            if ($this->configHas('insurances')) {
+                $realEstateDevelopment->insurance_companies()->saveMany(
+                    InsuranceCompany::whereHubCompanyId($hub_company_id)->inRandomOrder()->take(1)->get()
+                );
+            }
 
             // Initial register insurance
-            $realEstateDevelopment->insurances()->saveMany(
-                Insurance::inRandomOrder()->take(1)->get()
-            );
+            if ($this->configHas('insurances')) {
+                $realEstateDevelopment->insurances()->saveMany(
+                    Insurance::inRandomOrder()->take(1)->get()
+                );
+            }
 
             // Parameters
-            $realEstateDevelopment->parameters()->saveMany(Parameter::factory(5)->make());
-            $realEstateDevelopment->parameters()->each(function (Parameter $parameter, $key) {
-                $parameter->name = __('Phase :number', [
-                    'number' => ($key + 1)
-                ]);
-                $parameter->save();
-            });
+            if ($this->configHas('parameters')) {
+                $realEstateDevelopment->parameters()->saveMany(Parameter::factory(5)->make());
+                $realEstateDevelopment->parameters()->each(function (Parameter $parameter, $key) {
+                    $parameter->name = __('Phase :number', [
+                        'number' => ($key + 1)
+                    ]);
+                    $parameter->save();
+                });
+            }
 
             // Characteristics
-            $realEstateDevelopment->characteristics()->saveMany(
-                RealEstateDevelopment\Characteristic::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                    'characteristic_id' => Characteristic::inRandomOrder()->first(['id'])->id,
-                ])->count(5)->create()
-            );
+            if ($this->configHas('characteristics')) {
+                $realEstateDevelopment->characteristics()->saveMany(
+                    RealEstateDevelopment\Characteristic::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                        'characteristic_id' => Characteristic::inRandomOrder()->first(['id'])->id,
+                    ])->count(5)->create()
+                );
+            }
 
             // Typologies (must be created before accessories)
-            $realEstateDevelopment->typologies()->saveMany(
-                Typology::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(5)->create()->each(function (Typology $typology) use ($realEstateDevelopment) {
-                    $typology->real_estate_developments_proposal_model()->saveMany(
-                        $realEstateDevelopment->proposal_models()->inRandomOrder()->take(5)->get()
-                    );
-                })
-            );
+            if ($this->configHas('typologies')) {
+                $realEstateDevelopment->typologies()->saveMany(
+                    Typology::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(5)->create()->each(function (Typology $typology) use ($realEstateDevelopment) {
+                        $typology->real_estate_developments_proposal_model()->saveMany(
+                            $realEstateDevelopment->proposal_models()->inRandomOrder()->take(5)->get()
+                        );
+                    })
+                );
+            }
 
             // Accessories
-            $realEstateDevelopment->accessories()->saveMany(
-                RealEstateDevelopment\Accessory::factory([
-                    'accessory_id' => Accessory::whereHubCompanyId($hub_company_id)->inRandomOrder()->first(['id']),
-                    'category_id' => AccessoryCategory::inRandomOrder()->first(['id']),
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(5)->create()
-            );
+            if ($this->configHas('accessories')) {
+                $realEstateDevelopment->accessories()->saveMany(
+                    RealEstateDevelopment\Accessory::factory([
+                        'accessory_id' => Accessory::whereHubCompanyId($hub_company_id)->inRandomOrder()->first(['id']),
+                        'category_id' => AccessoryCategory::inRandomOrder()->first(['id']),
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(5)->create()
+                );
+            }
 
             // Documents
-            $realEstateDevelopment->documents()->saveMany(
-                Document::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(5)->create()
-            );
+            if ($this->configHas('documents')) {
+                $realEstateDevelopment->documents()->saveMany(
+                    Document::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(5)->create()
+                );
+            }
 
             // Medias
-            $realEstateDevelopment->medias()->saveMany(
-                Media::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(5)->create()
-            );
+            if ($this->configHas('media')) {
+                $realEstateDevelopment->medias()->saveMany(
+                    Media::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(5)->create()
+                );
+            }
 
             // Stages
-            $realEstateDevelopment->stages()->saveMany(
-                Stage::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(5)->create()->each(function (Stage $stage) {
-                    $stage->real_estate_developments_stages_images()->saveMany(
-                        StageImage::factory(5)->create()
-                    );
-                })
-            );
+            if ($this->configHas('stages')) {
+                $realEstateDevelopment->stages()->saveMany(
+                    Stage::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(5)->create()->each(function (Stage $stage) {
+                        $stage->real_estate_developments_stages_images()->saveMany(
+                            StageImage::factory(5)->create()
+                        );
+                    })
+                );
+            }
 
             // Mirrors
-            $realEstateDevelopment->mirrors()->saveMany(
-                Mirror::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(2)->create()->each(function (Mirror $mirror) {
-                    $mirror->real_estate_developments_mirrors_subgroups()->saveMany(
-                        MirrorGroup::factory([
-                            'mirror_id' => $mirror->id
-                        ])->count(1)->create()
-                    );
+            if ($this->configHas('mirrors')) {
+                $realEstateDevelopment->mirrors()->saveMany(
+                    Mirror::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(2)->create()->each(function (Mirror $mirror) {
+                        $mirror->real_estate_developments_mirrors_subgroups()->saveMany(
+                            MirrorGroup::factory([
+                                'mirror_id' => $mirror->id
+                            ])->count(1)->create()
+                        );
 
-                    $mirror->real_estate_developments_parameters()->associate(
-                        Parameter::inRandomOrder()->first()
-                    );
-                })
-            );
+                        $mirror->real_estate_developments_parameters()->associate(
+                            Parameter::inRandomOrder()->first()
+                        );
+                    })
+                );
+            }
 
             // Blueprints
-            $realEstateDevelopment->blueprints()->saveMany(
-                Blueprint::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(3)->create()->each(function (Blueprint $blueprint) use ($realEstateDevelopment) {
-                    $blueprint->real_estate_developments_typologies()->saveMany(
-                        $realEstateDevelopment->typologies()->inRandomOrder()->take(5)->get()
-                    );
+            if ($this->configHas('blueprints')) {
+                $realEstateDevelopment->blueprints()->saveMany(
+                    Blueprint::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(3)->create()->each(function (Blueprint $blueprint) use ($realEstateDevelopment) {
+                        $blueprint->real_estate_developments_typologies()->saveMany(
+                            $realEstateDevelopment->typologies()->inRandomOrder()->take(5)->get()
+                        );
 
-                    $blueprint->real_estate_developments_blueprint_images()->saveMany(
-                        BlueprintImage::factory()->count(3)->create()
-                    );
-                })
-            );
+                        $blueprint->real_estate_developments_blueprint_images()->saveMany(
+                            BlueprintImage::factory()->count(3)->create()
+                        );
+                    })
+                );
+            }
 
             // Unities
-            $realEstateDevelopment->unities()->saveMany(
-                Unit::factory([
-                    'real_estate_development_id' => $realEstateDevelopment->id,
-                ])->count(30)->create()->each(function (Unit $unit) use ($realEstateDevelopment) {
-                    $typology = $realEstateDevelopment->typologies()->inRandomOrder()->first();
-                    $unit->typology()->associate($typology->id);
+            if ($this->configHas('units')) {
+                $realEstateDevelopment->unities()->saveMany(
+                    Unit::factory([
+                        'real_estate_development_id' => $realEstateDevelopment->id,
+                    ])->count(30)->create()->each(function (Unit $unit) use ($realEstateDevelopment) {
+                        $typology = $realEstateDevelopment->typologies()->inRandomOrder()->first();
+                        $unit->typology()->associate($typology->id);
 
-                    $blueprint = $typology->blueprints()->inRandomOrder()->first();
-                    $unit->real_estate_developments_blueprints()->associate($blueprint->id);
+                        $blueprint = $typology->blueprints()->inRandomOrder()->first();
+                        $unit->real_estate_developments_blueprints()->associate($blueprint->id);
 
-                    $mirror = $realEstateDevelopment->mirrors()->inRandomOrder()->first();
-                    $unit->mirror_group()->associate($mirror->id);
+                        $mirror = $realEstateDevelopment->mirrors()->inRandomOrder()->first();
+                        $unit->mirror_group()->associate($mirror->id);
 
-                    $mirror_group = $mirror->mirrorGroup()->inRandomOrder()->first();
-                    $unit->mirror_subgroup()->associate($mirror_group->id);
-                })
-            );
+                        $mirror_group = $mirror->mirrorGroup()->inRandomOrder()->first();
+                        $unit->mirror_subgroup()->associate($mirror_group->id);
+                    })
+                );
+            }
 
             $bar->advance();
         });
 
         $bar->finish();
+    }
+
+    private function getSyncRelations(): array
+    {
+        $relations = [];
+        $syncRelations = config('sp-produto.sync_relations');
+        if (is_array($syncRelations)) {
+            foreach($syncRelations as $syncRelation) {
+                $relations[] = $syncRelation;
+            }
+        }
+        return $relations;
+    }
+
+    /**
+     * @param string $relation
+     * @return bool
+     */
+    private function configHas(string $relation): bool
+    {
+        $syncRelations = $this->getSyncRelations();
+
+        return in_array($relation, $syncRelations);
     }
 }

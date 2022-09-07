@@ -2,7 +2,7 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
-use App\Models\Worker;
+use BildVitta\SpProduto\Models\Worker;
 use Throwable;
 
 trait LogHelper

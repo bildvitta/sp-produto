@@ -3,6 +3,7 @@
 namespace BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments;
 
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Jobs\RealEstateDevelopmentImportJob;
+use BildVitta\SpProduto\Models\Worker;
 use Illuminate\Console\Command;
 
 class RealEstateDevelopmentImportCommand extends Command
@@ -30,11 +31,6 @@ class RealEstateDevelopmentImportCommand extends Command
     {
         $this->info('Starting import');
         
-        if (! class_exists('\App\Models\Worker')) {
-            $this->info('Error: class \App\Models\Worker not exists');
-            return 1;
-        }
-
         $selectLimit = 500;
         if ($optionSelect = $this->option('select')) {
             $selectLimit = (int) $optionSelect;
@@ -50,7 +46,7 @@ class RealEstateDevelopmentImportCommand extends Command
             $tableIndex = (int) $optionTableIndex;
         }
 
-        $worker = new \App\Models\Worker();
+        $worker = new Worker();
         $worker->type = 'sp-produto.dataimport.real_estate_developments';
         $worker->status = 'created';
         $worker->schedule = now();
@@ -59,38 +55,7 @@ class RealEstateDevelopmentImportCommand extends Command
             'offset' => $offset,
             'total' => null,
             'table_index' => $tableIndex,
-            'tables' => [
-                0 => 'hub_companies',
-                1 => 'accessory_categories',
-                2 => 'accessories',
-                3 => 'characteristics',
-                4 => 'proposal_models',
-                5 => 'proposal_model_periodicities',
-                6 => 'buying_options',
-                7 => 'insurance_companies',
-                8 => 'insurances',
-                9 => 'real_estate_developments',
-                10 => 'proposal_model_real_estate_development',
-                11 => 'buying_option_real_estate_development',
-                12 => 'insurance_company_real_estate_development',
-                13 => 'insurance_real_estate_development',
-                14 => 'characteristic_real_estate_development',
-                15 => 'typologies',
-                16 => 'real_estate_development_accessories',
-                17 => 'parameters',
-                18 => 'mirrors',
-                19 => 'mirror_groups',
-                20 => 'blueprints',
-                21 => 'blueprint_images',
-                22 => 'blueprint_typology',
-                23 => 'proposal_model_typology',
-                24 => 'real_estate_development_accessory_blueprint',
-                25 => 'units',
-                26 => 'documents',
-                27 => 'stages',
-                28 => 'stage_images',
-                29 => 'media',
-            ],
+            'tables' => $this->getTables(),
         ];
         $worker->save();
 
@@ -100,5 +65,99 @@ class RealEstateDevelopmentImportCommand extends Command
         $this->info('Job started, command execution ended');
 
         return 0;
+    }
+
+    /**
+     * @param string $relation
+     * @return bool
+     */
+    private function configHas(string $relation): bool
+    {
+        $syncRelations = config('sp-produto.sync_relations');
+        if (is_array($syncRelations)) {
+            return in_array($relation, $syncRelations);
+        }
+        return false;
+    }
+
+    /**
+     * @return array
+     */
+    private function getTables(): array
+    {
+        $tables = ['hub_companies'];
+        if ($this->configHas('accessories')) {
+            $tables[] = 'accessory_categories';
+            $tables[] = 'accessories';
+        }
+        if ($this->configHas('characteristics')) {
+            $tables[] = 'characteristics';
+        }
+        if ($this->configHas('proposal_models')) {
+            $tables[] = 'proposal_models';
+            $tables[] = 'proposal_model_periodicities';
+        }
+        if ($this->configHas('buying_options')) {
+            $tables[] = 'buying_options';
+        }
+        if ($this->configHas('insurances')) {
+            $tables[] = 'insurance_companies';
+            $tables[] = 'insurances';
+        }
+
+        $tables[] = 'real_estate_developments';
+
+        if ($this->configHas('proposal_models')) {
+            $tables[] = 'proposal_model_real_estate_development';
+        }
+        if ($this->configHas('buying_options')) {
+            $tables[] = 'buying_option_real_estate_development';
+        }
+        if ($this->configHas('insurances')) {
+            $tables[] = 'insurance_company_real_estate_development';
+            $tables[] = 'insurance_real_estate_development';
+        }
+        if ($this->configHas('characteristics')) {
+            $tables[] = 'characteristic_real_estate_development';
+        }
+        if ($this->configHas('typologies')) {
+            $tables[] = 'typologies';
+        }
+        if ($this->configHas('accessories')) {
+            $tables[] = 'real_estate_development_accessories';
+        }
+        if ($this->configHas('parameters')) {
+            $tables[] = 'parameters';
+        }
+        if ($this->configHas('mirrors')) {
+            $tables[] = 'mirrors';
+            $tables[] = 'mirror_groups';
+        }
+        if ($this->configHas('blueprints')) {
+            $tables[] = 'blueprints';
+            $tables[] = 'blueprint_images';
+            $tables[] = 'blueprint_typology';
+        }
+        if ($this->configHas('proposal_models')) {
+            $tables[] = 'proposal_model_typology';
+        }
+        if ($this->configHas('blueprints')) {
+            $tables[] = 'real_estate_development_accessory_blueprint';
+        }
+        if ($this->configHas('units')) {
+            $tables[] = 'units';
+        }
+        if ($this->configHas('documents')) {
+            $tables[] = 'documents';
+        }
+        if ($this->configHas('stages')) {
+            $tables[] = 'stages';
+            $tables[] = 'stage_images';
+        }
+        if ($this->configHas('media')) {
+            $tables[] = 'media';
+        }
+
+        return $tables;
     }
 }

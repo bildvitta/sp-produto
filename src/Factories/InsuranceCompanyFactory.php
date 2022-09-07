@@ -22,12 +22,12 @@ class InsuranceCompanyFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
-            'company_name' => fake()->words(5, true),
-            'document' => fake()->cnpj(false),
-            'susep' => fake()->numerify('#####'),
-            'is_active' => fake()->boolean(),
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
+            'company_name' => $this->faker->words(5, true),
+            'document' => $this->faker->cnpj(false),
+            'susep' => $this->faker->numerify('#####'),
+            'is_active' => $this->faker->boolean(),
             'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }
