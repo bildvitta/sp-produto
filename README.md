@@ -16,7 +16,7 @@ composer require bildvitta/sp-produto
 For everything to work perfectly in addition to having the settings file published in your application, run the command below:
 
 ```bash
-php artisan sp:install
+php artisan sp-produto:config
 ```
 
 ## Configuration
@@ -24,23 +24,50 @@ php artisan sp:install
 This is the contents of the published config file:
 
 ```php
+
+use BildVitta\Hub\Entities\HubCompany;
+
 return [
     'table_prefix' => env('MS_SP_PRODUTO_TABLE_PREFIX', 'produto_'),
+
+    'model_company' => env('MS_SP_PRODUTO_COMPANY', HubCompany::class),
+
     'db' => [
-        'host' => env('PRODUTO_DB_HOST', '127.0.0.1'),
-        'port' => env('PRODUTO_DB_PORT', '3306'),
-        'database' => env('PRODUTO_DB_DATABASE', 'forge'),
-        'username' => env('PRODUTO_DB_USERNAME', 'forge'),
-        'password' => env('PRODUTO_DB_PASSWORD', ''),
+        'host' => env('PRODUTO_DB_HOST'),
+        'port' => env('PRODUTO_DB_PORT'),
+        'database' => env('PRODUTO_DB_DATABASE'),
+        'username' => env('PRODUTO_DB_USERNAME'),
+        'password' => env('PRODUTO_DB_PASSWORD'),
     ],
+
     'rabbitmq' => [
         'host' => env('RABBITMQ_HOST'),
-        'port' => env('RABBITMQ_PORT', '5672'),
+        'port' => env('RABBITMQ_PORT'),
         'user' => env('RABBITMQ_USER'),
         'password' => env('RABBITMQ_PASSWORD'),
         'virtualhost' => env('RABBITMQ_VIRTUALHOST', '/'),
-        'exchange' => [],
-        'queue' => []
+        'exchange' => [
+            'real_estate_developments' => env('RABBITMQ_EXCHANGE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments'),
+        ],
+        'queue' => [
+            'real_estate_developments' => env('RABBITMQ_QUEUE_REAL_ESTATE_DEVELOPMENTS'),
+        ]
+    ],
+
+    'sync_relations' => [
+        'buying_options',
+        'parameters',
+        'insurances',
+        'accessories',
+        'mirrors', // need parameters
+        'blueprints', // need typologies, accessories
+        'characteristics',
+        'proposal_models',
+        'stages',
+        'typologies', // need proposal_models
+        'units', // need typologies, blueprints, mirrors 
+        'documents',
+        'media',
     ],
 ];
 ```
@@ -64,6 +91,30 @@ php artisan db:seed --class=SpProdutoSeeder
 ## Running the worker
 
 After setting the message broker access data in the configuration file, you can run the worker to keep the data up to date.
+
+```bash
+php artisan rabbitmqworker:real_estate_developments
+```
+
+Remove the relationships that you do not want to use, in order not to create the related tables, in the configuration file.
+
+Some relationships require other relationships, indicated in the comments.
+
+Run the command to install migrations and run seeds.
+
+```bash
+php artisan sp-produto:install
+```
+
+If you want to add some relationship later, add it to the settings array and run the above command again.
+
+Comando para importar dados:
+
+```bash
+php artisan dataimport:produto_real_estate_developments
+```
+
+Comando para executar o worker do RabbitMQ:
 
 ```bash
 php artisan rabbitmqworker:real_estate_developments

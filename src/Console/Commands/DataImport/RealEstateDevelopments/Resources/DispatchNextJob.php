@@ -2,8 +2,8 @@
 
 namespace BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources;
 
-use App\Models\Worker;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Jobs\RealEstateDevelopmentImportJob;
+use BildVitta\SpProduto\Models\Worker;
 
 trait DispatchNextJob
 {

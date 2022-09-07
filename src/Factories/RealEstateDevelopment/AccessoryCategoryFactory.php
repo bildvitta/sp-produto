@@ -27,8 +27,8 @@ class AccessoryCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->userName()
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->userName()
         ];
     }
 }

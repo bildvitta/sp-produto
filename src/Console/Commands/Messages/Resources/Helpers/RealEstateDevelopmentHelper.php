@@ -2,10 +2,9 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
-use App\Components\Iss\IssComponent;
-use App\Models\HubCompany;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Console\Commands\Messages\Exceptions\MessageProcessorException;
+use BildVitta\SpProduto\Models\HubCompany;
 use stdClass;
 
 trait RealEstateDevelopmentHelper
@@ -21,37 +20,37 @@ trait RealEstateDevelopmentHelper
 
         $this->realEstateDevelopment($realEstateDevelopment, $message);
                 
-        if (isset($message->stages)) {
+        if (isset($message->stages) && $this->configHas('stages')) {
             $this->stages($realEstateDevelopment, $message);
         }
-        if (isset($message->parameters)) {
+        if (isset($message->parameters) && $this->configHas('parameters')) {
             $this->parameters($realEstateDevelopment, $message);
         }
-        if (isset($message->insurances[0], $message->insurance_companies[0])) {
+        if (isset($message->insurances[0], $message->insurance_companies[0]) && $this->configHas('insurances')) {
             $this->insurances($realEstateDevelopment, $message);
         }
-        if (isset($message->real_estate_proposal_models)) {
+        if (isset($message->real_estate_proposal_models) && $this->configHas('proposal_models')) {
             $this->proposalModels($realEstateDevelopment, $message);
         }
-        if (isset($message->buying_options)) {
+        if (isset($message->buying_options) && $this->configHas('buying_options')) {
             $this->buyingOptions($realEstateDevelopment, $message);
         }
-        if (isset($message->typologies)) {
+        if (isset($message->typologies) && $this->configHas('typologies')) {
             $this->typologies($realEstateDevelopment, $message);
         }
-        if (isset($message->mirrors)) {
+        if (isset($message->mirrors) && $this->configHas('mirrors')) {
             $this->mirrors($realEstateDevelopment, $message);
         }
-        if (isset($message->accessories)) {
+        if (isset($message->accessories) && $this->configHas('accessories')) {
             $this->accessories($realEstateDevelopment, $message);
         }
-        if (isset($message->blueprints)) {
+        if (isset($message->blueprints) && $this->configHas('blueprints')) {
             $this->blueprints($realEstateDevelopment, $message);
         }
-        if (isset($message->medias)) {
+        if (isset($message->medias) && $this->configHas('media')) {
             $this->medias($realEstateDevelopment, $message);
         }
-        if (isset($message->documents)) {
+        if (isset($message->documents) && $this->configHas('documents')) {
             $this->documents($realEstateDevelopment, $message);
         }
     }
@@ -203,23 +202,12 @@ trait RealEstateDevelopmentHelper
     /**
      * @param string $hubCompanyUuid
      * @return int
-     * @throws MessageProcessorException
      */
     private function getHubCompanyId(string $hubCompanyUuid): int
     {
-        $hubCompany = HubCompany::whereUuid($hubCompanyUuid)->first();
-        if (!$hubCompany) {
-            if (class_exists('\App\Components\Iss\IssComponent')) {
-                $responseCompany = (new IssComponent())->hub()->findCompany($hubCompanyUuid);
-                $hubCompany = HubCompany::create([
-                    'uuid' => $hubCompanyUuid,
-                    'name' => $responseCompany->result->name
-                ]);
-            }
-            if (!$hubCompany) {
-                throw new MessageProcessorException('HubCompany not found');
-            }
-        }
+        $hubCompany = HubCompany::withTrashed()
+            ->where('uuid', $hubCompanyUuid)
+            ->first();
 
         return $hubCompany->id;
     }

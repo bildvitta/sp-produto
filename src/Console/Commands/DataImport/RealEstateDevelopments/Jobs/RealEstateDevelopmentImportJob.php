@@ -7,13 +7,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Worker;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\Connection;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\DispatchNextJob;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\SyncData;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\SyncRelated;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\SyncTables;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\UpdateWorker;
+use BildVitta\SpProduto\Models\Worker;
 use InvalidArgumentException;
 use Throwable;
 

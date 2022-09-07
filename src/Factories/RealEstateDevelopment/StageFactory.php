@@ -29,13 +29,13 @@ class StageFactory extends Factory
         $latest = Stage::latest()->first();
 
         return [
-            'uuid' => fake()->uuid(),
-            'name' => fake()->words(5, true),
-            'registered_at' => fake()->date(),
-            'foundation' => fake()->numberBetween($latest ? $latest->foundation : 1, 100),
-            'masonry' => fake()->numberBetween($latest ? $latest->masonry : 1, 100),
-            'structure' => fake()->numberBetween($latest ? $latest->structure : 1, 100),
-            'finishing' => fake()->numberBetween($latest ? $latest->finishing : 1, 100),
+            'uuid' => $this->faker->uuid(),
+            'name' => $this->faker->words(5, true),
+            'registered_at' => $this->faker->date(),
+            'foundation' => $this->faker->numberBetween($latest ? $latest->foundation : 1, 100),
+            'masonry' => $this->faker->numberBetween($latest ? $latest->masonry : 1, 100),
+            'structure' => $this->faker->numberBetween($latest ? $latest->structure : 1, 100),
+            'finishing' => $this->faker->numberBetween($latest ? $latest->finishing : 1, 100),
         ];
     }
 }
