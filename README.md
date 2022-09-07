@@ -72,6 +72,19 @@ return [
 ];
 ```
 
+Remove the relationships that you do not want to use, in order not to create the related tables, in the configuration file.
+
+Some relationships require other relationships, indicated in the comments.
+
+Run the command to install migrations and run seeds.
+
+```bash
+php artisan sp-produto:install
+```
+
+If you want to add some relationship later, add it to the settings array and run the above command again.
+
+
 ## Importing data
 
 You can import initial data from the parent module by setting the database connection data in the configuration file. However, it will be necessary to import the data from the dependent module first: sp-hub.
@@ -91,30 +104,6 @@ php artisan db:seed --class=SpProdutoSeeder
 ## Running the worker
 
 After setting the message broker access data in the configuration file, you can run the worker to keep the data up to date.
-
-```bash
-php artisan rabbitmqworker:real_estate_developments
-```
-
-Remove the relationships that you do not want to use, in order not to create the related tables, in the configuration file.
-
-Some relationships require other relationships, indicated in the comments.
-
-Run the command to install migrations and run seeds.
-
-```bash
-php artisan sp-produto:install
-```
-
-If you want to add some relationship later, add it to the settings array and run the above command again.
-
-Comando para importar dados:
-
-```bash
-php artisan dataimport:produto_real_estate_developments
-```
-
-Comando para executar o worker do RabbitMQ:
 
 ```bash
 php artisan rabbitmqworker:real_estate_developments
