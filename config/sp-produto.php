@@ -31,7 +31,7 @@ return [
 
     'sync_relations' => [
         'buying_options',
-        'parameters',
+        'parameters', // need buying_options
         'insurances',
         'accessories',
         'mirrors', // need parameters
