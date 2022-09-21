@@ -12,6 +12,7 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
