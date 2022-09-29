@@ -351,7 +351,8 @@ trait SyncTables
         $realEstateDevelopmentAccessories = $this->getDatabase()->table('real_estate_development_accessories as ra')
             ->leftJoin('real_estate_developments as red', 'ra.real_estate_development_id', '=', 'red.id')
             ->leftJoin('categories as ca', 'ra.category_id', '=', 'ca.id')
-            ->select('ra.*', 'red.uuid as real_estate_development_uuid', 'ca.uuid as accessory_category_uuid');
+            ->leftJoin('accessories as acc', 'ra.accessory_id', '=', 'acc.id')
+            ->select('ra.*', 'red.uuid as real_estate_development_uuid', 'ca.uuid as accessory_category_uuid', 'acc.uuid as accessory_uuid');
 
         $this->syncData(
             $realEstateDevelopmentAccessories,
@@ -360,6 +361,7 @@ trait SyncTables
             [
                 'real_estate_development' => RealEstateDevelopment::class,
                 'accessory_category' => AccessoryCategory::class,
+                'accessory' => Accessory::class,
             ],
             ['created_at', 'updated_at', 'deleted_at', 'start_at', 'end_at']
         );
