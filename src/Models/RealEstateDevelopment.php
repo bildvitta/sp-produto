@@ -21,6 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use BildVitta\SpProduto\Scopes\CompanyScope;
 
 /**
  * Class RealEstateDevelopment.
@@ -42,6 +43,16 @@ class RealEstateDevelopment extends BaseModel
     {
         parent::__construct($attributes);
         $this->table = config('sp-produto.table_prefix') . 'real_estate_developments';
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new CompanyScope());
     }
 
     /**
