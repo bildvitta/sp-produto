@@ -85,7 +85,7 @@ class RealEstateDevelopmentImportCommand extends Command
      */
     private function getTables(): array
     {
-        $tables = ['hub_companies'];
+        $tables = [];
         if ($this->configHas('accessories')) {
             $tables[] = 'accessory_categories';
             $tables[] = 'accessories';
