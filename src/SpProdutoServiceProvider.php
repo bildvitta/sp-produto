@@ -51,6 +51,13 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_produto_documents_table',
         'create_sp_produto_media_table',
         'create_sp_produto_stage_images_table',
+        'add_foreign_keys_to_sp_produto_blueprint_real_estate_development_accessory_table',
+        'add_foreign_keys_to_sp_produto_blueprint_typology_table',
+        'add_foreign_keys_to_sp_produto_buying_option_real_estate_development_table',
+        'add_foreign_keys_to_sp_produto_insurance_company_real_estate_development_table',
+        'add_foreign_keys_to_sp_produto_proposal_model_real_estate_development_table',
+        'add_foreign_keys_to_sp_produto_proposal_model_typology_table',
+        'add_foreign_keys_to_sp_produto_real_estate_development_accessories_table',
     ];
 
     /**
@@ -114,6 +121,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                 case 'buying_options':
                     $migrations[] = 'create_sp_produto_buying_options_table';
                     $migrations[] = 'create_sp_produto_buying_option_real_estate_development_table';
+                    $migrations[] = 'add_foreign_keys_to_sp_produto_buying_option_real_estate_development_table';
                     break;
                 case 'parameters':
                     $migrations[] = 'create_sp_produto_parameters_table';
@@ -123,11 +131,13 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_insurances_table';
                     $migrations[] = 'create_sp_produto_insurance_company_real_estate_development_table';
                     $migrations[] = 'create_sp_produto_insurance_real_estate_development_table';
+                    $migrations[] = 'add_foreign_keys_to_sp_produto_insurance_company_real_estate_development_table';
                     break;
                 case 'accessories':
                     $migrations[] = 'create_sp_produto_accessory_categories_table';
                     $migrations[] = 'create_sp_produto_accessories_table';
                     $migrations[] = 'create_sp_produto_real_estate_development_accessories_table';
+                    $migrations[] = 'add_foreign_keys_to_sp_produto_real_estate_development_accessories_table';
                     break;
                 case 'mirrors':
                     $migrations[] = 'create_sp_produto_mirrors_table';
@@ -138,6 +148,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_blueprint_images_table';
                     $migrations[] = 'create_sp_produto_blueprint_real_estate_development_accessory_table';
                     $migrations[] = 'create_sp_produto_blueprint_typology_table';
+                    $migrations[] = 'add_foreign_keys_to_sp_produto_blueprint_real_estate_development_accessory_table';
+                    $migrations[] = 'add_foreign_keys_to_sp_produto_blueprint_typology_table';
                     break;
                 case 'characteristics':
                     $migrations[] = 'create_sp_produto_characteristics_table';
@@ -148,6 +160,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_proposal_model_periodicities_table';
                     $migrations[] = 'create_sp_produto_proposal_model_real_estate_development_table';
                     $migrations[] = 'create_sp_produto_proposal_model_typology_table';
+                    $migrations[] = 'add_foreign_keys_to_sp_produto_proposal_model_real_estate_development_table';
+                    $migrations[] = 'add_foreign_keys_to_sp_produto_proposal_model_typology_table';
                     break;
                 case 'stages':
                     $migrations[] = 'create_sp_produto_stages_table';
