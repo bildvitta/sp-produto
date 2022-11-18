@@ -12,6 +12,7 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
+use BildVitta\SpProduto\Scopes\CompanyScope;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -113,6 +114,32 @@ class RealEstateDevelopment extends BaseModel
         'updated_at',
         'deleted_at',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'real_estate_developments';
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new CompanyScope());
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return RealEstateDevelopmentFactory::new();
+    }
 
     /**
      * Real estate developments hub company
