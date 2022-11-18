@@ -6,7 +6,6 @@ use BildVitta\SpProduto\Factories\RealEstateDevelopmentFactory;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Document;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Media;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Parameter;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
@@ -22,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use BildVitta\SpProduto\Scopes\CompanyScope;
 
 /**
  * Class RealEstateDevelopment.
@@ -114,32 +112,6 @@ class RealEstateDevelopment extends BaseModel
         'updated_at',
         'deleted_at',
     ];
-
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'real_estate_developments';
-    }
-
-    /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        static::addGlobalScope(new CompanyScope());
-    }
-
-    /**
-     * Create a new factory instance for the model.
-     *
-     * @return Factory
-     */
-    protected static function newFactory(): Factory
-    {
-        return RealEstateDevelopmentFactory::new();
-    }
 
     /**
      * Real estate developments hub company
