@@ -18,11 +18,11 @@ return new class extends Migration
         if (Schema::hasTable($this->tableName)) {
             Schema::table($this->tableName, function (Blueprint $table) {
                 Schema::disableForeignKeyConstraints();
-                $table->foreign('category_id', 'sp_produto_category_id_accessories_foreign')
+                $table->foreign('accessory_category_id', 'sp_produto_category_id_accessories_foreign')
                     ->references('id')->on(config('sp-produto.table_prefix') . 'accessory_categories')
                     ->onUpdate('cascade')->onDelete('cascade');
                 $table->foreign('accessory_id', 'sp_produto_accessory_id_categories_foreign')
-                    ->references('id')->on(config('sp-produto.table_prefix') . 'real_estate_development_accessories')
+                    ->references('id')->on(config('sp-produto.table_prefix') . 'accessories')
                     ->onUpdate('cascade')->onDelete('cascade');
                 Schema::enableForeignKeyConstraints();
             });
