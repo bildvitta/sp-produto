@@ -83,7 +83,7 @@ class Accessory extends BaseModel
      */
     public function category(): BelongsTo
     {
-        return $this->belongsTo(AccessoryCategory::class);
+        return $this->belongsTo(AccessoryCategory::class, 'accessory_category_id', 'id');
     }
 
     /**
