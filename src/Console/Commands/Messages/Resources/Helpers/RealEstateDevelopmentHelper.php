@@ -53,6 +53,9 @@ trait RealEstateDevelopmentHelper
         if (isset($message->documents) && $this->configHas('documents')) {
             $this->documents($realEstateDevelopment, $message);
         }
+        if (isset($message->sellable_by)) {
+            $this->sellableBy($realEstateDevelopment, $message);
+        }
     }
 
     /**
@@ -70,6 +73,9 @@ trait RealEstateDevelopmentHelper
      */
     private function getRealEstateDevelopment(stdClass $message): RealEstateDevelopment
     {
+        /**
+         * @todo: adicionar sellable_by
+         */
         $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->uuid)->first();
         if (! $realEstateDevelopment) {
             $realEstateDevelopment = new RealEstateDevelopment();
