@@ -73,9 +73,6 @@ trait RealEstateDevelopmentHelper
      */
     private function getRealEstateDevelopment(stdClass $message): RealEstateDevelopment
     {
-        /**
-         * @todo: adicionar sellable_by
-         */
         $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->uuid)->first();
         if (! $realEstateDevelopment) {
             $realEstateDevelopment = new RealEstateDevelopment();
