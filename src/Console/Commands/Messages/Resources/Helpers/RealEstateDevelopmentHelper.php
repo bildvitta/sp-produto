@@ -53,6 +53,9 @@ trait RealEstateDevelopmentHelper
         if (isset($message->documents) && $this->configHas('documents')) {
             $this->documents($realEstateDevelopment, $message);
         }
+        if (isset($message->sellable_by)) {
+            $this->sellableBy($realEstateDevelopment, $message);
+        }
     }
 
     /**
