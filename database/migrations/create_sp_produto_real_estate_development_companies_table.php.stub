@@ -21,7 +21,7 @@ return new class extends Migration {
                 $table->unsignedBigInteger('hub_company_id');
                 
                 $table->foreign('real_estate_development_id', 'pivot_real_estate_development_id_foreign')
-                    ->references('id')->on('real_estate_developments')
+                    ->references('id')->on(prefixTableName('real_estate_developments'))
                         ->onUpdate('cascade')
                         ->onDelete('cascade');
                 
