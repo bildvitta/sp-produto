@@ -22,6 +22,9 @@ class CompanyScope implements Scope
 
         if ($user) {
             $builder->where('hub_company_id', $user->company_id);
+            $builder->orWhereHas('sellable_by', function (Builder $query) use ($user) {
+                $query->where('hub_companies.id', $user->company_id);
+            });
         }
     }
 }

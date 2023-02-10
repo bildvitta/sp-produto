@@ -183,6 +183,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             }
         }
 
+        $migrations[] = 'create_sp_produto_real_estate_development_companies_table';
+
         return $migrations;
     }
 }

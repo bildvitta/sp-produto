@@ -14,6 +14,7 @@ use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MirrorHelper
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ParameterHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ProposalModelHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\RealEstateDevelopmentHelper;
+use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\SellableHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\StageHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\Tools;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\TypologyHelper;
@@ -40,6 +41,7 @@ class RealEstateDevelopmentMessageProcessor
     use UnitHelper;
     use MediaHelper;
     use DocumentHelper;
+    use SellableHelper;
 
     /**
      * @var string

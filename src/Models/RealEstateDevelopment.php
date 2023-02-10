@@ -328,4 +328,9 @@ class RealEstateDevelopment extends BaseModel
     {
         return $this->hub_company?->uuid;
     }
+
+    public function sellable_by(): BelongsToMany
+    {
+        return $this->belongsToMany(app(config('sp-produto.model_company')), config('sp-produto.table_prefix') . 'real_estate_development_companies', 'real_estate_development_id', 'hub_company_id')->withTimestamps();
+    }
 }
