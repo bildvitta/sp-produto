@@ -42,11 +42,12 @@ trait TypologyHelper
      */
     private function typologyProposalModel(Typology $typology, stdClass $messageTypology): void
     {
-        if (isset($messageTypology->proposal_models[0])) {
-            if ($proposalModel = ProposalModel::where('uuid', $messageTypology->proposal_models[0]->uuid)->first()) {
-                $typology->proposal_model_id = $proposalModel->id;
-                $typology->save();
+        if (!empty($messageTypology->proposal_models)) {
+            $proposalModelIds = [];
+            foreach ($messageTypology->proposal_models as $proposal_model) {
+                $proposalModelIds[] = ProposalModel::where('uuid', $proposal_model->uuid)->first()->id;
             }
+            $typology->real_estate_developments_proposal_model()->sync($proposalModelIds);
         }
     }
 
