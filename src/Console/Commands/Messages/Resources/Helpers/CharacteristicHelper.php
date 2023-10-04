@@ -2,6 +2,7 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
+use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
 use BildVitta\SpProduto\Models\Characteristic as BaseCharacteristic;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
@@ -36,6 +37,10 @@ trait CharacteristicHelper
             'differential' => $message->differential,
             'characteristic_id' => $baseCharacteristic->id,
         ]);
+
+        if (config('sp-produto.events.real_estate_development_updated')) {
+            event(new RealEstateDevelopmentUpdated($message->real_estate_development_uuid));
+        }
     }
 
     /**
@@ -45,5 +50,9 @@ trait CharacteristicHelper
     private function characteristicDelete(stdClass $message): void
     {
         Characteristic::where('uuid', $message->uuid)->delete();
+
+        if (config('sp-produto.events.real_estate_development_updated')) {
+            event(new RealEstateDevelopmentUpdated($message->real_estate_development_uuid));
+        }
     }
 }
