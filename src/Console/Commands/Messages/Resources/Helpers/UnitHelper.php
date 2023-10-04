@@ -2,6 +2,7 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
+use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
@@ -49,6 +50,10 @@ trait UnitHelper
         ]);
         $this->unitPriceCalc($unit, $message);
         $this->unitSaleStep($unit, $realEstateDevelopment);
+
+        if (config('sp-produto.events.real_estate_development_updated')) {
+            event(new RealEstateDevelopmentUpdated($message->real_estate_development_uuid));
+        }
     }
 
     /**
@@ -58,6 +63,9 @@ trait UnitHelper
     private function unitDelete(stdClass $message): void
     {
         BaseUnit::where('uuid', $message->uuid)->delete();
+        if (config('sp-produto.events.real_estate_development_updated')) {
+            event(new RealEstateDevelopmentUpdated($message->real_estate_development_uuid));
+        }
     }
 
     /**

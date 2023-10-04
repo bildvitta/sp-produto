@@ -4,6 +4,7 @@ namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Console\Commands\Messages\Exceptions\MessageProcessorException;
+use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
 use BildVitta\SpProduto\Models\HubCompany;
 use stdClass;
 
@@ -56,6 +57,10 @@ trait RealEstateDevelopmentHelper
         if (isset($message->sellable_by)) {
             $this->sellableBy($realEstateDevelopment, $message);
         }
+
+        if (config('sp-produto.events.real_estate_development_updated')) {
+            event(new RealEstateDevelopmentUpdated($message->uuid));
+        }
     }
 
     /**
@@ -65,6 +70,10 @@ trait RealEstateDevelopmentHelper
     private function realEstateDevelopmentDelete(stdClass $message): void
     {
         RealEstateDevelopment::where('uuid', $message->uuid)->delete();
+
+        if (config('sp-produto.events.real_estate_development_updated')) {
+            event(new RealEstateDevelopmentUpdated($message->uuid));
+        }
     }
 
     /**
