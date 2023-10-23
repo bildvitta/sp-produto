@@ -62,6 +62,7 @@ class Unit extends BaseModel
         'square_meters',
         'ideal_fraction',
         'fixed_price',
+        'table_price',
         'factor',
         'special_needs',
         'observations',

@@ -34,6 +34,7 @@ trait UnitHelper
             'code' => $message->code,
             'square_meters' => $message->square_meters,
             'fixed_price' => $message->fixed_price,
+            'table_price' => $message->table_price,
             'special_needs' => $message->special_needs,
             'floor' => $message->floor,
             'unit_type' => $message->unit_type,
