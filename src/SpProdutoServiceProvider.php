@@ -58,6 +58,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_foreign_keys_to_sp_produto_proposal_model_real_estate_development_table',
         'add_foreign_keys_to_sp_produto_proposal_model_typology_table',
         'add_foreign_keys_to_sp_produto_real_estate_development_accessories_table',
+        'add_table_price_to_sp_produto_units_table',
     ];
 
     /**
@@ -173,6 +174,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     break;
                 case 'units':
                     $migrations[] = 'create_sp_produto_units_table';
+                    $migrations[] = 'add_table_price_to_sp_produto_units_table';
                     break;
                 case 'documents':
                     $migrations[] = 'create_sp_produto_documents_table';

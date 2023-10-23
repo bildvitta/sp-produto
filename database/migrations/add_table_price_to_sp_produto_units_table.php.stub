@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('units');
+    }
+
+    public function up()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->decimal('fixed_price', 12, 3)->nullable()->change();
+                $table->decimal('table_price', 12, 3)->nullable()->after('fixed_price');
+            });
+        }
+    }
+
+    public function down()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->decimal('fixed_price')->change();
+                $table->dropColumn('table_price');
+            });
+        }
+    }
+};

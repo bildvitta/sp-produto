@@ -35,6 +35,7 @@ class UnitFactory extends Factory
             'square_meters' => $this->faker->numberBetween(200, 400),
             'ideal_fraction' => $this->faker->numberBetween(1, 50),
             'fixed_price' => $this->faker->numberBetween(10000, 200000),
+            'table_price' => $this->faker->numberBetween(10000, 200000),
             'factor' => $this->faker->numberBetween(1, 10000),
             'special_needs' => $this->faker->boolean(),
             'observations' => $this->faker->paragraphs(3, true),
