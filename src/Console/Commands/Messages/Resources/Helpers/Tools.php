@@ -12,7 +12,7 @@ trait Tools
      */
     private function toCarbon($field): ?Carbon
     {
-        if ($field) {
+        if ($field && !in_array(substr($field, 0, 4), ['0000', '-000'])) {
             return Carbon::create($field);
         }
 
