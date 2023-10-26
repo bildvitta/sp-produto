@@ -59,6 +59,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_foreign_keys_to_sp_produto_proposal_model_typology_table',
         'add_foreign_keys_to_sp_produto_real_estate_development_accessories_table',
         'add_table_price_to_sp_produto_units_table',
+        'add_verge_percentages_to_sp_produto_parameters_table',
     ];
 
     /**
@@ -126,6 +127,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     break;
                 case 'parameters':
                     $migrations[] = 'create_sp_produto_parameters_table';
+                    $migrations[] = 'add_verge_percentages_to_sp_produto_parameters_table';
                     break;
                 case 'insurances':
                     $migrations[] = 'create_sp_produto_insurance_companies_table';
