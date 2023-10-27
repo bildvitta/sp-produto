@@ -39,6 +39,11 @@ trait ParameterHelper
                 'square_meter_price' => $messageParameter->square_meter_price,
                 'steps' => $messageParameter->steps,
                 'verge' => $messageParameter->verge,
+                'verge_1' => $messageParameter->verge_1,
+                'verge_2' => $messageParameter->verge_2,
+                'verge_3' => $messageParameter->verge_3,
+                'verge_4' => $messageParameter->verge_4,
+                'verge_5' => $messageParameter->verge_5,
                 'has_empty_fields' => $messageParameter->has_empty_fields,
                 'real_estate_development_id' => $realEstateDevelopment->id,
             ]);

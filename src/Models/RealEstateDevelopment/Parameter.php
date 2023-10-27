@@ -96,6 +96,11 @@ class Parameter extends BaseModel
         'square_meter_price',
         'steps',
         'verge',
+        'verge_1',
+        'verge_2',
+        'verge_3',
+        'verge_4',
+        'verge_5',
         'real_estate_development_id',
         'buying_option_id',
         'created_at',
@@ -135,6 +140,11 @@ class Parameter extends BaseModel
     protected $casts = [
         'allow_commercialization' => 'boolean',
         'in_financial_transfer' => 'boolean',
+        'verge_1' => 'float',
+        'verge_2' => 'float',
+        'verge_3' => 'float',
+        'verge_4' => 'float',
+        'verge_5' => 'float',
     ];
 
     /**

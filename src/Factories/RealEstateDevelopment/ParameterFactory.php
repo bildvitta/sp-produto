@@ -44,7 +44,12 @@ class ParameterFactory extends Factory
             'ready_to_live_in' => $this->faker->dateTimeBetween('+2 years', '+3 years'),
             'square_meter_price' => $this->faker->numberBetween(1, 100),
             'steps' => $this->faker->randomKey(Parameter::STEPS_LIST),
-            'verge' => $this->faker->randomKey(Parameter::VERGE_LIST),
+            'verge' => $this->faker->random_int(1, 5),
+            'verge_1' => $this->faker->randomFloat(2, 0, 10),
+            'verge_2' => $this->faker->randomFloat(2, 0, 10),
+            'verge_3' => $this->faker->randomFloat(2, 0, 10),
+            'verge_4' => $this->faker->randomFloat(2, 0, 10),
+            'verge_5' => $this->faker->randomFloat(2, 0, 10),
         ];
     }
 }

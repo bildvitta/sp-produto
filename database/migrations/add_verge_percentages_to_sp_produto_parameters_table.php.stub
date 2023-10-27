@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('parameters');
+    }
+
+    public function up()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->integer('verge')->nullable()->default(1)->change();
+                $table->decimal('verge_1', 12, 3)->nullable()->after('verge');
+                $table->decimal('verge_2', 12, 3)->nullable()->after('verge_1');
+                $table->decimal('verge_3', 12, 3)->nullable()->after('verge_2');
+                $table->decimal('verge_4', 12, 3)->nullable()->after('verge_3');
+                $table->decimal('verge_5', 12, 3)->nullable()->after('verge_4');
+            });
+        }
+    }
+
+    public function down()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->string('verge')->nullable()->change();
+                $table->dropColumn('verge_1');
+                $table->dropColumn('verge_2');
+                $table->dropColumn('verge_3');
+                $table->dropColumn('verge_4');
+                $table->dropColumn('verge_5');
+            });
+        }
+    }
+};
