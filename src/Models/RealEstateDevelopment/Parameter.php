@@ -57,11 +57,11 @@ class Parameter extends BaseModel
     ];
 
     public const VERGE_LIST = [
-        '1' => 'Nível 1',
-        '2' => 'Nível 2',
-        '3' => 'Nível 3',
-        '4' => 'Nível 4',
-        '5' => 'Nível 5',
+        '1' => '1 alçada',
+        '2' => '2 alçadas',
+        '3' => '3 alçadas',
+        '4' => '4 alçadas',
+        '5' => '5 alçadas',
     ];
 
     public const REQUIRED_DATES = [
@@ -96,11 +96,11 @@ class Parameter extends BaseModel
         'square_meter_price',
         'steps',
         'verge',
-        'verge_1',
-        'verge_2',
-        'verge_3',
-        'verge_4',
-        'verge_5',
+        'verge_one',
+        'verge_two',
+        'verge_three',
+        'verge_four',
+        'verge_five',
         'real_estate_development_id',
         'buying_option_id',
         'created_at',
@@ -140,11 +140,11 @@ class Parameter extends BaseModel
     protected $casts = [
         'allow_commercialization' => 'boolean',
         'in_financial_transfer' => 'boolean',
-        'verge_1' => 'float',
-        'verge_2' => 'float',
-        'verge_3' => 'float',
-        'verge_4' => 'float',
-        'verge_5' => 'float',
+        'verge_one' => 'float',
+        'verge_two' => 'float',
+        'verge_three' => 'float',
+        'verge_four' => 'float',
+        'verge_five' => 'float',
     ];
 
     /**

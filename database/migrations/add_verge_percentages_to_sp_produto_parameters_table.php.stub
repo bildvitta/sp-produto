@@ -18,11 +18,11 @@ return new class extends Migration
         if (Schema::hasTable($this->tableName)) {
             Schema::table($this->tableName, function (Blueprint $table) {
                 $table->integer('verge')->nullable()->default(1)->change();
-                $table->decimal('verge_1', 12, 3)->nullable()->after('verge');
-                $table->decimal('verge_2', 12, 3)->nullable()->after('verge_1');
-                $table->decimal('verge_3', 12, 3)->nullable()->after('verge_2');
-                $table->decimal('verge_4', 12, 3)->nullable()->after('verge_3');
-                $table->decimal('verge_5', 12, 3)->nullable()->after('verge_4');
+                $table->decimal('verge_one', 12, 3)->nullable()->after('verge');
+                $table->decimal('verge_two', 12, 3)->nullable()->after('verge_one');
+                $table->decimal('verge_three', 12, 3)->nullable()->after('verge_two');
+                $table->decimal('verge_four', 12, 3)->nullable()->after('verge_three');
+                $table->decimal('verge_five', 12, 3)->nullable()->after('verge_four');
             });
         }
     }
@@ -31,12 +31,12 @@ return new class extends Migration
     {
         if (Schema::hasTable($this->tableName)) {
             Schema::table($this->tableName, function (Blueprint $table) {
-                $table->string('verge')->nullable()->change();
-                $table->dropColumn('verge_1');
-                $table->dropColumn('verge_2');
-                $table->dropColumn('verge_3');
-                $table->dropColumn('verge_4');
-                $table->dropColumn('verge_5');
+                $table->integer('verge')->nullable()->default(1)->change();
+                $table->dropColumn('verge_one');
+                $table->dropColumn('verge_two');
+                $table->dropColumn('verge_three');
+                $table->dropColumn('verge_four');
+                $table->dropColumn('verge_five');
             });
         }
     }

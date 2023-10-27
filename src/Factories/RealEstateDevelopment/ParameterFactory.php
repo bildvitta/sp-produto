@@ -45,11 +45,11 @@ class ParameterFactory extends Factory
             'square_meter_price' => $this->faker->numberBetween(1, 100),
             'steps' => $this->faker->randomKey(Parameter::STEPS_LIST),
             'verge' => $this->faker->random_int(1, 5),
-            'verge_1' => $this->faker->randomFloat(2, 0, 10),
-            'verge_2' => $this->faker->randomFloat(2, 0, 10),
-            'verge_3' => $this->faker->randomFloat(2, 0, 10),
-            'verge_4' => $this->faker->randomFloat(2, 0, 10),
-            'verge_5' => $this->faker->randomFloat(2, 0, 10),
+            'verge_one' => $this->faker->randomFloat(2, 0, 10),
+            'verge_two' => $this->faker->randomFloat(2, 0, 10),
+            'verge_three' => $this->faker->randomFloat(2, 0, 10),
+            'verge_four' => $this->faker->randomFloat(2, 0, 10),
+            'verge_five' => $this->faker->randomFloat(2, 0, 10),
         ];
     }
 }
