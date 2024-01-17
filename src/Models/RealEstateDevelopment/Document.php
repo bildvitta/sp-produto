@@ -20,6 +20,37 @@ class Document extends BaseModel
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * @const array
+     */
+    public const TYPE_LIST = [
+        'others' => 'Outros',
+        'descriptive_memorial' => 'Memorial Descritivo',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'uuid',
+        'name',
+        'description',
+        'format',
+        'preview',
+        'url',
+        'active',
+        'real_estate_development_id',
+        'type',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $casts = ['active' => 'boolean'];
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -35,32 +66,6 @@ class Document extends BaseModel
     {
         return DocumentFactory::new();
     }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'uuid',
-        'name',
-        'description',
-        'format',
-        'preview',
-        'url',
-        'active',
-        'real_estate_development_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = ['active' => 'boolean'];
 
     /**
      * @return BelongsTo

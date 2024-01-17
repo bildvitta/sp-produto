@@ -25,6 +25,8 @@ trait TypologyHelper
                 'uuid' => $messageTypology->uuid,
                 'real_estate_development_id' => $realEstateDevelopment->id,
                 'name' => $messageTypology->name,
+                'extract_text' => $messageTypology->extract_text,
+                'itbi_value' => $messageTypology->itbi_value,
             ]);
             $typologyIds[] = $typology->id;
             $this->typologyProposalModel($typology, $messageTypology);

@@ -60,6 +60,9 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_foreign_keys_to_sp_produto_real_estate_development_accessories_table',
         'add_table_price_to_sp_produto_units_table',
         'add_verge_percentages_to_sp_produto_parameters_table',
+        'add_registration_and_real_estate_development_code_columns_to_real_estate_developments_table',
+        'add_type_column_to_documents_table',
+        'add_extract_text_and_itbi_value_to_typologies_table',
     ];
 
     /**
@@ -116,7 +119,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         }
         $migrations = [
             'create_workers_table',
-            'create_sp_produto_real_estate_developments_table'
+            'create_sp_produto_real_estate_developments_table',
+            'add_registration_and_real_estate_development_code_columns_to_real_estate_developments_table',
         ];
         foreach ($relations as $relation) {
             switch ($relation) {
@@ -173,6 +177,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                 case 'typologies':
                     $migrations[] = 'create_sp_produto_typologies_table';
                     $migrations[] = 'create_sp_produto_typology_attributes_table';
+                    $migrations[] = 'add_extract_text_and_itbi_value_to_typologies_table';
                     break;
                 case 'units':
                     $migrations[] = 'create_sp_produto_units_table';
@@ -180,6 +185,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     break;
                 case 'documents':
                     $migrations[] = 'create_sp_produto_documents_table';
+                    $migrations[] = 'add_type_column_to_documents_table';
                     break;
                 case 'media':
                     $migrations[] = 'create_sp_produto_media_table';

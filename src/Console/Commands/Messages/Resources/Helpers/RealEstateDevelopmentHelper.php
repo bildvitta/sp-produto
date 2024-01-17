@@ -100,112 +100,121 @@ trait RealEstateDevelopmentHelper
      */
     private function realEstateDevelopment(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
-        if (isset($message->status)) {
+        if (property_exists($message, 'status')) {
             $realEstateDevelopment->status = $message->status;
         }
-        if (isset($message->address)) {
+        if (property_exists($message, 'address')) {
             $realEstateDevelopment->address = $message->address;
         }
-        if (isset($message->city)) {
+        if (property_exists($message, 'city')) {
             $realEstateDevelopment->city = $message->city;
         }
-        if (isset($message->complement)) {
+        if (property_exists($message, 'complement')) {
             $realEstateDevelopment->complement = $message->complement;
         }
-        if (isset($message->construction_address)) {
+        if (property_exists($message, 'construction_address')) {
             $realEstateDevelopment->construction_address = $message->construction_address;
         }
-        if (isset($message->construction_city)) {
+        if (property_exists($message, 'construction_city')) {
             $realEstateDevelopment->construction_city = $message->construction_city;
         }
-        if (isset($message->construction_complement)) {
+        if (property_exists($message, 'construction_complement')) {
             $realEstateDevelopment->construction_complement = $message->construction_complement;
         }
-        if (isset($message->construction_neighborhood)) {
+        if (property_exists($message, 'construction_neighborhood')) {
             $realEstateDevelopment->construction_neighborhood = $message->construction_neighborhood;
         }
-        if (isset($message->construction_phone)) {
+        if (property_exists($message, 'construction_phone')) {
             $realEstateDevelopment->construction_phone = $message->construction_phone;
         }
-        if (isset($message->construction_postal_code)) {
+        if (property_exists($message, 'construction_postal_code')) {
             $realEstateDevelopment->construction_postal_code = $message->construction_postal_code;
         }
-        if (isset($message->construction_state)) {
+        if (property_exists($message, 'construction_state')) {
             $realEstateDevelopment->construction_state = $message->construction_state;
         }
-        if (isset($message->construction_street_number)) {
+        if (property_exists($message, 'construction_street_number')) {
             $realEstateDevelopment->construction_street_number = $message->construction_street_number;
         }
-        if (isset($message->description)) {
+        if (property_exists($message, 'description')) {
             $realEstateDevelopment->description = $message->description;
         }
-        if (isset($message->document)) {
+        if (property_exists($message, 'document')) {
             $realEstateDevelopment->document = $message->document;
         }
-        if (isset($message->latitude)) {
+        if (property_exists($message, 'latitude')) {
             $realEstateDevelopment->latitude = $message->latitude;
         }
-        if (isset($message->longitude)) {
+        if (property_exists($message, 'longitude')) {
             $realEstateDevelopment->longitude = $message->longitude;
         }
-        if (isset($message->legal_text)) {
+        if (property_exists($message, 'legal_text')) {
             $realEstateDevelopment->legal_text = $message->legal_text;
         }
-        if (isset($message->name)) {
+        if (property_exists($message, 'name')) {
             $realEstateDevelopment->name = $message->name;
         }
-        if (isset($message->neighborhood)) {
+        if (property_exists($message, 'neighborhood')) {
             $realEstateDevelopment->neighborhood = $message->neighborhood;
         }
-        if (isset($message->nickname)) {
+        if (property_exists($message, 'nickname')) {
             $realEstateDevelopment->nickname = $message->nickname;
         }
-        if (isset($message->nire)) {
+        if (property_exists($message, 'nire')) {
             $realEstateDevelopment->nire = $message->nire;
         }
-        if (isset($message->nire_date)) {
+        if (property_exists($message, 'nire_date')) {
             $realEstateDevelopment->nire_date = $message->nire_date;
         }
-        if (isset($message->postal_code)) {
+        if (property_exists($message, 'postal_code')) {
             $realEstateDevelopment->postal_code = $message->postal_code;
         }
-        if (isset($message->real_estate)) {
+        if (property_exists($message, 'real_estate')) {
             $realEstateDevelopment->real_estate = $message->real_estate;
         }
-        if (isset($message->real_estate_logo)) {
+        if (property_exists($message, 'real_estate_logo')) {
             $realEstateDevelopment->real_estate_logo = $message->real_estate_logo;
         }
-        if (isset($message->register_number)) {
+        if (property_exists($message, 'register_number')) {
             $realEstateDevelopment->register_number = $message->register_number;
         }
-        if (isset($message->registration_number)) {
+        if (property_exists($message, 'registration_number')) {
             $realEstateDevelopment->registration_number = $message->registration_number;
         }
-        if (isset($message->registry_office)) {
+        if (property_exists($message, 'registry_office')) {
             $realEstateDevelopment->registry_office = $message->registry_office;
         }
-        if (isset($message->state)) {
+        if (property_exists($message, 'registration')) {
+            $realEstateDevelopment->registration = $message->registration;
+        }
+        if (property_exists($message, 'real_estate_development_code')) {
+            $realEstateDevelopment->real_estate_development_code = $message->real_estate_development_code;
+        }
+        if (property_exists($message, 'extract_text')) {
+            $realEstateDevelopment->extract_text = $message->extract_text;
+        }
+        if (property_exists($message, 'state')) {
             $realEstateDevelopment->state = $message->state;
         }
-        if (isset($message->street_number)) {
+        if (property_exists($message, 'street_number')) {
             $realEstateDevelopment->street_number = $message->street_number;
         }
-        if (isset($message->has_empty_fields)) {
+        if (property_exists($message, 'has_empty_fields')) {
             $realEstateDevelopment->has_empty_fields = $message->has_empty_fields;
         }
-        if (isset($message->external_code)) {
+        if (property_exists($message, 'external_code')) {
             $realEstateDevelopment->external_code = $message->external_code;
         }
-        if (isset($message->external_num_code)) {
+        if (property_exists($message, 'external_num_code')) {
             $realEstateDevelopment->external_num_code = $message->external_num_code;
         }
-        if (isset($message->external_company_code)) {
+        if (property_exists($message, 'external_company_code')) {
             $realEstateDevelopment->external_company_code = $message->external_company_code;
         }
-        if (isset($message->external_subsidiary_code)) {
+        if (property_exists($message, 'external_subsidiary_code')) {
             $realEstateDevelopment->external_subsidiary_code = $message->external_subsidiary_code;
         }
-        if (isset($message->real_estate_development_type_id)) {
+        if (property_exists($message, 'real_estate_development_type_id')) {
             $realEstateDevelopment->real_estate_development_type_id = $message->real_estate_development_type_id;
         }
         $realEstateDevelopment->save();

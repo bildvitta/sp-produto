@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Class ProposalModel.
+ * Class Typology
  *
  * @package BildVitta\SpProduto\Models
  */
@@ -22,6 +22,27 @@ class Typology extends BaseModel
 {
     use HasFactory;
     use SoftDeletes;
+
+    /**
+     * @var array
+     */
+    protected $fillable = [
+        'uuid',
+        'name',
+        'real_estate_development_id',
+        'extract_text',
+        'itbi_value',
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'itbi_value' => 'real',
+    ];
 
     public function __construct(array $attributes = [])
     {
@@ -38,20 +59,6 @@ class Typology extends BaseModel
     {
         return TypologyFactory::new();
     }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'uuid',
-        'name',
-        'real_estate_development_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
 
     public function realEstateDevelopment(): BelongsTo
     {
