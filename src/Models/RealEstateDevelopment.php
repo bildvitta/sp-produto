@@ -38,35 +38,7 @@ class RealEstateDevelopment extends BaseModel
         'in_commercialization' => 'Em comercialização',
     ];
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'real_estate_developments';
-    }
-
     /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        static::addGlobalScope(new CompanyScope());
-    }
-
-    /**
-     * Create a new factory instance for the model.
-     *
-     * @return Factory
-     */
-    protected static function newFactory(): Factory
-    {
-        return RealEstateDevelopmentFactory::new();
-    }
-
-    /**
-     * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -111,7 +83,36 @@ class RealEstateDevelopment extends BaseModel
         'created_at',
         'updated_at',
         'deleted_at',
+        'registration',
+        'real_estate_development_code',
+        'extract_text',
     ];
+
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->table = config('sp-produto.table_prefix') . 'real_estate_developments';
+    }
+
+    /**
+     * The "booted" method of the model.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope(new CompanyScope());
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return RealEstateDevelopmentFactory::new();
+    }
 
     /**
      * Real estate developments hub company

@@ -24,6 +24,7 @@ trait DocumentHelper
                 'real_estate_development_id' => $realEstateDevelopment->id,
                 'name' => $messageDocument->name,
                 'format' => $messageDocument->format,
+                'type' => $messageDocument->type,
                 'url' => $messageDocument->url,
                 'preview' => $messageDocument->preview,
                 'description' => $messageDocument->description,
