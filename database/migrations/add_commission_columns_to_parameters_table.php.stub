@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('parameters');
+    }
+
+    public function up()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->decimal('commission_real_estate_broker', 12, 3)->nullable()->after('verge_five');
+                $table->decimal('commission_supervisor', 12, 3)->nullable()->after('commission_real_estate_broker');
+                $table->decimal('commission_manager', 12, 3)->nullable()->after('commission_supervisor');
+            });
+        }
+    }
+
+    public function down()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->dropColumn(['commission_real_estate_broker', 'commission_supervisor', 'commission_manager']);
+            });
+        }
+    }
+};
