@@ -101,6 +101,9 @@ class Parameter extends BaseModel
         'verge_three',
         'verge_four',
         'verge_five',
+        'commission_real_estate_broker',
+        'commission_supervisor',
+        'commission_manager',
         'real_estate_development_id',
         'buying_option_id',
         'created_at',
@@ -145,6 +148,9 @@ class Parameter extends BaseModel
         'verge_three' => 'float',
         'verge_four' => 'float',
         'verge_five' => 'float',
+        'commission_real_estate_broker' => 'float',
+        'commission_supervisor' => 'float',
+        'commission_manager' => 'float',
     ];
 
     /**

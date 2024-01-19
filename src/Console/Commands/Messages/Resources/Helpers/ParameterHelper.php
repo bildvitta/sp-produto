@@ -44,6 +44,9 @@ trait ParameterHelper
                 'verge_three' => $messageParameter->verge_three,
                 'verge_four' => $messageParameter->verge_four,
                 'verge_five' => $messageParameter->verge_five,
+                'commission_real_estate_broker' => $messageParameter->commission_real_estate_broker,
+                'commission_supervisor' => $messageParameter->commission_supervisor,
+                'commission_manager' => $messageParameter->commission_manager,
                 'has_empty_fields' => $messageParameter->has_empty_fields,
                 'real_estate_development_id' => $realEstateDevelopment->id,
             ]);
