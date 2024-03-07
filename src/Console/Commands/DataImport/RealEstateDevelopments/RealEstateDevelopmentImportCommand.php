@@ -30,7 +30,7 @@ class RealEstateDevelopmentImportCommand extends Command
     public function handle()
     {
         $this->info('Starting import');
-        
+
         $selectLimit = 500;
         if ($optionSelect = $this->option('select')) {
             $selectLimit = (int) $optionSelect;
@@ -40,7 +40,7 @@ class RealEstateDevelopmentImportCommand extends Command
         if ($optionOffset = $this->option('offset')) {
             $offset = (int) $optionOffset;
         }
-        
+
         $tableIndex = 0;
         if ($optionTableIndex = $this->option('table')) {
             $tableIndex = (int) $optionTableIndex;
@@ -67,22 +67,16 @@ class RealEstateDevelopmentImportCommand extends Command
         return 0;
     }
 
-    /**
-     * @param string $relation
-     * @return bool
-     */
     private function configHas(string $relation): bool
     {
         $syncRelations = config('sp-produto.sync_relations');
         if (is_array($syncRelations)) {
             return in_array($relation, $syncRelations);
         }
+
         return false;
     }
 
-    /**
-     * @return array
-     */
     private function getTables(): array
     {
         $tables = [];

@@ -11,14 +11,9 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 /**
  * Class SpProdutoServiceProvider.
- *
- * @package BildVitta\SpProduto
  */
 class SpProdutoServiceProvider extends PackageServiceProvider
 {
-    /**
-     * @var array $migrations
-     */
     protected array $migrations = [
         'create_workers_table',
         'create_sp_produto_real_estate_developments_table', // must be the first
@@ -66,9 +61,6 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_commission_columns_to_parameters_table',
     ];
 
-    /**
-     * @var array $commands
-     */
     protected array $commands = [
         ConfigSp::class,
         InstallSp::class,
@@ -76,16 +68,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         RealEstateDevelopmentWorkerCommand::class,
     ];
 
-    /**
-     * @var string $seeder
-     */
     protected string $seeder = 'SpProdutoSeeder';
 
-    /**
-     * @param  Package  $package
-     *
-     * @return void
-     */
     public function configurePackage(Package $package): void
     {
         /*
@@ -104,14 +88,10 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             ->hasCommands($this->commands);
 
         $this->publishes([
-            $package->basePath("/../database/seeders/{$this->seeder}.php.stub")
-            => database_path("seeders/{$this->seeder}.php")
+            $package->basePath("/../database/seeders/{$this->seeder}.php.stub") => database_path("seeders/{$this->seeder}.php"),
         ], 'seeders');
     }
 
-    /**
-     * @return array
-     */
     private function getMigrations(): array
     {
         $relations = config('sp-produto.sync_relations');

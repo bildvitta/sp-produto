@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class InsuranceCompanyFactory.
- *
- * @package BildVitta\SpProduto\Factories
  */
 class InsuranceCompanyFactory extends Factory
 {

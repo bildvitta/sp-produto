@@ -15,8 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Typology
- *
- * @package BildVitta\SpProduto\Models
  */
 class Typology extends BaseModel
 {
@@ -47,13 +45,11 @@ class Typology extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'typologies';
+        $this->table = config('sp-produto.table_prefix').'typologies';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -67,39 +63,31 @@ class Typology extends BaseModel
 
     /**
      * Get the real estate development proposal models.
-     *
-     * @return BelongsToMany
      */
     public function real_estate_developments_proposal_model(): BelongsToMany
     {
-        return $this->belongsToMany(ProposalModel::class, config('sp-produto.table_prefix') . 'proposal_model_typology', 'typology_id', 'proposal_model_id');
+        return $this->belongsToMany(ProposalModel::class, config('sp-produto.table_prefix').'proposal_model_typology', 'typology_id', 'proposal_model_id');
     }
 
     /**
      * Define a many-to-many relationship.
-     *
-     * @return BelongsToMany
      */
     public function accessories(): BelongsToMany
     {
-        return $this->belongsToMany(RealEstateDevelopment\Accessory::class, config('sp-produto.table_prefix') . 'real_estate_development_accessory_typology');
+        return $this->belongsToMany(RealEstateDevelopment\Accessory::class, config('sp-produto.table_prefix').'real_estate_development_accessory_typology');
     }
 
     /**
      * Get blueprints for typology.
-     *
-     * @return BelongsToMany
      */
     public function blueprints(): BelongsToMany
     {
-        return $this->belongsToMany(Blueprint::class, config('sp-produto.table_prefix') . 'blueprint_typology')
+        return $this->belongsToMany(Blueprint::class, config('sp-produto.table_prefix').'blueprint_typology')
             ->with('real_estate_developments_blueprint_images');
     }
 
     /**
      * Define a one-to-many relationship.
-     *
-     * @return HasMany
      */
     public function units(): HasMany
     {

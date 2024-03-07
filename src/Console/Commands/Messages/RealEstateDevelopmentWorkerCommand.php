@@ -3,12 +3,11 @@
 namespace BildVitta\SpProduto\Console\Commands\Messages;
 
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\RealEstateDevelopmentMessageProcessor;
-use Exception;
 use Illuminate\Console\Command;
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPSSLConnection;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exception\AMQPExceptionInterface;
-use PhpAmqpLib\Channel\AMQPChannel;
 use Throwable;
 
 class RealEstateDevelopmentWorkerCommand extends Command
@@ -37,14 +36,8 @@ class RealEstateDevelopmentWorkerCommand extends Command
      */
     private $channel;
 
-    /**
-     * @var RealEstateDevelopmentMessageProcessor
-     */
     private RealEstateDevelopmentMessageProcessor $realEstateDevelopmentMessageProcessor;
 
-    /**
-     * @param RealEstateDevelopmentMessageProcessor $realEstateDevelopmentMessageProcessor
-     */
     public function __construct(RealEstateDevelopmentMessageProcessor $realEstateDevelopmentMessageProcessor)
     {
         parent::__construct();
@@ -71,14 +64,11 @@ class RealEstateDevelopmentWorkerCommand extends Command
         return 0;
     }
 
-    /**
-     * @return void
-     */
     private function process(): void
     {
         $this->connect();
         $this->channel = $this->connection->channel();
-        
+
         $queueName = config('sp-produto.rabbitmq.queue.real_estate_developments');
         $callback = [$this->realEstateDevelopmentMessageProcessor, 'process'];
         $this->channel->basic_consume(
@@ -87,14 +77,11 @@ class RealEstateDevelopmentWorkerCommand extends Command
         );
 
         $this->channel->consume();
-        
+
         $this->closeChannel();
         $this->closeConnection();
     }
 
-    /**
-     * @return void
-     */
     private function closeChannel(): void
     {
         try {
@@ -106,9 +93,6 @@ class RealEstateDevelopmentWorkerCommand extends Command
         }
     }
 
-    /**
-     * @return void
-     */
     private function closeConnection(): void
     {
         try {
@@ -120,9 +104,6 @@ class RealEstateDevelopmentWorkerCommand extends Command
         }
     }
 
-    /**
-     * @return void
-     */
     private function connect(): void
     {
         $host = config('sp-produto.rabbitmq.host');
@@ -132,12 +113,12 @@ class RealEstateDevelopmentWorkerCommand extends Command
         $virtualhost = config('sp-produto.rabbitmq.virtualhost');
         $heartbeat = 20;
         $sslOptions = [
-            'verify_peer' => false
+            'verify_peer' => false,
         ];
         $options = [
-            'heartbeat' => $heartbeat
+            'heartbeat' => $heartbeat,
         ];
-        
+
         if (app()->isLocal()) {
             $this->connection = new AMQPStreamConnection(
                 host: $host,

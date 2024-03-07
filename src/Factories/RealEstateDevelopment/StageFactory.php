@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class StageFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class StageFactory extends Factory
 {
@@ -21,8 +19,6 @@ class StageFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

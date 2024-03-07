@@ -4,9 +4,6 @@ namespace BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments
 
 trait Connection
 {
-    /**
-     * @return void
-     */
     private function configConnection(): void
     {
         config([
@@ -25,7 +22,7 @@ trait Connection
                 'strict' => true,
                 'engine' => null,
                 'options' => [],
-            ]
+            ],
         ]);
     }
 }

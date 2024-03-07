@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class MirrorGroup.
- *
- * @package BildVitta\SpProduto\Models
  */
 class MirrorGroup extends BaseModel
 {
@@ -23,13 +21,11 @@ class MirrorGroup extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'mirror_groups';
+        $this->table = config('sp-produto.table_prefix').'mirror_groups';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -50,9 +46,6 @@ class MirrorGroup extends BaseModel
         'deleted_at',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function mirror(): BelongsTo
     {
         return $this->belongsTo(Mirror::class);
@@ -60,8 +53,6 @@ class MirrorGroup extends BaseModel
 
     /**
      * Define a one-to-many relationship.
-     *
-     * @return HasMany
      */
     public function units(): HasMany
     {

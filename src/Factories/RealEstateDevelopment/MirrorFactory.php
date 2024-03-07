@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class MirrorsFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class MirrorFactory extends Factory
 {
@@ -21,8 +19,6 @@ class MirrorFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

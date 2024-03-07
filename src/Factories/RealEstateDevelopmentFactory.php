@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class RealEstateDevelopmentFactory.
- *
- * @package BildVitta\SpProduto\Factories
  */
 class RealEstateDevelopmentFactory extends Factory
 {
@@ -21,8 +19,6 @@ class RealEstateDevelopmentFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
@@ -51,14 +47,14 @@ class RealEstateDevelopmentFactory extends Factory
             'latitude' => $this->faker->latitude($min = ($lang - (rand(0, 500) / 1000)), $max = ($lang + (rand(0, 500) / 1000))),
             'longitude' => $this->faker->longitude($min = ($long - (rand(0, 500) / 1000)), $max = ($long + (rand(0, 500) / 1000))),
             'legal_text' => $this->faker->paragraph,
-            'name' => $this->faker->company . ' ' . $this->faker->companySuffix,
+            'name' => $this->faker->company.' '.$this->faker->companySuffix,
             'neighborhood' => $this->faker->words(5, true),
             'nickname' => $this->faker->company,
             'nire' => $this->faker->numerify('###########'),
             'nire_date' => $this->faker->date(),
             'postal_code' => $this->faker->postcode,
-            'real_estate' => $this->faker->company . ' ' . $this->faker->companySuffix,
-            'real_estate_logo' => 'https://placeimg.com/640/480/arch?' . $this->faker->uuid,
+            'real_estate' => $this->faker->company.' '.$this->faker->companySuffix,
+            'real_estate_logo' => 'https://placeimg.com/640/480/arch?'.$this->faker->uuid,
             'register_number' => $this->faker->numerify('###########'),
             'registration_number' => $this->faker->numerify('###########'),
             'registry_office' => $this->faker->words(5, true),

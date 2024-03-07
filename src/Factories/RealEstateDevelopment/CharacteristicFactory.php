@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class CharacteristicFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class CharacteristicFactory extends Factory
 {
@@ -21,8 +19,6 @@ class CharacteristicFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

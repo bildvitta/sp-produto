@@ -14,10 +14,6 @@ use Throwable;
 
 trait UnitHelper
 {
-    /**
-     * @param stdClass $message
-     * @return void
-     */
     private function unitUpdateOrCreate(stdClass $message): void
     {
         $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->real_estate_development_uuid)->first();
@@ -57,10 +53,6 @@ trait UnitHelper
         }
     }
 
-    /**
-     * @param stdClass $message
-     * @return void
-     */
     private function unitDelete(stdClass $message): void
     {
         BaseUnit::where('uuid', $message->uuid)->delete();
@@ -69,59 +61,42 @@ trait UnitHelper
         }
     }
 
-    /**
-     * @param string|null $mirrorUuid
-     * @return int|null
-     */
     private function getUnitMirrorId(?string $mirrorUuid): ?int
     {
         if ($mirrorUuid) {
             return Mirror::where('uuid', $mirrorUuid)->first()?->id;
         }
+
         return null;
     }
 
-    /**
-     * @param string|null $mirrorGroupUuid
-     * @return int|null
-     */
     private function getUnitMirrorGroupId(?string $mirrorGroupUuid): ?int
     {
         if ($mirrorGroupUuid) {
             return MirrorGroup::where('uuid', $mirrorGroupUuid)->first()?->id;
         }
+
         return null;
     }
 
-    /**
-     * @param string|null $blueprintUuid
-     * @return int|null
-     */
     private function getUnitBlueprintId(?string $blueprintUuid): ?int
     {
         if ($blueprintUuid) {
             return Blueprint::where('uuid', $blueprintUuid)->first()?->id;
         }
+
         return null;
     }
 
-    /**
-     * @param string|null $typologyUuid
-     * @return int|null
-     */
     private function getUnitTypologyId(?string $typologyUuid): ?int
     {
         if ($typologyUuid) {
             return Typology::where('uuid', $typologyUuid)->first()?->id;
         }
+
         return null;
     }
 
-    /**
-     * @param BaseUnit $baseUnit
-     * @param stdClass $message
-     * @return void
-     */
     private function unitPriceCalc(BaseUnit $baseUnit, stdClass $message): void
     {
         try {
@@ -137,10 +112,6 @@ trait UnitHelper
         }
     }
 
-    /**
-     * @param BaseUnit $unit
-     * @return void
-     */
     private function unitSaleStep(BaseUnit $unit, RealEstateDevelopment $realEstateDevelopment): void
     {
         if (empty($unit->sale_step_id) && class_exists('\App\Models\Settings\SaleStep')) {

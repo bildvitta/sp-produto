@@ -5,16 +5,11 @@ namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\StageImage;
-use stdClass;
 use Carbon\Carbon;
+use stdClass;
 
 trait StageHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function stages(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $stageIds = [];
@@ -40,9 +35,7 @@ trait StageHelper
     }
 
     /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param array $messageStageImages
-     * @return void
+     * @param  RealEstateDevelopment  $realEstateDevelopment
      */
     private function stageImages(Stage $stage, array $messageStageImages): void
     {

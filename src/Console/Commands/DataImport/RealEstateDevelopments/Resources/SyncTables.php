@@ -2,7 +2,6 @@
 
 namespace BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources;
 
-use Illuminate\Support\Facades\DB;
 use BildVitta\SpProduto\Models\Accessory;
 use BildVitta\SpProduto\Models\AccessoryCategory;
 use BildVitta\SpProduto\Models\BuyingOption;
@@ -14,12 +13,10 @@ use BildVitta\SpProduto\Models\ProposalModel;
 use BildVitta\SpProduto\Models\ProposalModelPeriodicities;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\ConnectionInterface;
+use Illuminate\Support\Facades\DB;
 
 trait SyncTables
 {
-    /**
-     * @return void
-     */
     private function hubCompanies(): void
     {
         $hub_companies = $this->getDatabase()->table('hub_companies');
@@ -33,9 +30,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function accessoryCategories(): void
     {
         $accessoryCategories = $this->getDatabase()->table('categories as ca')
@@ -51,9 +45,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function accessories(): void
     {
         $accessories = $this->getDatabase()->table('accessories as ac')
@@ -73,9 +64,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function characteristics(): void
     {
         $characteristics = $this->getDatabase()->table('characteristics as ch')
@@ -91,9 +79,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function proposalModels(): void
     {
         $proposalModels = $this->getDatabase()->table('proposal_models as pm')
@@ -109,9 +94,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function proposalModelsPeriodicities(): void
     {
         $proposalModelsPeriodicities = $this->getDatabase()->table('proposal_model_periodicities as pp')
@@ -127,9 +109,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function buyingOptions(): void
     {
         $buyingOptions = $this->getDatabase()->table('buying_options as bo')
@@ -145,9 +124,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function insuranceCompanies(): void
     {
         $insuranceCompanies = $this->getDatabase()->table('insurance_companies as ic')
@@ -163,9 +139,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function insurances(): void
     {
         $insurances = $this->getDatabase()->table('insurances as i')
@@ -181,9 +154,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function realEstateDevelopments(): void
     {
         $realEstateDevelopments = $this->getDatabase()->table('real_estate_developments as red')
@@ -199,9 +169,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function proposalModelRealEstateDevelopment(): void
     {
         $proposalModelRealEstateDevelopment = $this->getDatabase()->table('proposal_model_real_estate_development as pr')
@@ -224,9 +191,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function buyingOptionRealEstateDevelopment(): void
     {
         $buyingOptionRealEstateDevelopment = $this->getDatabase()->table('buying_option_real_estate_development as br')
@@ -249,9 +213,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function insuranceCompanyRealEstateDevelopment(): void
     {
         $insuranceCompanyRealEstateDevelopment = $this->getDatabase()->table('insurance_company_real_estate_development as icr')
@@ -274,9 +235,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function insuranceRealEstateDevelopment(): void
     {
         $insuranceRealEstateDevelopment = $this->getDatabase()->table('insurance_real_estate_development as ir')
@@ -299,9 +257,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function realEstateDevelopmentCharacteristic(): void
     {
         $realEstateDevelopmentCharacteristic = $this->getDatabase()->table('real_estate_development_characteristics as rc')
@@ -321,9 +276,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function typologies(): void
     {
         $typologies = $this->getDatabase()->table('typologies as ty')
@@ -343,9 +295,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function realEstateDevelopmentAccessories(): void
     {
         $realEstateDevelopmentAccessories = $this->getDatabase()->table('real_estate_development_accessories as ra')
@@ -367,9 +316,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function parameters(): void
     {
         $parameters = $this->getDatabase()->table('parameters as pa')
@@ -402,9 +348,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function mirrors(): void
     {
         $mirrors = $this->getDatabase()->table('mirrors as mi')
@@ -424,9 +367,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function mirrorGroups(): void
     {
         $mirrorGroups = $this->getDatabase()->table('mirror_groups as mg')
@@ -442,9 +382,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function blueprints(): void
     {
         $blueprints = $this->getDatabase()->table('blueprints as bl')
@@ -460,9 +397,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function blueprintImages(): void
     {
         $blueprint_images = $this->getDatabase()->table('blueprint_images as bi')
@@ -478,9 +412,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function blueprintTypology(): void
     {
         $blueprint_typology = $this->getDatabase()->table('blueprint_typology as bt')
@@ -503,9 +434,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function proposalModelTypology(): void
     {
         $proposal_model_typology = $this->getDatabase()->table('proposal_model_typology as pt')
@@ -528,9 +456,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function realEstateDevelopmentAccessoryBlueprint(): void
     {
         $realEstateDevelopmentAccessoryBlueprint = $this->getDatabase()->table('real_estate_development_accessory_blueprint as ab')
@@ -553,9 +478,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function units(): void
     {
         $units = $this->getDatabase()->table('units as un')
@@ -588,9 +510,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function documents(): void
     {
         $documents = $this->getDatabase()->table('documents as dc')
@@ -606,9 +525,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function stages(): void
     {
         $stages = $this->getDatabase()->table('stages as st')
@@ -624,9 +540,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function stageImages(): void
     {
         $stage_images = $this->getDatabase()->table('stage_images as si')
@@ -642,9 +555,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return void
-     */
     private function media(): void
     {
         $media = $this->getDatabase()->table('media as md')
@@ -660,9 +570,6 @@ trait SyncTables
         );
     }
 
-    /**
-     * @return ConnectionInterface
-     */
     private function getDatabase(): ConnectionInterface
     {
         return DB::connection('produto');

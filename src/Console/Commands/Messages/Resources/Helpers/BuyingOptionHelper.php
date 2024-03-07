@@ -8,11 +8,6 @@ use stdClass;
 
 trait BuyingOptionHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function buyingOptions(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $buyingOptionIds = [];

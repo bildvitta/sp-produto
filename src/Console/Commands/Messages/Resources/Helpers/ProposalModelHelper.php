@@ -9,11 +9,6 @@ use stdClass;
 
 trait ProposalModelHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     public function proposalModels(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $proposalModelIds = [];

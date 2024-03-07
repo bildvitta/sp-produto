@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class ProposalModelPeriodicitiesFactory.
- *
- * @package BildVitta\SpProduto\Factories
  */
 class ProposalModelPeriodicitiesFactory extends Factory
 {
@@ -21,8 +19,6 @@ class ProposalModelPeriodicitiesFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

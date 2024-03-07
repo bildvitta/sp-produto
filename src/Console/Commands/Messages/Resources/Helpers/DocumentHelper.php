@@ -8,11 +8,6 @@ use stdClass;
 
 trait DocumentHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function documents(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $documentIds = [];

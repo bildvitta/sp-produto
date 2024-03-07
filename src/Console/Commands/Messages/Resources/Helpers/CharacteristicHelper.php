@@ -4,16 +4,12 @@ namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
 use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
 use BildVitta\SpProduto\Models\Characteristic as BaseCharacteristic;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
 use stdClass;
 
 trait CharacteristicHelper
 {
-    /**
-     * @param stdClass $message
-     * @return void
-     */
     private function characteristicUpdateOrCreate(stdClass $message): void
     {
         $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->real_estate_development_uuid)->first();
@@ -43,10 +39,6 @@ trait CharacteristicHelper
         }
     }
 
-    /**
-     * @param stdClass $message
-     * @return void
-     */
     private function characteristicDelete(stdClass $message): void
     {
         Characteristic::where('uuid', $message->uuid)->delete();

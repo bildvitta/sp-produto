@@ -2,25 +2,20 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
+use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
-use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use stdClass;
 
 trait MirrorHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function mirrors(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $mirrorIds = [];
         $mirrorSubgroupIds = [];
         foreach ($message->mirrors as $messageMirror) {
             $mirror = Mirror::updateOrCreate([
-                'uuid' => $messageMirror->uuid
+                'uuid' => $messageMirror->uuid,
             ], [
                 'uuid' => $messageMirror->uuid,
                 'name' => $messageMirror->name,
@@ -31,7 +26,7 @@ trait MirrorHelper
             $mirrorSubgroupIds = [];
             foreach ($messageMirror->subgroups as $messageMirrorSubgroup) {
                 $mirrorGroup = MirrorGroup::updateOrCreate([
-                    'uuid' => $messageMirrorSubgroup->uuid
+                    'uuid' => $messageMirrorSubgroup->uuid,
                 ], [
                     'uuid' => $messageMirrorSubgroup->uuid,
                     'name' => $messageMirrorSubgroup->name,

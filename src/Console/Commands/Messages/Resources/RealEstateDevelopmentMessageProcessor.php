@@ -25,23 +25,23 @@ use Throwable;
 
 class RealEstateDevelopmentMessageProcessor
 {
-    use Tools;
-    use RealEstateDevelopmentHelper;
-    use StageHelper;
-    use ParameterHelper;
-    use InsuranceHelper;
-    use ProposalModelHelper;
-    use BuyingOptionHelper;
-    use TypologyHelper;
-    use MirrorHelper;
-    use LogHelper;
-    use CharacteristicHelper;
     use AccessoriesHelper;
     use BlueprintHelper;
-    use UnitHelper;
-    use MediaHelper;
+    use BuyingOptionHelper;
+    use CharacteristicHelper;
     use DocumentHelper;
+    use InsuranceHelper;
+    use LogHelper;
+    use MediaHelper;
+    use MirrorHelper;
+    use ParameterHelper;
+    use ProposalModelHelper;
+    use RealEstateDevelopmentHelper;
     use SellableHelper;
+    use StageHelper;
+    use Tools;
+    use TypologyHelper;
+    use UnitHelper;
 
     /**
      * @var string
@@ -73,10 +73,6 @@ class RealEstateDevelopmentMessageProcessor
      */
     public const DELETED = 'deleted';
 
-    /**
-     * @param AMQPMessage $message
-     * @return void
-     */
     public function process(AMQPMessage $message): void
     {
         $message->ack();
@@ -108,11 +104,6 @@ class RealEstateDevelopmentMessageProcessor
         }
     }
 
-    /**
-     * @param string $operation
-     * @param stdClass $messageData
-     * @return void
-     */
     private function processRealEstateDevelopment(string $operation, stdClass $messageData): void
     {
         switch ($operation) {
@@ -126,11 +117,6 @@ class RealEstateDevelopmentMessageProcessor
         }
     }
 
-    /**
-     * @param string $operation
-     * @param stdClass $messageData
-     * @return void
-     */
     private function processUnit(string $operation, stdClass $messageData): void
     {
         if ($this->configHas('units')) {
@@ -146,11 +132,6 @@ class RealEstateDevelopmentMessageProcessor
         }
     }
 
-    /**
-     * @param string $operation
-     * @param stdClass $messageData
-     * @return void
-     */
     private function processCharacteristic(string $operation, stdClass $messageData): void
     {
         if ($this->configHas('characteristics')) {

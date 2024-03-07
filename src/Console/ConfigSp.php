@@ -15,7 +15,7 @@ class ConfigSp extends Command
      */
     private const VENDOR_PUBLISH_CONFIG_PARAMS = [
         '--provider' => SpProdutoServiceProvider::class,
-        '--tag' => 'sp-produto-config'
+        '--tag' => 'sp-produto-config',
     ];
 
     /**
@@ -54,20 +54,13 @@ class ConfigSp extends Command
         $this->info('Finish configuration!');
     }
 
-    /**
-     * @param  string  $fileName
-     *
-     * @return bool
-     */
     private function configExists(string $fileName): bool
     {
         return File::exists(config_path($fileName));
     }
 
     /**
-     * @param bool|false $forcePublish
-     *
-     * @return void
+     * @param  bool|false  $forcePublish
      */
     private function publishConfiguration(bool $forcePublish = false): void
     {
@@ -82,8 +75,6 @@ class ConfigSp extends Command
 
     /**
      * Should overwrite config file.
-     *
-     * @return bool
      */
     private function shouldOverwriteConfig(): bool
     {

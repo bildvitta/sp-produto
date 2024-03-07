@@ -7,11 +7,6 @@ use stdClass;
 
 trait SellableHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function sellableBy(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         //get local id from message uuids.

@@ -8,18 +8,10 @@ use Illuminate\Support\Carbon;
 
 trait SyncData
 {
-    /**
-     * @param Builder $query
-     * @param string $model
-     * @param string|null $label
-     * @param array $related
-     * @param array $dates
-     * @return void
-     */
     private function syncData(
         Builder $query,
         string $model,
-        string $label = null,
+        ?string $label = null,
         array $related = [],
         array $dates = []
     ): void {

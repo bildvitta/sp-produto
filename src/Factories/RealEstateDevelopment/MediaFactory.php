@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class MediaFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class MediaFactory extends Factory
 {
@@ -21,8 +19,6 @@ class MediaFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
@@ -30,7 +26,7 @@ class MediaFactory extends Factory
             'uuid' => $this->faker->uuid(),
             'name' => $this->faker->word,
             'description' => $this->faker->paragraph,
-            'preview' => 'https://placeimg.com/640/480/any?' . $this->faker->uuid,
+            'preview' => 'https://placeimg.com/640/480/any?'.$this->faker->uuid,
             'media_type' => $this->faker->randomKey(Media::MEDIA_TYPE_LIST),
             'url' => $this->faker->imageUrl(),
             'format' => $this->faker->fileExtension,

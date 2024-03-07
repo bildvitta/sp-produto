@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class TypologyAttributeFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class TypologyAttributeFactory extends Factory
 {
@@ -21,8 +19,6 @@ class TypologyAttributeFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
@@ -31,7 +27,7 @@ class TypologyAttributeFactory extends Factory
             'name' => $this->faker->words(5, true),
             'description' => $this->faker->text(),
             'type_increase' => $this->faker->randomKey(TypologyAttribute::ADDITION_TYPE),
-            'value_increase' => $this->faker->randomFloat(2, 0, 9999)
+            'value_increase' => $this->faker->randomFloat(2, 0, 9999),
         ];
     }
 }

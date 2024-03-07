@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class BuyingOption.
- *
- * @package BildVitta\SpProduto\Models
  */
 class BuyingOption extends BaseModel
 {
@@ -21,13 +19,11 @@ class BuyingOption extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'buying_options';
+        $this->table = config('sp-produto.table_prefix').'buying_options';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -83,8 +79,6 @@ class BuyingOption extends BaseModel
 
     /**
      * Get hub company
-     *
-     * @return BelongsTo
      */
     public function hub_company(): BelongsTo
     {

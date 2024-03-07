@@ -4,10 +4,6 @@ namespace BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments
 
 trait UpdateWorker
 {
-    /**
-     * @param array $props
-     * @return void
-     */
     private function updateWorker(array $props): void
     {
         foreach ($props as $key => $value) {

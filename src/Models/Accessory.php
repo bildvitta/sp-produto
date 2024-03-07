@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Accessory.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Accessory extends BaseModel
 {
@@ -21,13 +19,11 @@ class Accessory extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'accessories';
+        $this->table = config('sp-produto.table_prefix').'accessories';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -52,8 +48,6 @@ class Accessory extends BaseModel
 
     /**
      * Accessory category
-     *
-     * @return BelongsTo
      */
     public function category(): BelongsTo
     {
@@ -62,8 +56,6 @@ class Accessory extends BaseModel
 
     /**
      * Get hub company
-     *
-     * @return BelongsTo
      */
     public function hub_company(): BelongsTo
     {

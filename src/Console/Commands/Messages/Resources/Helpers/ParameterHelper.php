@@ -8,11 +8,6 @@ use stdClass;
 
 trait ParameterHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function parameters(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $parameterIds = [];
@@ -25,7 +20,7 @@ trait ParameterHelper
                 'blueprint_definition_deadline' => $this->toCarbon($messageParameter->blueprint_definition_deadline),
                 'buying_option_id' => $messageParameter->buying_option_id,
                 'commercialization_status' => $messageParameter->commercialization_status,
-                'construction_over_in' =>  $this->toCarbon($messageParameter->construction_over_in),
+                'construction_over_in' => $this->toCarbon($messageParameter->construction_over_in),
                 'construction_prevision_in' => $this->toCarbon($messageParameter->construction_prevision_in),
                 'construction_start_in' => $this->toCarbon($messageParameter->construction_start_in),
                 'financial_transfer_deadline' => $this->toCarbon($messageParameter->financial_transfer_deadline),
