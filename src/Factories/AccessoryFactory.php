@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class AccessoryFactory.
- *
- * @package BildVitta\SpProduto\Factories
  */
 class AccessoryFactory extends Factory
 {

@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class BuyingOptionFactory.
- *
- * @package BildVitta\SpProduto\Factories
  */
 class BuyingOptionFactory extends Factory
 {
@@ -21,8 +19,6 @@ class BuyingOptionFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

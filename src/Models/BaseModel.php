@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class BaseModel.
- *
- * @package BildVitta\SpProduto\Models
  */
 class BaseModel extends Model
 {
@@ -18,8 +16,6 @@ class BaseModel extends Model
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
     public function getRouteKeyName(): string
     {

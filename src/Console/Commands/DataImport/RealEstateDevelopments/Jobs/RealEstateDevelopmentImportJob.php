@@ -2,11 +2,6 @@
 
 namespace BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Jobs;
 
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Bus\Queueable;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\Connection;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\DispatchNextJob;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\SyncData;
@@ -14,20 +9,25 @@ use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resou
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\SyncTables;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\Resources\UpdateWorker;
 use BildVitta\SpProduto\Models\Worker;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use InvalidArgumentException;
 use Throwable;
 
 class RealEstateDevelopmentImportJob implements ShouldQueue
 {
+    use Connection;
     use Dispatchable;
+    use DispatchNextJob;
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-    use Connection;
     use SyncData;
     use SyncRelated;
     use SyncTables;
-    use DispatchNextJob;
     use UpdateWorker;
 
     /**
@@ -49,14 +49,8 @@ class RealEstateDevelopmentImportJob implements ShouldQueue
      */
     public $retryAfter = 60;
 
-    /**
-     * @var int
-     */
     private int $workerId;
 
-    /**
-     * @var string
-     */
     private string $currentTable;
 
     /**
@@ -64,9 +58,6 @@ class RealEstateDevelopmentImportJob implements ShouldQueue
      */
     private $worker;
 
-    /**
-     * @param int $workerId
-     */
     public function __construct(int $workerId)
     {
         $this->onQueue('default');
@@ -77,6 +68,7 @@ class RealEstateDevelopmentImportJob implements ShouldQueue
      * Execute the job.
      *
      * @return void
+     *
      * @throws InvalidArgumentException
      */
     public function handle()
@@ -184,9 +176,6 @@ class RealEstateDevelopmentImportJob implements ShouldQueue
         $this->dispatchNextJob();
     }
 
-    /**
-     * @return void
-     */
     private function init(): void
     {
         $this->configConnection();
@@ -194,10 +183,6 @@ class RealEstateDevelopmentImportJob implements ShouldQueue
         $this->currentTable = $this->worker->payload->tables[$this->worker->payload->table_index];
     }
 
-    /**
-     * @param Throwable $exception
-     * @return void
-     */
     public function failed(Throwable $exception): void
     {
         if (! $worker = Worker::find($this->workerId)) {

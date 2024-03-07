@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Insurance.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Insurance extends BaseModel
 {
@@ -21,13 +19,11 @@ class Insurance extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'insurances';
+        $this->table = config('sp-produto.table_prefix').'insurances';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -63,8 +59,6 @@ class Insurance extends BaseModel
 
     /**
      * Get insurance company.
-     *
-     * @return BelongsTo
      */
     public function insuranceCompanies(): BelongsTo
     {

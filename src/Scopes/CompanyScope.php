@@ -10,11 +10,6 @@ class CompanyScope implements Scope
 {
     /**
      * Global scope to list results by company.
-     *
-     * @param  Builder  $builder
-     * @param  Model  $model
-     *
-     * @return void
      */
     public function apply(Builder $builder, Model $model): void
     {

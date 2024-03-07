@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class DocumentFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class DocumentFactory extends Factory
 {
@@ -23,7 +21,6 @@ class DocumentFactory extends Factory
      * Define the model's default state.
      *
      * @see \App\Providers\AppServiceProvider::register() For imageUrl document
-     * @return array
      */
     public function definition(): array
     {
@@ -32,8 +29,8 @@ class DocumentFactory extends Factory
             'name' => $this->faker->words(3, true),
             'description' => $this->faker->text(300),
             'format' => $this->faker->fileExtension,
-            'url' => 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf?' . $this->faker->uuid,
-            'preview' => $this->faker->optional(0.8)->passthrough('https://placeimg.com/640/480/tech?' . $this->faker->uuid),
+            'url' => 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf?'.$this->faker->uuid,
+            'preview' => $this->faker->optional(0.8)->passthrough('https://placeimg.com/640/480/tech?'.$this->faker->uuid),
             'active' => $this->faker->boolean,
         ];
     }

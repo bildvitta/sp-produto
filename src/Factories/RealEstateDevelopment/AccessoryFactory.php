@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class AccessoryFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class AccessoryFactory extends Factory
 {
@@ -21,8 +19,6 @@ class AccessoryFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {

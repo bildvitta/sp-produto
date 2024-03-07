@@ -4,15 +4,15 @@ namespace BildVitta\SpProduto\Models;
 
 use BildVitta\SpProduto\Factories\RealEstateDevelopmentFactory;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Document;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Media;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Parameter;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use BildVitta\SpProduto\Scopes\CompanyScope;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -24,8 +24,6 @@ use Illuminate\Support\Carbon;
 
 /**
  * Class RealEstateDevelopment.
- *
- * @package BildVitta\SpProduto\Models
  */
 class RealEstateDevelopment extends BaseModel
 {
@@ -91,7 +89,7 @@ class RealEstateDevelopment extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'real_estate_developments';
+        $this->table = config('sp-produto.table_prefix').'real_estate_developments';
     }
 
     /**
@@ -106,8 +104,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -116,8 +112,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments hub company
-     *
-     * @return BelongsTo
      */
     public function hub_company(): BelongsTo
     {
@@ -126,49 +120,39 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments proposal models
-     *
-     * @return BelongsToMany
      */
     public function proposal_models(): BelongsToMany
     {
-        return $this->belongsToMany(ProposalModel::class, config('sp-produto.table_prefix') . 'proposal_model_real_estate_development')
+        return $this->belongsToMany(ProposalModel::class, config('sp-produto.table_prefix').'proposal_model_real_estate_development')
             ->with('periodicities');
     }
 
     /**
      * Real estate developments buying options
-     *
-     * @return BelongsToMany
      */
     public function buying_options(): BelongsToMany
     {
-        return $this->belongsToMany(BuyingOption::class, config('sp-produto.table_prefix') . 'buying_option_real_estate_development');
+        return $this->belongsToMany(BuyingOption::class, config('sp-produto.table_prefix').'buying_option_real_estate_development');
     }
 
     /**
      * Real estate development insurance companies
-     *
-     * @return BelongsToMany
      */
     public function insurance_companies(): BelongsToMany
     {
-        return $this->belongsToMany(InsuranceCompany::class, config('sp-produto.table_prefix') . 'insurance_company_real_estate_development');
+        return $this->belongsToMany(InsuranceCompany::class, config('sp-produto.table_prefix').'insurance_company_real_estate_development');
     }
 
     /**
      * Real estate development insurances
-     *
-     * @return BelongsToMany
      */
     public function insurances(): BelongsToMany
     {
-        return $this->belongsToMany(Insurance::class, config('sp-produto.table_prefix') . 'insurance_real_estate_development');
+        return $this->belongsToMany(Insurance::class, config('sp-produto.table_prefix').'insurance_real_estate_development');
     }
 
     /**
      * Real estate developments characteristics
-     *
-     * @return HasMany
      */
     public function characteristics(): HasMany
     {
@@ -177,8 +161,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments accessories
-     *
-     * @return HasMany
      */
     public function accessories(): HasMany
     {
@@ -187,8 +169,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments documents
-     *
-     * @return HasMany
      */
     public function documents(): HasMany
     {
@@ -197,8 +177,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments medias
-     *
-     * @return HasMany
      */
     public function medias(): HasMany
     {
@@ -212,8 +190,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments typologies
-     *
-     * @return HasMany
      */
     public function typologies(): HasMany
     {
@@ -222,8 +198,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments mirrors
-     *
-     * @return HasMany
      */
     public function mirrors(): HasMany
     {
@@ -232,8 +206,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Define a one-to-many relationship.
-     *
-     * @return HasMany
      */
     public function unities(): HasMany
     {
@@ -242,8 +214,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Define a one-to-many relationship.
-     *
-     * @return HasMany
      */
     public function blueprints(): HasMany
     {
@@ -263,8 +233,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments paramenters
-     *
-     * @return HasMany
      */
     public function parameters(): HasMany
     {
@@ -295,8 +263,6 @@ class RealEstateDevelopment extends BaseModel
 
     /**
      * Real estate developments stages
-     *
-     * @return HasMany
      */
     public function stages(): HasMany
     {
@@ -332,6 +298,6 @@ class RealEstateDevelopment extends BaseModel
 
     public function sellable_by(): BelongsToMany
     {
-        return $this->belongsToMany(app(config('sp-produto.model_company')), config('sp-produto.table_prefix') . 'real_estate_development_companies', 'real_estate_development_id', 'hub_company_id')->withTimestamps();
+        return $this->belongsToMany(app(config('sp-produto.model_company')), config('sp-produto.table_prefix').'real_estate_development_companies', 'real_estate_development_id', 'hub_company_id')->withTimestamps();
     }
 }

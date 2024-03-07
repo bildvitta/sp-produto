@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ProposalModelPeriodicities.
- *
- * @package BildVitta\SpProduto\Models
  */
 class ProposalModelPeriodicities extends BaseModel
 {
@@ -21,13 +19,11 @@ class ProposalModelPeriodicities extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'proposal_model_periodicities';
+        $this->table = config('sp-produto.table_prefix').'proposal_model_periodicities';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -39,7 +35,7 @@ class ProposalModelPeriodicities extends BaseModel
      */
     public const ADD_ON_TYPE_LIST = [
         'fixed_value' => 'Valor fixo',
-        'percentage' => 'Porcentagem'
+        'percentage' => 'Porcentagem',
     ];
 
     /**
@@ -72,9 +68,6 @@ class ProposalModelPeriodicities extends BaseModel
         'pin_value' => 'boolean',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function proposalModel(): BelongsTo
     {
         return $this->belongsTo(ProposalModel::class);
@@ -82,8 +75,6 @@ class ProposalModelPeriodicities extends BaseModel
 
     /**
      * Get hub company
-     *
-     * @return BelongsTo
      */
     public function hub_company(): BelongsTo
     {

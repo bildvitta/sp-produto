@@ -3,20 +3,17 @@
 namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
 use BildVitta\SpProduto\Factories\RealEstateDevelopment\AccessoryFactory;
+use BildVitta\SpProduto\Models\Accessory as BaseAccessory;
 use BildVitta\SpProduto\Models\AccessoryCategory;
 use BildVitta\SpProduto\Models\BaseModel;
-use BildVitta\SpProduto\Models\Accessory as BaseAccessory;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Accessory.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Accessory extends BaseModel
 {
@@ -26,13 +23,11 @@ class Accessory extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'real_estate_development_accessories';
+        $this->table = config('sp-produto.table_prefix').'real_estate_development_accessories';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -68,8 +63,6 @@ class Accessory extends BaseModel
 
     /**
      * Define Accessory
-     *
-     * @return BelongsTo
      */
     public function accessory(): BelongsTo
     {
@@ -78,8 +71,6 @@ class Accessory extends BaseModel
 
     /**
      * Define an inverse one-to-one or many relationship.
-     *
-     * @return BelongsTo
      */
     public function category(): BelongsTo
     {
@@ -88,8 +79,6 @@ class Accessory extends BaseModel
 
     /**
      * Real Estate Development accessory categorization.
-     *
-     * @return BelongsTo
      */
     public function accessory_categorization(): BelongsTo
     {
@@ -101,9 +90,6 @@ class Accessory extends BaseModel
         return $this->belongsTo(RealEstateDevelopment::class);
     }
 
-    /**
-     * @return string|null
-     */
     public function getNameAttribute(): ?string
     {
         return $this?->accessory?->name;

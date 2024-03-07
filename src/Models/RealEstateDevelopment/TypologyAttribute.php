@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ProposalModel.
- *
- * @package BildVitta\SpProduto\Models
  */
 class TypologyAttribute extends BaseModel
 {
@@ -22,13 +20,11 @@ class TypologyAttribute extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'typology_attributes';
+        $this->table = config('sp-produto.table_prefix').'typology_attributes';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -43,7 +39,7 @@ class TypologyAttribute extends BaseModel
     public const ADDITION_TYPE = [
         'fixed_value' => 'Valor fixo',
         'addition_value' => 'Acréscimo de valor',
-        'percentage' => 'Percentual'
+        'percentage' => 'Percentual',
     ];
 
     /**
@@ -63,9 +59,6 @@ class TypologyAttribute extends BaseModel
         'deleted_at',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function typology(): BelongsTo
     {
         return $this->belongsTo(Typology::class);

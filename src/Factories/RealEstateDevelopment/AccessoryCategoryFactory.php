@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class AccessoryCategoryFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class AccessoryCategoryFactory extends Factory
 {
@@ -21,14 +19,12 @@ class AccessoryCategoryFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
             'uuid' => $this->faker->uuid(),
-            'name' => $this->faker->userName()
+            'name' => $this->faker->userName(),
         ];
     }
 }

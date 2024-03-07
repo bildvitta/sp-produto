@@ -10,11 +10,6 @@ use stdClass;
 
 trait TypologyHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function typologies(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $typologyIds = [];
@@ -37,14 +32,9 @@ trait TypologyHelper
             ->delete();
     }
 
-    /**
-     * @param Typology $typology
-     * @param stdClass $messageTypology
-     * @return void
-     */
     private function typologyProposalModel(Typology $typology, stdClass $messageTypology): void
     {
-        if (!empty($messageTypology->proposal_models)) {
+        if (! empty($messageTypology->proposal_models)) {
             $proposalModelIds = [];
             foreach ($messageTypology->proposal_models as $proposal_model) {
                 $proposalModelIds[] = ProposalModel::where('uuid', $proposal_model->uuid)->first()->id;
@@ -53,11 +43,6 @@ trait TypologyHelper
         }
     }
 
-    /**
-     * @param Typology $typology
-     * @param stdClass $messageTypology
-     * @return void
-     */
     private function typologyAttributes(Typology $typology, stdClass $messageTypology): void
     {
         $typologyAttributeIds = [];

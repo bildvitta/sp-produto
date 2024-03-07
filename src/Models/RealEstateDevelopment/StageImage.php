@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class StageImage.
- *
- * @package BildVitta\SpProduto\Models
  */
 class StageImage extends BaseModel
 {
@@ -22,13 +20,11 @@ class StageImage extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'stage_images';
+        $this->table = config('sp-produto.table_prefix').'stage_images';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -51,9 +47,6 @@ class StageImage extends BaseModel
         'deleted_at',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function stage(): BelongsTo
     {
         return $this->belongsTo(Stage::class);

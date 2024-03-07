@@ -7,9 +7,6 @@ use BildVitta\SpProduto\Models\Worker;
 
 trait DispatchNextJob
 {
-    /**
-     * @return void
-     */
     private function dispatchNextJob(): void
     {
         if (! $this->worker = Worker::find($this->workerId)) {

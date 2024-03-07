@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class ProposalModelFactory.
- *
- * @package BildVitta\SpProduto\Factories
  */
 class ProposalModelFactory extends Factory
 {
@@ -21,15 +19,13 @@ class ProposalModelFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
         return [
             'uuid' => $this->faker->uuid(),
             'name' => $this->faker->words(5, true),
-            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id
+            'hub_company_id' => config('sp-produto.model_company')::inRandomOrder()->first()?->id,
         ];
     }
 }

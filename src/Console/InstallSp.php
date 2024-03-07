@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpMissingFieldTypeInspection */
 
 namespace BildVitta\SpProduto\Console;
@@ -8,8 +9,6 @@ use Illuminate\Console\Command;
 
 /**
  * Class InstallSp.
- *
- * @package BildVitta\SpProduto\Console
  */
 class InstallSp extends Command
 {
@@ -19,7 +18,7 @@ class InstallSp extends Command
      * @const array
      */
     private const VENDOR_PUBLISH_MIGRATION_PARAMS = [
-        '--provider' => SpProdutoServiceProvider::class
+        '--provider' => SpProdutoServiceProvider::class,
     ];
 
     /**
@@ -59,12 +58,12 @@ class InstallSp extends Command
             $this->publishSeeders();
             $this->runSeeders();
         }
-        
+
         $this->info('Finish database seeders!');
 
         $this->info('Installed SPPackage');
     }
-   
+
     private function shouldRunMigrations(): bool
     {
         return $this->confirm('Run migrations of SP package? If you have already done this step, do not do it again!');
@@ -75,9 +74,6 @@ class InstallSp extends Command
         return $this->confirm('Run seeders of SP package? If you have already done this step, do not do it again!');
     }
 
-    /**
-     * @return void
-     */
     private function publishMigration(): void
     {
         $this->call('vendor:publish', self::VENDOR_PUBLISH_MIGRATION_PARAMS);
@@ -94,7 +90,7 @@ class InstallSp extends Command
     {
         $this->call('vendor:publish', [
             '--provider' => SpProdutoServiceProvider::class,
-            '--tag' => 'seeders'
+            '--tag' => 'seeders',
         ]);
     }
 
@@ -102,7 +98,7 @@ class InstallSp extends Command
     {
         $this->info('Run seeders.');
         $this->call('db:seed', [
-            '--class' => 'SpProdutoSeeder'
+            '--class' => 'SpProdutoSeeder',
         ]);
         $this->newLine();
         $this->info('Finish seeders.');

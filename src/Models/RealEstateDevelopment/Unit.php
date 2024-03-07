@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Unit.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Unit extends BaseModel
 {
@@ -23,13 +21,11 @@ class Unit extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'units';
+        $this->table = config('sp-produto.table_prefix').'units';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -81,9 +77,6 @@ class Unit extends BaseModel
         'deleted_at',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
@@ -107,8 +100,6 @@ class Unit extends BaseModel
 
     /**
      * Get the blueprints for the unit.
-     *
-     * @return BelongsTo
      */
     public function real_estate_developments_blueprints(): BelongsTo
     {
@@ -117,8 +108,6 @@ class Unit extends BaseModel
 
     /**
      * Get the mirrors group for the unit.
-     *
-     * @return BelongsTo
      */
     public function mirror_group(): BelongsTo
     {
@@ -127,8 +116,6 @@ class Unit extends BaseModel
 
     /**
      * Get the mirrors subgroups for the unit.
-     *
-     * @return BelongsTo
      */
     public function mirror_subgroup(): BelongsTo
     {

@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ProposalModel.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Characteristic extends BaseModel
 {
@@ -23,13 +21,11 @@ class Characteristic extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'real_estate_development_characteristics';
+        $this->table = config('sp-produto.table_prefix').'real_estate_development_characteristics';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -60,17 +56,11 @@ class Characteristic extends BaseModel
      */
     protected $casts = ['differential' => 'boolean'];
 
-    /**
-     * @return BelongsTo
-     */
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function characteristic(): BelongsTo
     {
         return $this->belongsTo(\BildVitta\SpProduto\Models\Characteristic::class, 'characteristic_id');

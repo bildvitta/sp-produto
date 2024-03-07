@@ -4,7 +4,6 @@ namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 
 use BildVitta\SpProduto\Factories\RealEstateDevelopment\MirrorFactory;
 use BildVitta\SpProduto\Models\BaseModel;
-use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,8 +13,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Mirror.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Mirror extends BaseModel
 {
@@ -25,13 +22,11 @@ class Mirror extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'mirrors';
+        $this->table = config('sp-produto.table_prefix').'mirrors';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -45,7 +40,7 @@ class Mirror extends BaseModel
      */
     public const MIRROR_TYPES = [
         'horizontal' => 'Horizontal',
-        'vertical' => 'Vertical'
+        'vertical' => 'Vertical',
     ];
 
     /**
@@ -66,31 +61,24 @@ class Mirror extends BaseModel
 
     /**
      * Define a one-to-one relationship.
-     *
-     * @return BelongsTo
      */
     public function real_estate_developments_parameters(): BelongsTo
     {
         return $this->belongsTo(Parameter::class, 'parameter_id');
     }
 
-    /**
-     * @return Collection
-     */
     public function subgroups(): Collection
     {
         return $this->mirrorGroup()->with([
             'units' => function (HasMany $query) {
                 $query->with(['real_estate_developments_blueprints']);
                 $query->orderBy('floor');
-            }
+            },
         ])->get();
     }
 
     /**
      * Define a one-to-many relationship.
-     *
-     * @return HasMany
      */
     public function mirrorGroup(): HasMany
     {
@@ -99,8 +87,6 @@ class Mirror extends BaseModel
 
     /**
      * Define a one-to-many relationship.
-     *
-     * @return HasMany
      */
     public function real_estate_developments_mirrors_subgroups(): HasMany
     {

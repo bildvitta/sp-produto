@@ -8,13 +8,11 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Stage.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Stage extends BaseModel
 {
@@ -24,13 +22,11 @@ class Stage extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'stages';
+        $this->table = config('sp-produto.table_prefix').'stages';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -68,17 +64,11 @@ class Stage extends BaseModel
         'finishing' => 'integer',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function images(): HasMany
     {
         return $this->hasMany(StageImage::class);
@@ -86,8 +76,6 @@ class Stage extends BaseModel
 
     /**
      * Get the real estate development stage images.
-     *
-     * @return HasMany
      */
     public function real_estate_developments_stages_images(): HasMany
     {

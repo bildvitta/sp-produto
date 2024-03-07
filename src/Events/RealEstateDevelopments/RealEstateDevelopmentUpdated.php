@@ -10,9 +10,6 @@ class RealEstateDevelopmentUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * @param string|null $realEstateDevelopmentUuid
-     */
     public function __construct(public ?string $realEstateDevelopmentUuid)
     {
     }

@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class BlueprintImage.
- *
- * @package BildVitta\SpProduto\Models
  */
 class BlueprintImage extends BaseModel
 {
@@ -22,13 +20,11 @@ class BlueprintImage extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'blueprint_images';
+        $this->table = config('sp-produto.table_prefix').'blueprint_images';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -51,9 +47,6 @@ class BlueprintImage extends BaseModel
         'deleted_at',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function blueprint(): BelongsTo
     {
         return $this->belongsTo(Blueprint::class);

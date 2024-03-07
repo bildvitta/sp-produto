@@ -11,11 +11,6 @@ use stdClass;
 
 trait AccessoriesHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function accessories(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $accessories = collect($message->accessories);

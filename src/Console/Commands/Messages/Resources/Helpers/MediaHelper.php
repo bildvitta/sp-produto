@@ -8,11 +8,6 @@ use stdClass;
 
 trait MediaHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function medias(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $mediaIds = [];

@@ -14,8 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Parameter.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Parameter extends BaseModel
 {
@@ -25,13 +23,11 @@ class Parameter extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'parameters';
+        $this->table = config('sp-produto.table_prefix').'parameters';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -69,7 +65,7 @@ class Parameter extends BaseModel
         'launch_in',
         'blueprint_definition_deadline',
         'construction_over_in',
-        'construction_start_in'
+        'construction_start_in',
     ];
 
     /**
@@ -153,9 +149,6 @@ class Parameter extends BaseModel
         'commission_manager' => 'float',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
@@ -163,11 +156,9 @@ class Parameter extends BaseModel
 
     /**
      * Get the buying options for the parameter.
-     *
-     * @return BelongsToMany
      */
     public function buying_options(): BelongsToMany
     {
-        return $this->belongsToMany(BuyingOption::class, config('sp-produto.prefix_table') . 'buying_options');
+        return $this->belongsToMany(BuyingOption::class, config('sp-produto.prefix_table').'buying_options');
     }
 }

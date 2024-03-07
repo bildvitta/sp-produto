@@ -2,20 +2,15 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
-use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\BlueprintImage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Accessory;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\BlueprintImage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use stdClass;
 
 trait BlueprintHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function blueprints(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $blueprintIds = [];
@@ -39,8 +34,6 @@ trait BlueprintHelper
     }
 
     /**
-     * @param Blueprint $blueprint
-     * @param array $messageBlueprintImages
      * @return void
      */
     private function blueprintImages(Blueprint $blueprint, array $messageBlueprintImages)
@@ -53,7 +46,7 @@ trait BlueprintHelper
                 'uuid' => $messageBlueprintImage->uuid,
                 'blueprint_id' => $blueprint->id,
                 'name' => $messageBlueprintImage->name ?? '',
-                'image' => explode("?", $messageBlueprintImage->image)[0],
+                'image' => explode('?', $messageBlueprintImage->image)[0],
                 'format' => $messageBlueprintImage->format ?? '',
             ]);
             $blueprintImageIds[] = $blueprintImage->id;
@@ -63,11 +56,6 @@ trait BlueprintHelper
             ->delete();
     }
 
-    /**
-     * @param Blueprint $blueprint
-     * @param array $messageBlueprintTypologies
-     * @return void
-     */
     private function blueprintTypologies(Blueprint $blueprint, array $messageBlueprintTypologies): void
     {
         $typologyUuids = collect($messageBlueprintTypologies)->pluck('uuid')->toArray();
@@ -80,11 +68,6 @@ trait BlueprintHelper
         }
     }
 
-    /**
-     * @param Blueprint $blueprint
-     * @param array $messageBlueprintAccessories
-     * @return void
-     */
     private function blueprintAccessories(Blueprint $blueprint, array $messageBlueprintAccessories): void
     {
         $accessoryUuids = collect($messageBlueprintAccessories)->pluck('uuid')->toArray();

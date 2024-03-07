@@ -12,8 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Document.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Document extends BaseModel
 {
@@ -54,22 +52,17 @@ class Document extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'documents';
+        $this->table = config('sp-produto.table_prefix').'documents';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
         return DocumentFactory::new();
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);

@@ -9,11 +9,6 @@ use stdClass;
 
 trait InsuranceHelper
 {
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function insurances(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         $insuranceCompany = InsuranceCompany::updateOrCreate([

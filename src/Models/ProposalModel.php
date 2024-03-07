@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class ProposalModel.
- *
- * @package BildVitta\SpProduto\Models
  */
 class ProposalModel extends BaseModel
 {
@@ -22,13 +20,11 @@ class ProposalModel extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'proposal_models';
+        $this->table = config('sp-produto.table_prefix').'proposal_models';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -51,8 +47,6 @@ class ProposalModel extends BaseModel
 
     /**
      * Get hub company
-     *
-     * @return BelongsTo
      */
     public function hub_company(): BelongsTo
     {
@@ -61,8 +55,6 @@ class ProposalModel extends BaseModel
 
     /**
      * Define a one-to-many relationship.
-     *
-     * @return HasMany
      */
     public function periodicities(): HasMany
     {

@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 trait SyncRelated
 {
-    /**
-         * @param Builder $query
-         * @param array $model
-         * @param array $foreign
-         * @param string $pivot
-         * @param string $label
-         * @return void
-         */
     private function syncRelated(
         Builder $query,
         array $model,

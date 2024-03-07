@@ -2,17 +2,15 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
-use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Console\Commands\Messages\Exceptions\MessageProcessorException;
 use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
 use BildVitta\SpProduto\Models\HubCompany;
+use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use stdClass;
 
 trait RealEstateDevelopmentHelper
 {
     /**
-     * @param stdClass $message
-     * @return void
      * @throws MessageProcessorException
      */
     private function realEstateDevelopmentUpdateOrCreate(stdClass $message): void
@@ -20,7 +18,7 @@ trait RealEstateDevelopmentHelper
         $realEstateDevelopment = $this->getRealEstateDevelopment($message);
 
         $this->realEstateDevelopment($realEstateDevelopment, $message);
-                
+
         if (isset($message->stages) && $this->configHas('stages')) {
             $this->stages($realEstateDevelopment, $message);
         }
@@ -63,10 +61,6 @@ trait RealEstateDevelopmentHelper
         }
     }
 
-    /**
-     * @param stdClass $message
-     * @return void
-     */
     private function realEstateDevelopmentDelete(stdClass $message): void
     {
         RealEstateDevelopment::where('uuid', $message->uuid)->delete();
@@ -76,10 +70,6 @@ trait RealEstateDevelopmentHelper
         }
     }
 
-    /**
-     * @param stdClass $message
-     * @return RealEstateDevelopment
-     */
     private function getRealEstateDevelopment(stdClass $message): RealEstateDevelopment
     {
         $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->uuid)->first();
@@ -93,11 +83,6 @@ trait RealEstateDevelopmentHelper
         return $realEstateDevelopment;
     }
 
-    /**
-     * @param RealEstateDevelopment $realEstateDevelopment
-     * @param stdClass $message
-     * @return void
-     */
     private function realEstateDevelopment(RealEstateDevelopment $realEstateDevelopment, stdClass $message): void
     {
         if (property_exists($message, 'status')) {
@@ -220,10 +205,6 @@ trait RealEstateDevelopmentHelper
         $realEstateDevelopment->save();
     }
 
-    /**
-     * @param string $hubCompanyUuid
-     * @return int
-     */
     private function getHubCompanyId(string $hubCompanyUuid): int
     {
         $hubCompany = HubCompany::withTrashed()

@@ -8,14 +8,12 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Blueprints.
- *
- * @package BildVitta\SpProduto\Models
  */
 class Blueprint extends BaseModel
 {
@@ -25,13 +23,11 @@ class Blueprint extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'blueprints';
+        $this->table = config('sp-produto.table_prefix').'blueprints';
     }
 
     /**
      * Create a new factory instance for the model.
-     *
-     * @return Factory
      */
     protected static function newFactory(): Factory
     {
@@ -53,25 +49,16 @@ class Blueprint extends BaseModel
         'deleted_at',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function realEstateDevelopment(): BelongsTo
     {
         return $this->belongsTo(RealEstateDevelopment::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function typologies(): BelongsToMany
     {
         return $this->belongsToMany(Typology::class, prefixTableName('blueprint_typology'));
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function real_estate_development_accessories(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -84,8 +71,6 @@ class Blueprint extends BaseModel
 
     /**
      * Get real estate development blueprint images.
-     *
-     * @return HasMany
      */
     public function real_estate_developments_blueprint_images(): HasMany
     {
@@ -99,11 +84,9 @@ class Blueprint extends BaseModel
 
     /**
      * Get real estate development blueprint typologies.
-     *
-     * @return BelongsToMany
      */
     public function real_estate_developments_typologies(): BelongsToMany
     {
-        return $this->belongsToMany(Typology::class, config('sp-produto.table_prefix') . 'blueprint_typology');
+        return $this->belongsToMany(Typology::class, config('sp-produto.table_prefix').'blueprint_typology');
     }
 }

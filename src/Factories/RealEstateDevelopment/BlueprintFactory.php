@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * Class BlueprintFactory.
- *
- * @package BildVitta\SpProduto\Factories\RealEstateDevelopment
  */
 class BlueprintFactory extends Factory
 {
@@ -21,8 +19,6 @@ class BlueprintFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
