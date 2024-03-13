@@ -23,9 +23,11 @@ return [
         'virtualhost' => env('RABBITMQ_VIRTUALHOST', '/'),
         'exchange' => [
             'real_estate_developments' => env('RABBITMQ_EXCHANGE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments'),
+            'properties' => env('RABBITMQ_EXCHANGE_PROPERTIES', 'properties'),
         ],
         'queue' => [
             'real_estate_developments' => env('RABBITMQ_QUEUE_REAL_ESTATE_DEVELOPMENTS'),
+            'properties' => env('RABBITMQ_QUEUE_PROPERTIES'),
         ],
     ],
 
@@ -43,5 +45,10 @@ return [
         'units', // need typologies, blueprints, mirrors
         'documents',
         'media',
+        'properties',
+    ],
+
+    'events' => [
+        'real_estate_development_updated' => env('RABBITMQ_EVENT_REAL_ESTATE_DEVELOPMENT_UPDATED', true),
     ],
 ];

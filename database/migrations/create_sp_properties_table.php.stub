@@ -1,0 +1,103 @@
+<?php
+
+use BildVitta\SpProduto\Models\AutomobileBrand;
+use BildVitta\SpProduto\Models\AutomobileModel;
+use BildVitta\SpProduto\Models\AutomobileVersion;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('properties');
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $companyModel = app(config('hub.model_company'));
+                $automobileBrandModel = new AutomobileBrand();
+                $automobileModel = new AutomobileModel();
+                $automobileVersionModel = new AutomobileVersion();
+
+                $table->id();
+                $table->uuid('uuid')->unique();
+
+                $table->foreignId('hub_company_id');
+
+                $table->string('kind')->nullable();
+                $table->string('property_name');
+                $table->text('description')->nullable();
+                $table->decimal('desired_value', 12, 2, true)->nullable();
+                $table->decimal('rated_price', 12, 2, true)->nullable();
+                $table->string('status')->nullable();
+                $table->string('postal_code')->nullable();
+                $table->string('address')->nullable();
+                $table->string('number')->nullable();
+                $table->string('city')->nullable();
+                $table->string('state')->nullable();
+                $table->string('complement')->nullable();
+                $table->string('neighborhood')->nullable();
+                $table->string('estate_type')->nullable();
+                $table->string('property_condition')->nullable();
+                $table->float('useful_area')->nullable();
+                $table->float('total_area')->nullable();
+                $table->float('average_property_tax')->nullable();
+                $table->bigInteger('rooms_quantity')->nullable();
+                $table->bigInteger('suite_rooms_quantity')->nullable();
+                $table->bigInteger('bathrooms_quantity')->nullable();
+                $table->bigInteger('garage_quantity')->nullable();
+                $table->bigInteger('floor_number')->nullable();
+                $table->bigInteger('floors_quantity')->nullable();
+                $table->bigInteger('unities_floor_quantity')->nullable();
+                $table->boolean('is_condominium')->nullable();
+                $table->string('condominium_name')->nullable();
+                $table->float('average_condominium_price')->nullable();
+                $table->boolean('is_rented')->nullable();
+                $table->float('rental_price')->nullable();
+
+                $table->foreignId('brand_id')->nullable();
+                $table->foreignId('model_id')->nullable();
+                $table->foreignId('version_id')->nullable();
+
+                $table->string('automobile_body_type')->nullable();
+                $table->string('automobile_type')->nullable();
+                $table->string('model_year')->nullable();
+                $table->string('fuel')->nullable();
+                $table->string('base_color')->nullable();
+                $table->string('commercial_color')->nullable();
+                $table->bigInteger('mileage')->nullable();
+
+                $table->unsignedInteger('sales_code')->nullable();
+                $table->string('property_purpose')->nullable();
+                $table->boolean('authorized_commercialization')->nullable();
+                $table->string('iptu_payment_condition')->nullable();
+                $table->string('property_standard')->nullable();
+                $table->string('location_standard')->nullable();
+                $table->year('construction_year')->nullable();
+                $table->year('property_renovation_year')->nullable();
+                $table->boolean('exclusivity')->nullable();
+                $table->boolean('accept_financing')->nullable();
+
+                $table->timestamps();
+                $table->softDeletes();
+
+                $table->foreign('hub_company_id')->references('id')->on($companyModel->getTable())->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('brand_id')->references('id')->on(prefixTableName('automobile_brands'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('model_id')->references('id')->on(prefixTableName('automobile_models'))->onUpdate('cascade')->onDelete('cascade');
+                $table->foreign('version_id')->references('id')->on(prefixTableName('automobile_versions'))->onUpdate('cascade')->onDelete('cascade');
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};

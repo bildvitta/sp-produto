@@ -26,24 +26,47 @@ trait SyncRelated
             $query->limit($this->worker->payload->limit)->offset($this->worker->payload->offset);
 
             $query->get()->each(function ($item) use ($model, $foreign, $pivot) {
-                $modelObject = $model['class']::where('uuid', $item->model_uuid);
-                $foreignObject = $foreign['class']::where('uuid', $item->foreign_uuid);
-
-                if (in_array(SoftDeletes::class, class_uses($model['class']))) {
-                    $modelObject->withTrashed();
+                if (! $model['class']) {
+                    $array = [
+                        'id' => $item->model_uuid,
+                    ];
+                    $modelObject = json_decode(json_encode($array), false);
+                    $modelField = $model['field'];
                 }
-                $modelObject = $modelObject->first();
 
-                if (in_array(SoftDeletes::class, class_uses($foreign['class']))) {
-                    $foreignObject->withTrashed();
+                if ($model['class']) {
+                    $modelObject = $model['class']::where('uuid', $item->model_uuid);
+                    if (in_array(SoftDeletes::class, class_uses($model['class']))) {
+                        $modelObject->withTrashed();
+                    }
+                    $modelObject = $modelObject->first();
+
+                    $modelField = sprintf('%s_id', $model['field']);
                 }
-                $foreignObject = $foreignObject->first();
+
+                if (! $foreign['class']) {
+                    $array = [
+                        'id' => $item->foreign_uuid,
+                    ];
+                    $foreignObject = json_decode(json_encode($array), false);
+                    $foreignField = $foreign['field'];
+                }
+
+                if ($foreign['class']) {
+                    $foreignObject = $foreign['class']::where('uuid', $item->foreign_uuid);
+                    if (in_array(SoftDeletes::class, class_uses($foreign['class']))) {
+                        $foreignObject->withTrashed();
+                    }
+                    $foreignObject = $foreignObject->first();
+
+                    $foreignField = sprintf('%s_id', $foreign['field']);
+                }
 
                 if ($modelObject && $foreignObject) {
                     DB::table(prefixTableName($pivot))
                         ->insert([
-                            sprintf('%s_id', $model['field']) => $modelObject->id,
-                            sprintf('%s_id', $foreign['field']) => $foreignObject->id,
+                            $modelField => $modelObject->id,
+                            $foreignField => $foreignObject->id,
                         ]);
                 }
             });

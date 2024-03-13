@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use BildVitta\SpProduto\Models\Property;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('property_holders');
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->foreignId('property_id')
+                    ->constrained(prefixTableName('properties'))
+                    ->index('property_holders_property_id_foreign');
+                $table->uuid('holder_uuid');
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};
