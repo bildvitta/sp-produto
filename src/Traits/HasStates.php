@@ -4,7 +4,7 @@ namespace BildVitta\SpProduto\Traits;
 
 trait HasStates
 {
-    private $state_list = [
+    public const STATE_LIST = [
         'AC' => 'Acre',
         'AL' => 'Alagoas',
         'AP' => 'Amapá',
@@ -37,7 +37,7 @@ trait HasStates
     public function stateName($attribute = 'state')
     {
         if (isset($this->$attribute)) {
-            return $this->state_list[$this->$attribute];
+            return $this->STATE_LIST[$this->$attribute];
         }
 
         return '';
@@ -49,7 +49,7 @@ trait HasStates
     public function stateInitials(?string $attribute = null): ?string
     {
         if (isset($attribute)) {
-            return array_search($attribute, $this->state_list);
+            return array_search($attribute, $this->STATE_LIST);
         }
 
         return null;
