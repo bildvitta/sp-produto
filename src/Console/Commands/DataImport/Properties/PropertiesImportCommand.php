@@ -81,12 +81,12 @@ class PropertiesImportCommand extends Command
     {
         $tables = [];
         if ($this->configHas('properties')) {
-            // $tables[] = 'automobile_brands';
-            // $tables[] = 'automobile_models';
-            // $tables[] = 'automobile_versions';
-            // $tables[] = 'automobile_differentials';
-            // $tables[] = 'estate_differentials';
-            // $tables[] = 'properties';
+            $tables[] = 'automobile_brands';
+            $tables[] = 'automobile_models';
+            $tables[] = 'automobile_versions';
+            $tables[] = 'automobile_differentials';
+            $tables[] = 'estate_differentials';
+            $tables[] = 'properties';
             $tables[] = 'property_attachments';
             $tables[] = 'property_holders';
             $tables[] = 'property_images';
