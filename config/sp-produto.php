@@ -33,7 +33,6 @@ return [
         'virtualhost' => env('RABBITMQ_VIRTUALHOST', '/'),
         'exchange' => [
             'real_estate_developments' => env('RABBITMQ_EXCHANGE_REAL_ESTATE_DEVELOPMENTS', 'real_estate_developments'),
-            'properties' => env('RABBITMQ_EXCHANGE_PROPERTIES', 'properties'),
         ],
         'queue' => [
             'real_estate_developments' => env('RABBITMQ_QUEUE_REAL_ESTATE_DEVELOPMENTS'),
