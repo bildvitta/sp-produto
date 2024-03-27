@@ -88,7 +88,7 @@ class PropertiesImportCommand extends Command
             $tables[] = 'estate_differentials';
             $tables[] = 'properties';
             $tables[] = 'property_attachments';
-            $tables[] = 'property_holders';
+            $tables[] = 'holder_property';
             $tables[] = 'property_images';
             $tables[] = 'automobile_differential_property';
             $tables[] = 'estate_differential_property';

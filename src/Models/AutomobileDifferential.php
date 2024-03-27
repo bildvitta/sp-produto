@@ -13,7 +13,7 @@ class AutomobileDifferential extends BaseModel
     protected $fillable = [
         'uuid',
         'label',
-        'slug',
+        'value',
     ];
 
     public function __construct(array $attributes = [])

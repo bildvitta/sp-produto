@@ -30,6 +30,13 @@ class PropertyHolder extends BaseModel
      */
     protected $primaryKey = false;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'holder_property';
+
     protected $fillable = [
         'property_id',
         'holder_uuid',
@@ -38,7 +45,7 @@ class PropertyHolder extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix').'property_holders';
+        $this->table = config('sp-produto.table_prefix') . 'holder_property';
     }
 
     public function property(): BelongsTo

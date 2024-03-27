@@ -100,8 +100,8 @@ class PropertyImportJob implements ShouldQueue
             case 'property_attachments':
                 $this->property_attachments();
                 break;
-            case 'property_holders':
-                $this->property_holders();
+            case 'holder_property':
+                $this->holder_property();
                 break;
             case 'property_images':
                 $this->property_images();

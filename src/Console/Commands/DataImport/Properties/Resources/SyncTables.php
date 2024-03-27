@@ -10,6 +10,7 @@ use BildVitta\SpProduto\Models\EstateDifferential;
 use BildVitta\SpProduto\Models\HubCompany;
 use BildVitta\SpProduto\Models\Property;
 use BildVitta\SpProduto\Models\PropertyAttachment;
+use BildVitta\SpProduto\Models\PropertyHolder;
 use BildVitta\SpProduto\Models\PropertyImage;
 use Illuminate\Database\ConnectionInterface;
 use Illuminate\Support\Facades\DB;
@@ -129,25 +130,26 @@ trait SyncTables
         );
     }
 
-    private function property_holders()
+    private function holder_property()
     {
-        $property_holders = $this->getDatabase()->table('holder_property as ph')
-            ->leftJoin('properties as p', 'ph.property_id', '=', 'p.id')
-            ->select('ph.holder_uuid as foreign_uuid', 'p.uuid as model_uuid');
+        $propertyHolders = $this->getDatabase()->table('holder_property as ph')
+            ->join('properties as p', 'ph.property_id', '=', 'p.id')
+            ->select('ph.holder_uuid', 'p.uuid as property_uuid')
+            ->get();
 
-        $this->syncRelated(
-            $property_holders,
-            [
-                'class' => Property::class,
-                'field' => 'property',
-            ],
-            [
-                'class' => null,
-                'field' => 'holder_uuid',
-            ],
-            'property_holders',
-            'Real Estate Developments Accessory Blueprint'
-        );
+        PropertyHolder::query()->delete();
+
+        foreach($propertyHolders as $propertyHolder) {
+            $propertyId = Property::query()
+                ->where('uuid', $propertyHolder->property_uuid)
+                ->value('id');
+            if ($propertyId) {
+                PropertyHolder::create([
+                    'property_id' => $propertyId,
+                    'holder_uuid' => $propertyHolder->holder_uuid,
+                ]);
+            }
+        }        
     }
 
     private function property_images()
@@ -169,46 +171,48 @@ trait SyncTables
 
     private function automobile_differential_property()
     {
-        $automobile_differential_property = $this->getDatabase()->table('automobile_differential_property as adp')
-            ->leftJoin('automobile_differentials as ad', 'adp.automobile_differential_id', '=', 'ad.id')
-            ->leftJoin('properties as p', 'adp.property_id', '=', 'p.id')
-            ->select('adp.*', 'ad.uuid as automobile_differential_uuid', 'p.uuid as property_uuid');
+        $automobileDifferentialProperties = $this->getDatabase()->table('automobile_differential_property as adp')
+            ->join('automobile_differentials as ad', 'adp.automobile_differential_id', '=', 'ad.id')
+            ->join('properties as p', 'adp.property_id', '=', 'p.id')
+            ->select('adp.*', 'ad.uuid as automobile_differential_uuid', 'p.uuid as property_uuid')
+            ->get();
 
-        $this->syncRelated(
-            $automobile_differential_property,
-            [
-                'class' => AutomobileDifferential::class,
-                'field' => 'automobile_differential_id',
-            ],
-            [
-                'class' => Property::class,
-                'field' => 'property_id',
-            ],
-            'automobile_differential_property',
-            'Automobile Differential Property'
-        );
+        DB::table(prefixTableName('automobile_differential_property'))->delete();
+
+        foreach($automobileDifferentialProperties as $automobileDifferentialProperty) {
+            $property = Property::query()
+                ->where('uuid', $automobileDifferentialProperty->property_uuid)
+                ->first();
+            $automobileDiferential = AutomobileDifferential::query()
+                ->where('uuid', $automobileDifferentialProperty->automobile_differential_uuid)
+                ->first();
+            if ($property && $automobileDiferential) {
+                $property->automobile_differentials()->attach($automobileDiferential);
+            }      
+        }   
     }
 
     private function estate_differential_property()
     {
-        $estate_differential_property = $this->getDatabase()->table('estate_differential_property as edp')
-            ->leftJoin('estate_differentials as ed', 'edp.estate_differential_id', '=', 'ed.id')
-            ->leftJoin('properties as p', 'edp.property_id', '=', 'p.id')
-            ->select('edp.*', 'ed.uuid as estate_differential_uuid', 'p.uuid as property_uuid');
+        $estateDifferentialProperties = $this->getDatabase()->table('estate_differential_property as edp')
+            ->join('estate_differentials as ed', 'edp.estate_differential_id', '=', 'ed.id')
+            ->join('properties as p', 'edp.property_id', '=', 'p.id')
+            ->select('edp.*', 'ed.uuid as estate_differential_uuid', 'p.uuid as property_uuid')
+            ->get();
 
-        $this->syncRelated(
-            $estate_differential_property,
-            [
-                'class' => EstateDifferential::class,
-                'field' => 'estate_differential_id',
-            ],
-            [
-                'class' => Property::class,
-                'field' => 'property_id',
-            ],
-            'estate_differential_property',
-            'Estate Differential Property'
-        );
+        DB::table(prefixTableName('estate_differential_property'))->delete();    
+
+        foreach($estateDifferentialProperties as $estateDifferentialProperty) {
+            $property = Property::query()
+                ->where('uuid', $estateDifferentialProperty->property_uuid)
+                ->first();
+            $estateDiferential = EstateDifferential::query()
+                ->where('uuid', $estateDifferentialProperty->estate_differential_uuid)
+                ->first();
+            if ($property && $estateDiferential) {
+                $property->estates_differentials()->attach($estateDiferential);
+            }        
+        }
     }
 
     private function getDatabase(): ConnectionInterface

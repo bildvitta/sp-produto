@@ -161,9 +161,9 @@ class Property extends BaseModel
         $this->table = config('sp-produto.table_prefix').'properties';
     }
 
-    public function hub_company()
+    public function hub_company(): BelongsTo
     {
-        return $this->hasMany(config('sp-produto.model_company'));
+        return $this->belongsTo(config('sp-produto.model_company'), 'hub_company_id', 'id');
     }
 
     /**
@@ -184,12 +184,12 @@ class Property extends BaseModel
 
     public function automobile_differentials(): BelongsToMany
     {
-        return $this->belongsToMany(AutomobileDifferential::class, config('sp-produto.table_prefix').'automobile_differential_property', 'automobile_differential_id', 'property_id');
+        return $this->belongsToMany(AutomobileDifferential::class, config('sp-produto.table_prefix') . 'automobile_differential_property', 'property_id', 'automobile_differential_id');
     }
 
     public function estates_differentials(): BelongsToMany
     {
-        return $this->belongsToMany(EstateDifferential::class, config('sp-produto.table_prefix').'estate_differential_property', 'estate_differential_id', 'property_id');
+        return $this->belongsToMany(EstateDifferential::class, config('sp-produto.table_prefix') . 'estate_differential_property', 'property_id', 'estate_differential_id');
     }
 
     /**

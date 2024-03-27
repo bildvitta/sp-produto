@@ -69,7 +69,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_automobile_differentials_table',
         'create_sp_properties_table',
         'create_sp_property_attachments_table',
-        'create_sp_property_holders_table',
+        'create_sp_holder_property_table',
         'create_sp_property_images_table',
         'create_sp_automobile_differential_property_table',
         'create_sp_estate_differential_property_table',
@@ -196,7 +196,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_automobile_differentials_table';
                     $migrations[] = 'create_sp_properties_table';
                     $migrations[] = 'create_sp_property_attachments_table';
-                    $migrations[] = 'create_sp_property_holders_table';
+                    $migrations[] = 'create_sp_holder_property_table';
                     $migrations[] = 'create_sp_property_images_table';
                     $migrations[] = 'create_sp_automobile_differential_property_table';
                     $migrations[] = 'create_sp_estate_differential_property_table';

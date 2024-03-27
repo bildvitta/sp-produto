@@ -13,12 +13,12 @@ class EstateDifferential extends BaseModel
     protected $fillable = [
         'uuid',
         'label',
-        'slug',
+        'value',
     ];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix').'estate_differential_property';
+        $this->table = config('sp-produto.table_prefix').'estate_differentials';
     }
 }
