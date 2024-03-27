@@ -1,0 +1,42 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use BildVitta\SpProduto\Models\AutomobileModel;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('automobile_versions');
+    }
+
+    public function up()
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+                $table->uuid('uuid')->unique();
+
+                $table->foreignId('automobile_model_id')
+                    ->constrained(prefixTableName('automobile_models'))
+                    ->onUpdate('cascade')
+                    ->onDelete('cascade')
+                    ->index('automobile_versions_model_id_foreign');
+
+                $table->string('label');
+                $table->string('slug');
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        }
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists($this->tableName);
+    }
+};

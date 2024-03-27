@@ -2,9 +2,11 @@
 
 namespace BildVitta\SpProduto;
 
+use BildVitta\SpProduto\Console\Commands\DataImport\Properties\PropertiesImportCommand;
 use BildVitta\SpProduto\Console\Commands\DataImport\RealEstateDevelopments\RealEstateDevelopmentImportCommand;
 use BildVitta\SpProduto\Console\Commands\Messages\RealEstateDevelopmentWorkerCommand;
 use BildVitta\SpProduto\Console\ConfigSp;
+use BildVitta\SpProduto\Console\ConfigureRabbitMQ;
 use BildVitta\SpProduto\Console\InstallSp;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -59,11 +61,25 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_type_column_to_documents_table',
         'add_extract_text_and_itbi_value_to_typologies_table',
         'add_commission_columns_to_parameters_table',
+
+        'create_sp_automobile_brands_table',
+        'create_sp_automobile_models_table',
+        'create_sp_automobile_versions_table',
+        'create_sp_estate_differentials_table',
+        'create_sp_automobile_differentials_table',
+        'create_sp_properties_table',
+        'create_sp_property_attachments_table',
+        'create_sp_holder_property_table',
+        'create_sp_property_images_table',
+        'create_sp_automobile_differential_property_table',
+        'create_sp_estate_differential_property_table',
     ];
 
     protected array $commands = [
         ConfigSp::class,
         InstallSp::class,
+        ConfigureRabbitMQ::class,
+        PropertiesImportCommand::class,
         RealEstateDevelopmentImportCommand::class,
         RealEstateDevelopmentWorkerCommand::class,
     ];
@@ -171,6 +187,19 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     break;
                 case 'media':
                     $migrations[] = 'create_sp_produto_media_table';
+                    break;
+                case 'properties':
+                    $migrations[] = 'create_sp_automobile_brands_table';
+                    $migrations[] = 'create_sp_automobile_models_table';
+                    $migrations[] = 'create_sp_automobile_versions_table';
+                    $migrations[] = 'create_sp_estate_differentials_table';
+                    $migrations[] = 'create_sp_automobile_differentials_table';
+                    $migrations[] = 'create_sp_properties_table';
+                    $migrations[] = 'create_sp_property_attachments_table';
+                    $migrations[] = 'create_sp_holder_property_table';
+                    $migrations[] = 'create_sp_property_images_table';
+                    $migrations[] = 'create_sp_automobile_differential_property_table';
+                    $migrations[] = 'create_sp_estate_differential_property_table';
                     break;
             }
         }

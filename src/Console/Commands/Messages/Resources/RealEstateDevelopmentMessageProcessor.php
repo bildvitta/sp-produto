@@ -12,6 +12,7 @@ use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\LogHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MediaHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MirrorHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ParameterHelper;
+use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\PropertyHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ProposalModelHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\RealEstateDevelopmentHelper;
 use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\SellableHelper;
@@ -42,6 +43,7 @@ class RealEstateDevelopmentMessageProcessor
     use Tools;
     use TypologyHelper;
     use UnitHelper;
+    use PropertyHelper;
 
     /**
      * @var string
@@ -57,6 +59,11 @@ class RealEstateDevelopmentMessageProcessor
      * @var string
      */
     public const CHARACTERISTICS = 'characteristics';
+
+    /**
+     * @var string
+     */
+    public const PROPERTIES = 'properties';
 
     /**
      * @var string
@@ -95,6 +102,9 @@ class RealEstateDevelopmentMessageProcessor
                 case self::CHARACTERISTICS:
                     $this->processCharacteristic($operation, $messageData);
                     break;
+                case self::PROPERTIES:
+                    $this->processProperty($operation, $messageData);
+                    break;    
             }
         } catch (Throwable $exception) {
             $this->logError($exception, $messageBody);
@@ -142,6 +152,21 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::DELETED:
                     $this->characteristicDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processProperty(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('properties')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->propertyUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->propertyDelete($messageData);
                     break;
             }
         }
