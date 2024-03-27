@@ -37,7 +37,6 @@ return [
         ],
         'queue' => [
             'real_estate_developments' => env('RABBITMQ_QUEUE_REAL_ESTATE_DEVELOPMENTS'),
-            'properties' => env('RABBITMQ_QUEUE_PROPERTIES'),
         ],
     ],
 
@@ -59,6 +58,6 @@ return [
     ],
 
     'events' => [
-        'real_estate_development_updated' => env('RABBITMQ_EVENT_REAL_ESTATE_DEVELOPMENT_UPDATED', true),
+        'real_estate_development_updated' => env('RABBITMQ_EVENT_REAL_ESTATE_DEVELOPMENT_UPDATED', false),
     ],
 ];

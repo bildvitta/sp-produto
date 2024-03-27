@@ -43,19 +43,12 @@ class ConfigureRabbitMQ extends Command
         $exchangeNameRealEstateDevelopments = config('sp-produto.rabbitmq.exchange.real_estate_developments');
         $queueNameRealEstateDevelopments = config('sp-produto.rabbitmq.queue.real_estate_developments');
 
-        $exchangeNameProperties = config('sp-produto.rabbitmq.exchange.properties');
-        $queueNameProperties = config('sp-produto.rabbitmq.queue.properties');
-
         $connection = new AMQPStreamConnection($host, $port, $user, $password, $vhost);
         $channel = $connection->channel();
 
         $channel->exchange_declare($exchangeNameRealEstateDevelopments, 'fanout', false, true, false);
         $channel->queue_declare($queueNameRealEstateDevelopments, false, true, false, false);
         $channel->queue_bind($queueNameRealEstateDevelopments, $exchangeNameRealEstateDevelopments);
-
-        $channel->exchange_declare($exchangeNameProperties, 'fanout', false, true, false);
-        $channel->queue_declare($queueNameProperties, false, true, false, false);
-        $channel->queue_bind($queueNameProperties, $exchangeNameProperties);
 
         $channel->close();
         $connection->close();
