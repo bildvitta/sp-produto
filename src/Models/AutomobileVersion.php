@@ -17,6 +17,9 @@ class AutomobileVersion extends BaseModel
         'uuid',
         'label',
         'slug',
+        'updated_at',
+        'created_at',
+        'deleted_at',
     ];
 
     public function __construct(array $attributes = [])
