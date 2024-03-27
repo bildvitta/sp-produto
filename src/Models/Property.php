@@ -145,6 +145,9 @@ class Property extends BaseModel
         'property_renovation_year',
         'exclusivity',
         'accept_financing',
+        'updated_at',
+        'created_at',
+        'deleted_at',
     ];
 
     protected $casts = [

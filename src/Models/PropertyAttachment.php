@@ -18,6 +18,9 @@ class PropertyAttachment extends BaseModel
         'url',
         'format',
         'property_id',
+        'updated_at',
+        'created_at',
+        'deleted_at',
     ];
 
     public function __construct(array $attributes = [])
