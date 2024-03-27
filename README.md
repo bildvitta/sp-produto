@@ -68,6 +68,7 @@ return [
         'units', // need typologies, blueprints, mirrors 
         'documents',
         'media',
+        'properties',
     ],
 ];
 ```
