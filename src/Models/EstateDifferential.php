@@ -14,6 +14,9 @@ class EstateDifferential extends BaseModel
         'uuid',
         'label',
         'value',
+        'updated_at',
+        'created_at',
+        'deleted_at',
     ];
 
     public function __construct(array $attributes = [])

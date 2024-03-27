@@ -23,6 +23,9 @@ class AutomobileBrand extends BaseModel
         'type',
         'label',
         'slug',
+        'updated_at',
+        'created_at',
+        'deleted_at',
     ];
 
     public function __construct(array $attributes = [])
