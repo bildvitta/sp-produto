@@ -73,6 +73,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_property_images_table',
         'create_sp_automobile_differential_property_table',
         'create_sp_estate_differential_property_table',
+        'add_garage_type_and_furniture_columns_on_units_table',
     ];
 
     protected array $commands = [
@@ -180,6 +181,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                 case 'units':
                     $migrations[] = 'create_sp_produto_units_table';
                     $migrations[] = 'add_table_price_to_sp_produto_units_table';
+                    $migrations[] = 'add_garage_type_and_furniture_columns_on_units_table';
                     break;
                 case 'documents':
                     $migrations[] = 'create_sp_produto_documents_table';
