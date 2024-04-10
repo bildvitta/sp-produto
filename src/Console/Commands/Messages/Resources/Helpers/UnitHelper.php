@@ -44,6 +44,9 @@ trait UnitHelper
             'notary_registration' => $message->notary_registration,
             'property_tax_identification' => $message->property_tax_identification,
             'has_empty_fields' => $message->has_empty_fields,
+            'has_furniture' => $message->has_furniture ?? null,
+            'furniture_value' => $message->furniture_value ?? null,
+            'garage_type' => $message->garage_type ?? null,
         ]);
         $this->unitPriceCalc($unit, $message);
         $this->unitSaleStep($unit, $realEstateDevelopment);
