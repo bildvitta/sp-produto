@@ -74,6 +74,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_automobile_differential_property_table',
         'create_sp_estate_differential_property_table',
         'add_garage_type_and_furniture_columns_on_units_table',
+        'drop_status_column_on_properties_table',
     ];
 
     protected array $commands = [
@@ -202,6 +203,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_property_images_table';
                     $migrations[] = 'create_sp_automobile_differential_property_table';
                     $migrations[] = 'create_sp_estate_differential_property_table';
+                    $migrations[] = 'drop_status_column_on_properties_table';
                     break;
             }
         }
