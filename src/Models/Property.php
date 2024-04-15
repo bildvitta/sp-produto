@@ -21,13 +21,6 @@ class Property extends BaseModel
         'other' => 'Outro',
     ];
 
-    public const STATUS_LIST = [
-        'available_for_sale' => 'Disponível para venda',
-        'in_analysis' => 'Em análise',
-        'passed_on' => 'Repassado',
-        'unavailable' => 'Indisponível',
-    ];
-
     public const ESTATE_TYPE_LIST = [
         'house' => 'Casa',
         'apartment' => 'Apartamento',
@@ -102,7 +95,6 @@ class Property extends BaseModel
         'description',
         'desired_value',
         'rated_price',
-        'status',
         'postal_code',
         'address',
         'number',

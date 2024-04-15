@@ -31,7 +31,6 @@ trait PropertyHelper
             'description' => $message->description,
             'desired_value' => $message->desired_value,
             'rated_price' => $message->rated_price,
-            'status' => $message->status,
             'postal_code' => $message->postal_code,
             'address' => $message->address,
             'number' => $message->number,
