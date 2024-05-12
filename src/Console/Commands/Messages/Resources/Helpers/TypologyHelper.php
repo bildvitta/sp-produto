@@ -2,10 +2,10 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
+use BildVitta\SpProduto\Models\Attribute;
 use BildVitta\SpProduto\Models\ProposalModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
-use BildVitta\SpProduto\Models\RealEstateDevelopment\TypologyAttribute;
 use stdClass;
 
 trait TypologyHelper
@@ -34,33 +34,30 @@ trait TypologyHelper
 
     private function typologyProposalModel(Typology $typology, stdClass $messageTypology): void
     {
-        if (! empty($messageTypology->proposal_models)) {
-            $proposalModelIds = [];
-            foreach ($messageTypology->proposal_models as $proposal_model) {
-                $proposalModelIds[] = ProposalModel::where('uuid', $proposal_model->uuid)->first()->id;
-            }
-            $typology->real_estate_developments_proposal_model()->sync($proposalModelIds);
-        }
+        $proposalModelUuids = collect($messageTypology->proposal_models)->pluck('uuid');
+        $proposalModelIds = ProposalModel::whereIn('uuid', $proposalModelUuids)
+            ->get(['id'])
+            ->pluck('id')
+            ->toArray();
+        $typology->real_estate_developments_proposal_model()->sync($proposalModelIds);
     }
 
     private function typologyAttributes(Typology $typology, stdClass $messageTypology): void
     {
-        $typologyAttributeIds = [];
+        $attributeIds = [];
         foreach ($messageTypology->attributes as $messageAttribute) {
-            $typologyAttribute = TypologyAttribute::updateOrCreate([
+            $attribute = Attribute::updateOrCreate([
                 'uuid' => $messageAttribute->uuid,
             ], [
                 'uuid' => $messageAttribute->uuid,
-                'typology_id' => $typology->id,
                 'name' => $messageAttribute->name,
                 'description' => $messageAttribute->description,
                 'type_increase' => $messageAttribute->type_increase,
                 'value_increase' => $messageAttribute->value_increase,
+                'hub_company_id' => $this->hubCompanyId($messageAttribute),
             ]);
-            $typologyAttributeIds[] = $typologyAttribute->id;
+            $attributeIds[] = $attribute->id;
         }
-        TypologyAttribute::where('typology_id', $typology->id)
-            ->whereNotIn('id', $typologyAttributeIds)
-            ->delete();
+        $typology->typology_attributes()->sync($attributeIds);
     }
 }

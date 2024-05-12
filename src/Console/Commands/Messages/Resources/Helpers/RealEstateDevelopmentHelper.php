@@ -55,7 +55,6 @@ trait RealEstateDevelopmentHelper
         if (isset($message->sellable_by)) {
             $this->sellableBy($realEstateDevelopment, $message);
         }
-
         if (config('sp-produto.events.real_estate_development_updated')) {
             event(new RealEstateDevelopmentUpdated($message->uuid));
         }
@@ -202,6 +201,12 @@ trait RealEstateDevelopmentHelper
         if (property_exists($message, 'real_estate_development_type_id')) {
             $realEstateDevelopment->real_estate_development_type_id = $message->real_estate_development_type_id;
         }
+        if (property_exists($message, 'segment')) {
+            $realEstateDevelopment->segment = $message->segment;
+        }
+
+        $realEstateDevelopment->hub_company_id = $this->getHubCompanyId($message->hub_company_uuid);
+
         $realEstateDevelopment->save();
     }
 
