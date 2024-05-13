@@ -2,82 +2,41 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources;
 
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\AccessoriesHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\BlueprintHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\BuyingOptionHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\CharacteristicHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\DocumentHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\InsuranceHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\LogHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MediaHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\MirrorHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ParameterHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\PropertyHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\ProposalModelHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\RealEstateDevelopmentHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\SellableHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\StageHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\Tools;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\TypologyHelper;
-use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\UnitHelper;
+use BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers\Helpers;
 use PhpAmqpLib\Message\AMQPMessage;
 use stdClass;
 use Throwable;
 
 class RealEstateDevelopmentMessageProcessor
 {
-    use AccessoriesHelper;
-    use BlueprintHelper;
-    use BuyingOptionHelper;
-    use CharacteristicHelper;
-    use DocumentHelper;
-    use InsuranceHelper;
-    use LogHelper;
-    use MediaHelper;
-    use MirrorHelper;
-    use ParameterHelper;
-    use ProposalModelHelper;
-    use RealEstateDevelopmentHelper;
-    use SellableHelper;
-    use StageHelper;
-    use Tools;
-    use TypologyHelper;
-    use UnitHelper;
-    use PropertyHelper;
+    use Helpers;
 
-    /**
-     * @var string
-     */
     public const REAL_ESTATE_DEVELOPMENTS = 'real_estate_developments';
 
-    /**
-     * @var string
-     */
     public const UNITS = 'units';
 
-    /**
-     * @var string
-     */
     public const CHARACTERISTICS = 'characteristics';
 
-    /**
-     * @var string
-     */
+    public const REAL_ESTATE_DEVELOPMENT_CHARACTERISTICS = 'real_estate_development_characteristics';
+
+    public const PROPOSAL_MODELS = 'proposal_models';
+
+    public const BUYING_OPTIONS = 'buying_options';
+
     public const PROPERTIES = 'properties';
 
-    /**
-     * @var string
-     */
+    public const CATEGORIES = 'categories';
+
+    public const ACCESSORIES = 'accessories';
+
+    public const INSURANCE_COMPANIES = 'insurance_companies';
+
+    public const ATTRIBUTES = 'attributes';
+
     public const UPDATED = 'updated';
 
-    /**
-     * @var string
-     */
     public const CREATED = 'created';
 
-    /**
-     * @var string
-     */
     public const DELETED = 'deleted';
 
     public function process(AMQPMessage $message): void
@@ -102,9 +61,33 @@ class RealEstateDevelopmentMessageProcessor
                 case self::CHARACTERISTICS:
                     $this->processCharacteristic($operation, $messageData);
                     break;
+                case self::REAL_ESTATE_DEVELOPMENT_CHARACTERISTICS:
+                    $this->processRealEstateDevelopmentCharacteristic($operation, $messageData);
+                    break;     
                 case self::PROPERTIES:
                     $this->processProperty($operation, $messageData);
-                    break;    
+                    break;
+                case self::PROPERTIES:
+                    $this->processProperty($operation, $messageData);
+                    break;
+                case self::PROPOSAL_MODELS:
+                    $this->processProposalModels($operation, $messageData);
+                    break;
+                case self::BUYING_OPTIONS:
+                    $this->processBuyingOptions($operation, $messageData);
+                    break; 
+                case self::CATEGORIES:
+                    $this->processCategories($operation, $messageData);
+                    break;
+                case self::ACCESSORIES:
+                    $this->processAccessories($operation, $messageData);
+                    break;
+                case self::INSURANCE_COMPANIES:
+                    $this->processInsuranceCompanies($operation, $messageData);
+                    break;
+                case self::ATTRIBUTES:
+                    $this->processAttributes($operation, $messageData);
+                    break;                                      
             }
         } catch (Throwable $exception) {
             $this->logError($exception, $messageBody);
@@ -167,6 +150,111 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::DELETED:
                     $this->propertyDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processProposalModels(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('proposal_models')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->proposalModelUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->proposalModelDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processBuyingOptions(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('buying_options')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->buyingOptionUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->buyingOptionDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processCategories(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('accessories')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->categoryUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->categoryDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processAccessories(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('accessories')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->accessoryUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->accessoryDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processInsuranceCompanies(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('insurances')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->insuranceCompanyUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->insuranceCompanyDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processRealEstateDevelopmentCharacteristic(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('characteristics')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->realEstateDevelopmentCharacteristicUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->realEstateDevelopmentCharacteristicDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processAttributes(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('typologies')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->attributeUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->attributeDelete($messageData);
                     break;
             }
         }
