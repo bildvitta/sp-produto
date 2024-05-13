@@ -1,21 +1,18 @@
 <?php
 
-namespace BildVitta\SpProduto\Factories\RealEstateDevelopment;
+namespace BildVitta\SpProduto\Factories;
 
-use BildVitta\SpProduto\Models\RealEstateDevelopment\TypologyAttribute;
+use BildVitta\SpProduto\Models\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * Class TypologyAttributeFactory.
- */
-class TypologyAttributeFactory extends Factory
+class AttributeFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = TypologyAttribute::class;
+    protected $model = Attribute::class;
 
     /**
      * Define the model's default state.
@@ -26,7 +23,7 @@ class TypologyAttributeFactory extends Factory
             'uuid' => $this->faker->uuid(),
             'name' => $this->faker->words(5, true),
             'description' => $this->faker->text(),
-            'type_increase' => $this->faker->randomKey(TypologyAttribute::ADDITION_TYPE),
+            'type_increase' => $this->faker->randomKey(Attribute::ADDITION_TYPE),
             'value_increase' => $this->faker->randomFloat(2, 0, 9999),
         ];
     }

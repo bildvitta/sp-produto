@@ -75,6 +75,9 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_estate_differential_property_table',
         'add_garage_type_and_furniture_columns_on_units_table',
         'drop_status_column_on_properties_table',
+        'alter_street_number_field_on_real_estate_developments_table',
+        'add_segment_field_on_real_estate_developments_table',
+        'alter_table_typology_attributes_table',
     ];
 
     protected array $commands = [
@@ -120,6 +123,8 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             'create_workers_table',
             'create_sp_produto_real_estate_developments_table',
             'add_registration_and_real_estate_development_code_columns_to_real_estate_developments_table',
+            'alter_street_number_field_on_real_estate_developments_table',
+            'add_segment_field_on_real_estate_developments_table',
         ];
         foreach ($relations as $relation) {
             switch ($relation) {
@@ -178,6 +183,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_typologies_table';
                     $migrations[] = 'create_sp_produto_typology_attributes_table';
                     $migrations[] = 'add_extract_text_and_itbi_value_to_typologies_table';
+                    $migrations[] = 'alter_table_typology_attributes_table';
                     break;
                 case 'units':
                     $migrations[] = 'create_sp_produto_units_table';

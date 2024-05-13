@@ -84,6 +84,7 @@ class RealEstateDevelopment extends BaseModel
         'registration',
         'real_estate_development_code',
         'extract_text',
+        'segment',
     ];
 
     public function __construct(array $attributes = [])

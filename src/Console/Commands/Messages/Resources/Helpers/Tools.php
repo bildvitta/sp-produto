@@ -2,7 +2,9 @@
 
 namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
+use BildVitta\SpProduto\Models\HubCompany;
 use Carbon\Carbon;
+use stdClass;
 
 trait Tools
 {
@@ -26,5 +28,12 @@ trait Tools
         }
 
         return false;
+    }
+
+    protected function hubCompanyId(stdClass $message): int
+    {
+        return HubCompany::withTrashed()
+            ->where('uuid', $message->hub_company_uuid)
+            ->value('id');
     }
 }
