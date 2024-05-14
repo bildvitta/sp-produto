@@ -8,14 +8,15 @@ trait Helpers
     use AttributeHelper;
     use BlueprintHelper;
     use BuyingOptionHelper;
-    use CharacteristicHelper;
     use CategoriesHelper;
+    use CharacteristicHelper;
     use DocumentHelper;
     use InsuranceHelper;
     use LogHelper;
     use MediaHelper;
     use MirrorHelper;
     use ParameterHelper;
+    use PropertyHelper;
     use ProposalModelHelper;
     use RealEstateDevelopmentCharacteristicHelper;
     use RealEstateDevelopmentHelper;
@@ -24,5 +25,4 @@ trait Helpers
     use Tools;
     use TypologyHelper;
     use UnitHelper;
-    use PropertyHelper;
 }

@@ -45,7 +45,7 @@ class PropertyHolder extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'holder_property';
+        $this->table = config('sp-produto.table_prefix').'holder_property';
     }
 
     public function property(): BelongsTo

@@ -53,7 +53,7 @@ trait InsuranceHelper
         ]);
 
         $insuranceIds = [];
-        foreach($message->insurances as $messageInsurance) {
+        foreach ($message->insurances as $messageInsurance) {
             $insurance = Insurance::updateOrCreate([
                 'uuid' => $messageInsurance->uuid,
             ], [

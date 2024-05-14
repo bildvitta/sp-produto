@@ -60,7 +60,7 @@ trait AccessoriesHelper
 
         Accessory::query()
             ->where('real_estate_development_id', $realEstateDevelopment->id)
-            ->when($updatedOrCreatedAccessoryIds->count(), function($query) use($updatedOrCreatedAccessoryIds) {
+            ->when($updatedOrCreatedAccessoryIds->count(), function ($query) use ($updatedOrCreatedAccessoryIds) {
                 $query->whereNotIn('id', $updatedOrCreatedAccessoryIds);
             })
             ->delete();

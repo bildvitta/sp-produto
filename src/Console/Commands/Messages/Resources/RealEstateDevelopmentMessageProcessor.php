@@ -63,7 +63,7 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::REAL_ESTATE_DEVELOPMENT_CHARACTERISTICS:
                     $this->processRealEstateDevelopmentCharacteristic($operation, $messageData);
-                    break;     
+                    break;
                 case self::PROPERTIES:
                     $this->processProperty($operation, $messageData);
                     break;
@@ -75,7 +75,7 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::BUYING_OPTIONS:
                     $this->processBuyingOptions($operation, $messageData);
-                    break; 
+                    break;
                 case self::CATEGORIES:
                     $this->processCategories($operation, $messageData);
                     break;
@@ -87,7 +87,7 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::ATTRIBUTES:
                     $this->processAttributes($operation, $messageData);
-                    break;                                      
+                    break;
             }
         } catch (Throwable $exception) {
             $this->logError($exception, $messageBody);
