@@ -22,6 +22,7 @@ trait TypologyHelper
                 'name' => $messageTypology->name,
                 'extract_text' => $messageTypology->extract_text,
                 'itbi_value' => $messageTypology->itbi_value,
+                'appraisal_value' => $messageTypology->appraisal_value,
             ]);
             $typologyIds[] = $typology->id;
             $this->typologyProposalModel($typology, $messageTypology);

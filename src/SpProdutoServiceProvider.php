@@ -184,6 +184,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_typology_attributes_table';
                     $migrations[] = 'add_extract_text_and_itbi_value_to_typologies_table';
                     $migrations[] = 'alter_table_typology_attributes_table';
+                    $migrations[] = 'add_appraisal_value_on_typologies_table';
                     break;
                 case 'units':
                     $migrations[] = 'create_sp_produto_units_table';

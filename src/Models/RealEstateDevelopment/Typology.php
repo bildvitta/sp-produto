@@ -25,13 +25,15 @@ class Typology extends BaseModel
         'real_estate_development_id',
         'extract_text',
         'itbi_value',
+        'appraisal_value',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $casts = [
-        'itbi_value' => 'real',
+        'itbi_value' => 'decimal:2',
+        'appraisal_value' => 'decimal:2',
     ];
 
     public function __construct(array $attributes = [])
