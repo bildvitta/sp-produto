@@ -40,6 +40,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_produto_proposal_model_real_estate_development_table',
         'create_sp_produto_proposal_model_typology_table',
         'create_sp_produto_real_estate_development_accessories_table',
+        'create_sp_produto_real_estate_development_accessory_unit_table',
         'create_sp_produto_real_estate_development_characteristic_table',
         'create_sp_produto_stages_table',
         'create_sp_produto_typologies_table', // must be before others typologies tables
@@ -149,6 +150,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_accessory_categories_table';
                     $migrations[] = 'create_sp_produto_accessories_table';
                     $migrations[] = 'create_sp_produto_real_estate_development_accessories_table';
+                    $migrations[] = 'create_sp_produto_real_estate_development_accessory_unit_table';
                     $migrations[] = 'add_foreign_keys_to_sp_produto_real_estate_development_accessories_table';
                     break;
                 case 'mirrors':

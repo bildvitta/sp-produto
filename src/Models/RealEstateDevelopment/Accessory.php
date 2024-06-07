@@ -90,6 +90,11 @@ class Accessory extends BaseModel
         return $this->belongsTo(RealEstateDevelopment::class);
     }
 
+    public function unities()
+    {
+        return $this->belongsToMany(Unit::class, prefixTableName('real_estate_development_accessory_unit'));
+    }
+
     public function getNameAttribute(): ?string
     {
         return $this?->accessory?->name;

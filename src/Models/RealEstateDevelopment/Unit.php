@@ -93,6 +93,11 @@ class Unit extends BaseModel
         return $this->belongsTo(Typology::class);
     }
 
+    public function accessories()
+    {
+        return $this->belongsToMany(Accessory::class, prefixTableName('real_estate_development_accessory_unit'));
+    }
+
     /**
      * Get the accessories for the unit.
      */

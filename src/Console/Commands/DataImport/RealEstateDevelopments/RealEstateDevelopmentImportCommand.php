@@ -49,6 +49,7 @@ class RealEstateDevelopmentImportCommand extends Command
         $worker = new Worker();
         $worker->type = 'sp-produto.dataimport.real_estate_developments';
         $worker->status = 'created';
+        $worker->queue = 'default';
         $worker->schedule = now();
         $worker->payload = [
             'limit' => $selectLimit,
@@ -152,6 +153,8 @@ class RealEstateDevelopmentImportCommand extends Command
             $tables[] = 'media';
         }
 
-        return $tables;
+        return [
+            'units',
+        ];
     }
 }

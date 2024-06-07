@@ -4,6 +4,7 @@ namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
 use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use BildVitta\SpProduto\Models\RealEstateDevelopment\Accessory;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Mirror;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\MirrorGroup;
@@ -48,6 +49,10 @@ trait UnitHelper
             'furniture_value' => $message->furniture_value ?? null,
             'garage_type' => $message->garage_type ?? null,
         ]);
+
+        $accessories = Accessory::whereIn('uuid', $message->accessories)->get();
+        $unit->accessories()->sync($accessories->pluck('id'));
+
         $this->unitPriceCalc($unit, $message);
         $this->unitSaleStep($unit, $realEstateDevelopment);
 

@@ -508,6 +508,25 @@ trait SyncTables
             ],
             ['created_at', 'updated_at', 'deleted_at', 'ready_to_live_in']
         );
+
+        $accessories = $this->getDatabase()->table('real_estate_development_accessory_unit as redau')
+            ->leftJoin('units as un', 'redau.unit_id', '=', 'un.id')
+            ->leftJoin('real_estate_development_accessories as reda', 'redau.accessory_id', '=', 'reda.id')
+            ->select('un.uuid as unit_uuid', 'reda.uuid as accessory_uuid');
+
+        $this->syncRelated(
+            $accessories,
+            [
+                'class' => RealEstateDevelopment\Unit::class,
+                'field' => 'unit',
+            ],
+            [
+                'class' => RealEstateDevelopment\Accessory::class,
+                'field' => 'accessory',
+            ],
+            'real_estate_development_accessory_unit',
+            'Acessories for Units'
+        );
     }
 
     private function documents(): void
