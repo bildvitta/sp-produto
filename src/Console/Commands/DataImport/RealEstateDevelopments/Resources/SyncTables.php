@@ -6,9 +6,11 @@ use BildVitta\SpProduto\Models\Accessory;
 use BildVitta\SpProduto\Models\AccessoryCategory;
 use BildVitta\SpProduto\Models\BuyingOption;
 use BildVitta\SpProduto\Models\Characteristic;
+use BildVitta\SpProduto\Models\Environment;
 use BildVitta\SpProduto\Models\HubCompany;
 use BildVitta\SpProduto\Models\Insurance;
 use BildVitta\SpProduto\Models\InsuranceCompany;
+use BildVitta\SpProduto\Models\Personalization;
 use BildVitta\SpProduto\Models\ProposalModel;
 use BildVitta\SpProduto\Models\ProposalModelPeriodicities;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
@@ -586,6 +588,54 @@ trait SyncTables
             'Media for Real Estate Development',
             ['real_estate_development' => RealEstateDevelopment::class],
             ['created_at', 'updated_at', 'deleted_at']
+        );
+    }
+
+    private function environments()
+    {
+        $environments = $this->getDatabase()->table('environments')
+            ->select(['*']);
+
+        $this->syncData(
+            $environments,
+            Environment::class,
+            'Environments for Personalization',
+            [],
+            ['created_at', 'updated_at', 'deleted_at']
+        );
+    }
+
+    private function personalizations()
+    {
+        $personalizations = $this->getDatabase()->table('personalizations', 'p')
+            ->leftJoin('real_estate_developments as red', 'p.real_estate_development_id', '=', 'red.id')
+            ->select('p.*', 'red.uuid as real_estate_development_uuid');
+
+        $this->syncData(
+            $personalizations,
+            Personalization::class,
+            'Personalizations',
+            ['real_estate_development' => RealEstateDevelopment::class],
+            ['created_at', 'updated_at', 'deleted_at']
+        );
+
+        $environment_personalizations = $this->getDatabase()->table('environment_personalizations', 'ep')
+            ->leftJoin('environments as e', 'ep.environment_id', '=', 'e.id')
+            ->leftJoin('personalizations as p', 'ep.personalization_id', '=', 'p.id')
+            ->select('e.uuid as environment_uuid', 'p.uuid as personalization_uuid');
+
+        $this->syncRelated(
+            $environment_personalizations,
+            [
+                'class' => Personalization::class,
+                'field' => 'personalization',
+            ],
+            [
+                'class' => Environment::class,
+                'field' => 'environment',
+            ],
+            'environment_personalizations',
+            'Environment Personalizations'
         );
     }
 

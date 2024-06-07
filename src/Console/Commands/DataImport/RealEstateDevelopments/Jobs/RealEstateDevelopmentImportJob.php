@@ -169,6 +169,12 @@ class RealEstateDevelopmentImportJob implements ShouldQueue
             case 'media':
                 $this->media();
                 break;
+            case 'environments':
+                $this->environments();
+                break;
+            case 'personalizations':
+                $this->personalizations();
+                break;
             default:
                 throw new InvalidArgumentException('Invalid current table');
         }

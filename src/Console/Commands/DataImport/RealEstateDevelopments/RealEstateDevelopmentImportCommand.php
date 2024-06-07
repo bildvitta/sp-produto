@@ -152,6 +152,10 @@ class RealEstateDevelopmentImportCommand extends Command
         if ($this->configHas('media')) {
             $tables[] = 'media';
         }
+        if ($this->configHas('personalizations')) {
+            $tables[] = 'environments';
+            $tables[] = 'personalizations';
+        }
 
         return $tables;
     }

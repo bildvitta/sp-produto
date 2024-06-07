@@ -11,11 +11,13 @@ trait Helpers
     use CategoriesHelper;
     use CharacteristicHelper;
     use DocumentHelper;
+    use EnvironmentHelper;
     use InsuranceHelper;
     use LogHelper;
     use MediaHelper;
     use MirrorHelper;
     use ParameterHelper;
+    use PersonalizationHelper;
     use PropertyHelper;
     use ProposalModelHelper;
     use RealEstateDevelopmentCharacteristicHelper;

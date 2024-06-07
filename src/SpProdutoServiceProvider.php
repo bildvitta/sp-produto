@@ -214,6 +214,11 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_estate_differential_property_table';
                     $migrations[] = 'drop_status_column_on_properties_table';
                     break;
+                case 'personalizations':
+                    $migrations[] = 'create_sp_personalizations_table';
+                    $migrations[] = 'create_sp_environments_table';
+                    $migrations[] = 'create_sp_environment_personalization_table';
+                    break;
             }
         }
 
