@@ -153,8 +153,6 @@ class RealEstateDevelopmentImportCommand extends Command
             $tables[] = 'media';
         }
 
-        return [
-            'units',
-        ];
+        return $tables;
     }
 }
