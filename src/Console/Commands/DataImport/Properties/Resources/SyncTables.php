@@ -139,7 +139,7 @@ trait SyncTables
 
         PropertyHolder::query()->delete();
 
-        foreach($propertyHolders as $propertyHolder) {
+        foreach ($propertyHolders as $propertyHolder) {
             $propertyId = Property::query()
                 ->where('uuid', $propertyHolder->property_uuid)
                 ->value('id');
@@ -149,7 +149,7 @@ trait SyncTables
                     'holder_uuid' => $propertyHolder->holder_uuid,
                 ]);
             }
-        }        
+        }
     }
 
     private function property_images()
@@ -179,7 +179,7 @@ trait SyncTables
 
         DB::table(prefixTableName('automobile_differential_property'))->delete();
 
-        foreach($automobileDifferentialProperties as $automobileDifferentialProperty) {
+        foreach ($automobileDifferentialProperties as $automobileDifferentialProperty) {
             $property = Property::query()
                 ->where('uuid', $automobileDifferentialProperty->property_uuid)
                 ->first();
@@ -188,8 +188,8 @@ trait SyncTables
                 ->first();
             if ($property && $automobileDiferential) {
                 $property->automobile_differentials()->attach($automobileDiferential);
-            }      
-        }   
+            }
+        }
     }
 
     private function estate_differential_property()
@@ -200,9 +200,9 @@ trait SyncTables
             ->select('edp.*', 'ed.uuid as estate_differential_uuid', 'p.uuid as property_uuid')
             ->get();
 
-        DB::table(prefixTableName('estate_differential_property'))->delete();    
+        DB::table(prefixTableName('estate_differential_property'))->delete();
 
-        foreach($estateDifferentialProperties as $estateDifferentialProperty) {
+        foreach ($estateDifferentialProperties as $estateDifferentialProperty) {
             $property = Property::query()
                 ->where('uuid', $estateDifferentialProperty->property_uuid)
                 ->first();
@@ -211,7 +211,7 @@ trait SyncTables
                 ->first();
             if ($property && $estateDiferential) {
                 $property->estates_differentials()->attach($estateDiferential);
-            }        
+            }
         }
     }
 

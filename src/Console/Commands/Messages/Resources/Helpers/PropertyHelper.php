@@ -7,8 +7,8 @@ use BildVitta\SpProduto\Models\AutomobileDifferential;
 use BildVitta\SpProduto\Models\AutomobileModel;
 use BildVitta\SpProduto\Models\AutomobileVersion;
 use BildVitta\SpProduto\Models\EstateDifferential;
-use BildVitta\SpProduto\Models\Property;
 use BildVitta\SpProduto\Models\HubCompany;
+use BildVitta\SpProduto\Models\Property;
 use BildVitta\SpProduto\Models\PropertyAttachment;
 use BildVitta\SpProduto\Models\PropertyHolder;
 use BildVitta\SpProduto\Models\PropertyImage;
@@ -237,7 +237,7 @@ trait PropertyHelper
     private function propertyEstateDiferentials(Property $property, stdClass $message): void
     {
         $estateDiferentials = [];
-        foreach($message->estates_differentials as $estatesDifferential) {
+        foreach ($message->estates_differentials as $estatesDifferential) {
             $estateDiferentials[] = EstateDifferential::updateOrCreate([
                 'uuid' => $estatesDifferential->uuid,
             ], [
@@ -252,7 +252,7 @@ trait PropertyHelper
     private function propertyAutomobileDiferentials(Property $property, stdClass $message): void
     {
         $automobileDiferentials = [];
-        foreach($message->automobile_differentials as $automobileDifferential) {
+        foreach ($message->automobile_differentials as $automobileDifferential) {
             $automobileDiferentials[] = AutomobileDifferential::updateOrCreate([
                 'uuid' => $automobileDifferential->uuid,
             ], [

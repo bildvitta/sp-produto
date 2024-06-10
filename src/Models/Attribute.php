@@ -3,7 +3,6 @@
 namespace BildVitta\SpProduto\Models;
 
 use BildVitta\SpProduto\Factories\AttributeFactory;
-use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

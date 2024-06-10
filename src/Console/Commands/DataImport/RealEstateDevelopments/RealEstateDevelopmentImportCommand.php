@@ -49,6 +49,7 @@ class RealEstateDevelopmentImportCommand extends Command
         $worker = new Worker();
         $worker->type = 'sp-produto.dataimport.real_estate_developments';
         $worker->status = 'created';
+        $worker->queue = 'default';
         $worker->schedule = now();
         $worker->payload = [
             'limit' => $selectLimit,
@@ -150,6 +151,10 @@ class RealEstateDevelopmentImportCommand extends Command
         }
         if ($this->configHas('media')) {
             $tables[] = 'media';
+        }
+        if ($this->configHas('personalizations')) {
+            $tables[] = 'environments';
+            $tables[] = 'personalizations';
         }
 
         return $tables;

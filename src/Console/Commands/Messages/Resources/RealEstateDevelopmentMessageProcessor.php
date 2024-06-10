@@ -33,6 +33,10 @@ class RealEstateDevelopmentMessageProcessor
 
     public const ATTRIBUTES = 'attributes';
 
+    public const ENVIRONMENTS = 'environments';
+
+    public const PERSONALIZATIONS = 'personalizations';
+
     public const UPDATED = 'updated';
 
     public const CREATED = 'created';
@@ -63,7 +67,7 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::REAL_ESTATE_DEVELOPMENT_CHARACTERISTICS:
                     $this->processRealEstateDevelopmentCharacteristic($operation, $messageData);
-                    break;     
+                    break;
                 case self::PROPERTIES:
                     $this->processProperty($operation, $messageData);
                     break;
@@ -75,7 +79,7 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::BUYING_OPTIONS:
                     $this->processBuyingOptions($operation, $messageData);
-                    break; 
+                    break;
                 case self::CATEGORIES:
                     $this->processCategories($operation, $messageData);
                     break;
@@ -87,12 +91,48 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::ATTRIBUTES:
                     $this->processAttributes($operation, $messageData);
-                    break;                                      
+                    break;
+                case self::ENVIRONMENTS:
+                    $this->processEnvironments($operation, $messageData);
+                    break;
+                case self::PERSONALIZATIONS:
+                    $this->processPersonalizations($operation, $messageData);
+                    break;
             }
         } catch (Throwable $exception) {
             $this->logError($exception, $messageBody);
             if (app()->isLocal()) {
                 throw $exception;
+            }
+        }
+    }
+
+    private function processPersonalizations(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('personalizations')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->personalizationUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->personalizationDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processEnvironments(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('personalizations')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->environmentUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->environmentDelete($messageData);
+                    break;
             }
         }
     }

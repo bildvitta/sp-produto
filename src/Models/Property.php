@@ -179,12 +179,12 @@ class Property extends BaseModel
 
     public function automobile_differentials(): BelongsToMany
     {
-        return $this->belongsToMany(AutomobileDifferential::class, config('sp-produto.table_prefix') . 'automobile_differential_property', 'property_id', 'automobile_differential_id');
+        return $this->belongsToMany(AutomobileDifferential::class, config('sp-produto.table_prefix').'automobile_differential_property', 'property_id', 'automobile_differential_id');
     }
 
     public function estates_differentials(): BelongsToMany
     {
-        return $this->belongsToMany(EstateDifferential::class, config('sp-produto.table_prefix') . 'estate_differential_property', 'property_id', 'estate_differential_id');
+        return $this->belongsToMany(EstateDifferential::class, config('sp-produto.table_prefix').'estate_differential_property', 'property_id', 'estate_differential_id');
     }
 
     /**
