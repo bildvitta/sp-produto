@@ -40,6 +40,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_produto_proposal_model_real_estate_development_table',
         'create_sp_produto_proposal_model_typology_table',
         'create_sp_produto_real_estate_development_accessories_table',
+        'create_sp_produto_real_estate_development_accessory_unit_table',
         'create_sp_produto_real_estate_development_characteristic_table',
         'create_sp_produto_stages_table',
         'create_sp_produto_typologies_table', // must be before others typologies tables
@@ -149,6 +150,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_accessory_categories_table';
                     $migrations[] = 'create_sp_produto_accessories_table';
                     $migrations[] = 'create_sp_produto_real_estate_development_accessories_table';
+                    $migrations[] = 'create_sp_produto_real_estate_development_accessory_unit_table';
                     $migrations[] = 'add_foreign_keys_to_sp_produto_real_estate_development_accessories_table';
                     break;
                 case 'mirrors':
@@ -211,6 +213,11 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_automobile_differential_property_table';
                     $migrations[] = 'create_sp_estate_differential_property_table';
                     $migrations[] = 'drop_status_column_on_properties_table';
+                    break;
+                case 'personalizations':
+                    $migrations[] = 'create_sp_personalizations_table';
+                    $migrations[] = 'create_sp_environments_table';
+                    $migrations[] = 'create_sp_environment_personalization_table';
                     break;
             }
         }
