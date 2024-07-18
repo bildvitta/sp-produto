@@ -26,13 +26,15 @@ class ProposalModelPeriodicitiesFactory extends Factory
         $pin_value = $this->faker->boolean;
 
         return [
-            'uuid' => $this->faker->uuid(),
             'update_installments_quantity' => $update_installments_quantity,
             'installments' => $update_installments_quantity === false ? 0 : $this->faker->numberBetween(1, 360),
-            'add_on_type' => $this->faker->randomKey(ProposalModelPeriodicities::ADD_ON_TYPE_LIST),
-            'periodicity_quantity' => $this->faker->numberBetween(1, 360),
+            'periodicity' => $this->faker->randomKey(ProposalModelPeriodicities::PERIODICITY_LIST),
             'pin_value' => $pin_value,
+            'add_on_type' => $pin_value ? 'fixed_value' : null,
             'add_on_value' => $pin_value ? $this->faker->randomFloat(2, 10, 999999) : null,
+            'editable' => $this->faker->boolean,
+            'due_date_type' => $this->faker->randomKey(ProposalModelPeriodicities::DUE_DATE_TYPE_LIST),
+            'due_dates' => $this->faker->numberBetween(30, 180),
         ];
     }
 }

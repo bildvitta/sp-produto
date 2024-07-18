@@ -30,6 +30,33 @@ class ProposalModelPeriodicities extends BaseModel
         return ProposalModelPeriodicitiesFactory::new();
     }
 
+    public const PERIODICITY_LIST = [
+        'financing' => 'Financiamento',
+        'fgts' => 'FGTS',
+        'subsidy' => 'Subsídio',
+        'down_payment' => 'Entrada',
+        'intermediate' => 'Intermediária',
+        'post_construction' => 'Pós-obra',
+        'monthly' => 'Mensal',
+        'bimonthly' => 'Bimestral',
+        'quarterly' => 'Trimestral',
+        'semiannual' => 'Semestral',
+        'yearly' => 'Anual',
+        'conclusion_balance' => 'Saldo Conclusão',
+    ];
+
+    public const DUE_DATE_TYPE_LIST = [
+        // 'blueprint_definition_deadline' => 'Data limite para definição de planta',
+        'construction_over_in' => 'Data de entrega da obra',
+        // 'construction_prevision_in' => 'Data de previsão de entrega da obra',
+        // 'construction_start_in' => 'Data de início da obra',
+        // 'financial_transfer_deadline' => 'Data limite para repasse',
+        // 'launch_in' => 'Data de lançamento',
+        'pre_launch_in' => 'Data de breve lançamento',
+        'ready_to_live_in' => 'Data de entrega real',
+        'hand_over_keys_in' => 'Data de entrega das chaves',
+    ];
+
     /**
      * @const array[]
      */
@@ -49,10 +76,12 @@ class ProposalModelPeriodicities extends BaseModel
         'update_installments_quantity',
         'installments',
         'periodicity',
-        'periodicity_quantity',
         'pin_value',
         'add_on_type',
         'add_on_value',
+        'editable',
+        'due_date_type',
+        'due_dates',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -66,6 +95,7 @@ class ProposalModelPeriodicities extends BaseModel
     protected $casts = [
         'update_installments_quantity' => 'boolean',
         'pin_value' => 'boolean',
+        'editable' => 'boolean',
     ];
 
     public function proposalModel(): BelongsTo
