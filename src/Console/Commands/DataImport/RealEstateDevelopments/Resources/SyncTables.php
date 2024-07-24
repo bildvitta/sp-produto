@@ -619,10 +619,10 @@ trait SyncTables
             ['created_at', 'updated_at', 'deleted_at']
         );
 
-        $environment_personalizations = $this->getDatabase()->table('environment_personalizations', 'ep')
+        $environment_personalizations = $this->getDatabase()->table('environment_personalization', 'ep')
             ->leftJoin('environments as e', 'ep.environment_id', '=', 'e.id')
             ->leftJoin('personalizations as p', 'ep.personalization_id', '=', 'p.id')
-            ->select('e.uuid as environment_uuid', 'p.uuid as personalization_uuid');
+            ->select('e.uuid as foreign_uuid', 'p.uuid as model_uuid');
 
         $this->syncRelated(
             $environment_personalizations,
@@ -634,7 +634,7 @@ trait SyncTables
                 'class' => Environment::class,
                 'field' => 'environment',
             ],
-            'environment_personalizations',
+            'environment_personalization',
             'Environment Personalizations'
         );
     }

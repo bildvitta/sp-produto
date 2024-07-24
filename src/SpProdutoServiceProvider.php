@@ -39,6 +39,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'create_sp_produto_proposal_model_periodicities_table',
         'create_sp_produto_proposal_model_real_estate_development_table',
         'create_sp_produto_proposal_model_typology_table',
+        'add_columns_on_proposal_model_periodicities_table',
         'create_sp_produto_real_estate_development_accessories_table',
         'create_sp_produto_real_estate_development_accessory_unit_table',
         'create_sp_produto_real_estate_development_characteristic_table',
@@ -176,6 +177,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_proposal_model_typology_table';
                     $migrations[] = 'add_foreign_keys_to_sp_produto_proposal_model_real_estate_development_table';
                     $migrations[] = 'add_foreign_keys_to_sp_produto_proposal_model_typology_table';
+                    $migrations[] = 'add_columns_on_proposal_model_periodicities_table';
                     break;
                 case 'stages':
                     $migrations[] = 'create_sp_produto_stages_table';
