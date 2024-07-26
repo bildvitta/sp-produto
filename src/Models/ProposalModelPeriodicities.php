@@ -43,6 +43,7 @@ class ProposalModelPeriodicities extends BaseModel
         'semiannual' => 'Semestral',
         'yearly' => 'Anual',
         'conclusion_balance' => 'Saldo Conclusão',
+        'final' => 'Final',
     ];
 
     public const DUE_DATE_TYPE_LIST = [
