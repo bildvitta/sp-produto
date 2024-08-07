@@ -157,6 +157,9 @@ class RealEstateDevelopmentImportJob implements ShouldQueue
             case 'units':
                 $this->units();
                 break;
+            case 'units_accessories':
+                $this->units_accessories();
+                break;
             case 'documents':
                 $this->documents();
                 break;
