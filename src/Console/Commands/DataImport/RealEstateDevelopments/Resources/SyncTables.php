@@ -510,11 +510,14 @@ trait SyncTables
             ],
             ['created_at', 'updated_at', 'deleted_at', 'ready_to_live_in']
         );
+    }
 
+    private function units_accessories()
+    {
         $accessories = $this->getDatabase()->table('real_estate_development_accessory_unit as redau')
             ->leftJoin('units as un', 'redau.unit_id', '=', 'un.id')
             ->leftJoin('real_estate_development_accessories as reda', 'redau.accessory_id', '=', 'reda.id')
-            ->select('un.uuid as unit_uuid', 'reda.uuid as accessory_uuid');
+            ->select('reda.uuid as foreign_uuid', 'un.uuid as model_uuid');
 
         $this->syncRelated(
             $accessories,
