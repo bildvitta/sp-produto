@@ -514,7 +514,7 @@ trait SyncTables
         $accessories = $this->getDatabase()->table('real_estate_development_accessory_unit as redau')
             ->leftJoin('units as un', 'redau.unit_id', '=', 'un.id')
             ->leftJoin('real_estate_development_accessories as reda', 'redau.accessory_id', '=', 'reda.id')
-            ->select('un.uuid as unit_uuid', 'reda.uuid as accessory_uuid');
+            ->select('un.uuid as model_uuid', 'reda.uuid as foreign_uuid');
 
         $this->syncRelated(
             $accessories,
