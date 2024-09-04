@@ -1,0 +1,43 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('unit_prices');
+    }
+
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        if (!Schema::hasTable($this->tableName)) {
+            Schema::create($this->tableName, function (Blueprint $table) {
+                $table->id();
+                $table->uuid();
+                $table->foreignId('unit_id')->constrained(prefixTableName('units'))->cascadeOnDelete();
+                $table->date('period');
+                $table->decimal('fixed_price', 12, 3);
+                $table->decimal('table_price', 12, 3);
+                $table->timestamps();
+
+                $table->unique(['unit_id', 'period']);
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('unit_prices');
+    }
+};
