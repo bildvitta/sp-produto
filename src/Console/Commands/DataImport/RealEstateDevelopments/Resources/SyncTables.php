@@ -534,6 +534,23 @@ trait SyncTables
         );
     }
 
+    private function units_prices()
+    {
+        $accessories = $this->getDatabase()->table('unit_prices as up')
+            ->leftJoin('units as un', 'up.unit_id', '=', 'un.id')
+            ->select('up.*', 'un.uuid as unit_uuid');
+
+        $this->syncData(
+            $accessories,
+            RealEstateDevelopment\UnitPrice::class,
+            'Prices for Units',
+            [
+                'unit' => RealEstateDevelopment\Unit::class,
+            ],
+            ['created_at', 'updated_at']
+        );
+    }
+
     private function documents(): void
     {
         $documents = $this->getDatabase()->table('documents as dc')

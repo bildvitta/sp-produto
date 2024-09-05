@@ -10,7 +10,5 @@ class RealEstateDevelopmentUpdated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public function __construct(public ?string $realEstateDevelopmentUuid)
-    {
-    }
+    public function __construct(public ?string $realEstateDevelopmentUuid) {}
 }

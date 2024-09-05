@@ -53,12 +53,27 @@ trait UnitHelper
         $accessories = Accessory::whereIn('uuid', $message->accessories)->get();
         $unit->accessories()->sync($accessories->pluck('id'));
 
+        $this->unitPrices($unit, $message->prices);
+
         $this->unitPriceCalc($unit, $message);
         $this->unitSaleStep($unit, $realEstateDevelopment);
 
         if (config('sp-produto.events.real_estate_development_updated')) {
             event(new RealEstateDevelopmentUpdated($message->real_estate_development_uuid));
         }
+    }
+
+    private function unitPrices(BaseUnit $unit, array $prices): void
+    {
+        collect($prices)->each(function ($item) use ($unit) {
+            $unit->prices()->updateOrCreate([
+                'uuid' => $item->uuid,
+            ], [
+                'period' => $item->period,
+                'fixed_price' => $item->fixed_price,
+                'table_price' => $item->table_price,
+            ]);
+        });
     }
 
     private function unitDelete(stdClass $message): void

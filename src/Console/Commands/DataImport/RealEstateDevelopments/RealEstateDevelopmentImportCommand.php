@@ -33,20 +33,20 @@ class RealEstateDevelopmentImportCommand extends Command
 
         $selectLimit = 500;
         if ($optionSelect = $this->option('select')) {
-            $selectLimit = (int)$optionSelect;
+            $selectLimit = (int) $optionSelect;
         }
 
         $offset = 0;
         if ($optionOffset = $this->option('offset')) {
-            $offset = (int)$optionOffset;
+            $offset = (int) $optionOffset;
         }
 
         $tableIndex = 0;
         if ($optionTableIndex = $this->option('table')) {
-            $tableIndex = (int)$optionTableIndex;
+            $tableIndex = (int) $optionTableIndex;
         }
 
-        $worker = new Worker();
+        $worker = new Worker;
         $worker->type = 'sp-produto.dataimport.real_estate_developments';
         $worker->status = 'created';
         $worker->queue = 'default';
@@ -142,6 +142,7 @@ class RealEstateDevelopmentImportCommand extends Command
         if ($this->configHas('units')) {
             $tables[] = 'units';
             $tables[] = 'units_accessories';
+            $tables[] = 'units_prices';
         }
         if ($this->configHas('documents')) {
             $tables[] = 'documents';
@@ -157,6 +158,10 @@ class RealEstateDevelopmentImportCommand extends Command
             $tables[] = 'environments';
             $tables[] = 'personalizations';
         }
+
+        $tables = [];
+
+        $tables[] = 'units_prices';
 
         return $tables;
     }
