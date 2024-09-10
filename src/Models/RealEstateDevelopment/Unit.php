@@ -174,4 +174,13 @@ class Unit extends BaseModel
             return '0.00';
         });
     }
+
+    public function hasPriceTablePeriod(): Attribute
+    {
+        return Attribute::get(function () {
+            $period = date('Y-m-01');
+
+            return $this->prices()->where('period', $period)->exists();
+        });
+    }
 }
