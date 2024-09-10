@@ -179,9 +179,8 @@ class Unit extends BaseModel
     {
         return Attribute::get(function () {
             $period = date('Y-m-01');
-            $query = $this->prices()->where('period', $period);
 
-            return $query->exists();
+            return $this->prices()->where('period', $period)->exists();
         });
     }
 }
