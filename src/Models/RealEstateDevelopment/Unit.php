@@ -5,9 +5,11 @@ namespace BildVitta\SpProduto\Models\RealEstateDevelopment;
 use BildVitta\SpProduto\Factories\RealEstateDevelopment\UnitFactory;
 use BildVitta\SpProduto\Models\BaseModel;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -138,5 +140,47 @@ class Unit extends BaseModel
     public function blueprint()
     {
         return $this->belongsTo(Blueprint::class);
+    }
+
+    public function prices(): HasMany
+    {
+        return $this->hasMany(UnitPrice::class);
+    }
+
+    public function tablePrice(): Attribute
+    {
+        return Attribute::get(function () {
+            $period = date('Y-m-01');
+            $query = $this->prices()->where('period', $period);
+
+            if ($query->exists()) {
+                return $query->first()->table_price;
+            }
+
+            return '0.00';
+        });
+    }
+
+    public function fixedPrice(): Attribute
+    {
+        return Attribute::get(function () {
+            $period = date('Y-m-01');
+            $query = $this->prices()->where('period', $period);
+
+            if ($query->exists()) {
+                return $query->first()->fixed_price;
+            }
+
+            return '0.00';
+        });
+    }
+
+    public function hasPriceTablePeriod(): Attribute
+    {
+        return Attribute::get(function () {
+            $period = date('Y-m-01');
+
+            return $this->prices()->where('period', $period)->exists();
+        });
     }
 }

@@ -18,9 +18,15 @@ return new class extends Migration
         if (Schema::hasTable($this->tableName)) {
             Schema::table($this->tableName, function (Blueprint $table) {
                 $table->after('add_on_value', function (Blueprint $table) {
-                    $table->boolean('editable')->default(true);
-                    $table->string('due_date_type')->nullable();
-                    $table->unsignedInteger('due_dates')->nullable();
+                    if(Schema::hasColumn($this->tableName, 'editable')) {
+                        $table->boolean('editable')->default(true);
+                    }
+                    if(Schema::hasColumn($this->tableName, 'due_date_type')) {
+                        $table->string('due_date_type')->nullable();
+                    }
+                    if(Schema::hasColumn($this->tableName, 'due_dates')) {
+                        $table->unsignedInteger('due_dates')->nullable();
+                    }
                 });
                 $table->dropColumn('periodicity_quantity');
             });

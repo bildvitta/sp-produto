@@ -100,7 +100,7 @@ class RealEstateDevelopment extends BaseModel
      */
     protected static function booted()
     {
-        static::addGlobalScope(new CompanyScope());
+        static::addGlobalScope(new CompanyScope);
     }
 
     /**

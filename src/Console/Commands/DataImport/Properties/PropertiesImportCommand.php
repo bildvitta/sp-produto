@@ -46,7 +46,7 @@ class PropertiesImportCommand extends Command
             $tableIndex = (int) $optionTableIndex;
         }
 
-        $worker = new Worker();
+        $worker = new Worker;
         $worker->type = 'sp-produto.dataimport.properties';
         $worker->status = 'created';
         $worker->schedule = now();
