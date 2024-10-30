@@ -150,35 +150,27 @@ class Unit extends BaseModel
     public function tablePrice(): Attribute
     {
         return Attribute::get(function () {
-            $period = date('Y-m-01');
-            $query = $this->prices()->where('period', $period);
+            $period = now('America/Sao_Paulo')->format('Y-m-01');
+            $price = $this->prices()->where('period', $period)->value('table_price');
 
-            if ($query->exists()) {
-                return $query->first()->table_price;
-            }
-
-            return '0.00';
+            return $price ?? '0.00';
         });
     }
 
     public function fixedPrice(): Attribute
     {
         return Attribute::get(function () {
-            $period = date('Y-m-01');
-            $query = $this->prices()->where('period', $period);
+            $period = now('America/Sao_Paulo')->format('Y-m-01');
+            $price = $this->prices()->where('period', $period)->value('fixed_price');
 
-            if ($query->exists()) {
-                return $query->first()->fixed_price;
-            }
-
-            return '0.00';
+            return $price ?? '0.00';
         });
     }
 
     public function hasPriceTablePeriod(): Attribute
     {
         return Attribute::get(function () {
-            $period = date('Y-m-01');
+            $period = now('America/Sao_Paulo')->format('Y-m-01');
 
             return $this->prices()->where('period', $period)->exists();
         });
