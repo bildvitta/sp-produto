@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use IntlTimeZone;
 
 /**
  * Class Unit.
@@ -24,7 +23,7 @@ class Unit extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'units';
+        $this->table = config('sp-produto.table_prefix').'units';
     }
 
     /**
@@ -151,7 +150,7 @@ class Unit extends BaseModel
     public function tablePrice(): Attribute
     {
         return Attribute::get(function () {
-            $period = now("America/Sao_Paulo")->format('Y-m-01');
+            $period = now('America/Sao_Paulo')->format('Y-m-01');
             $price = $this->prices()->where('period', $period)->value('table_price');
 
             return $price ?? '0.00';
@@ -161,7 +160,7 @@ class Unit extends BaseModel
     public function fixedPrice(): Attribute
     {
         return Attribute::get(function () {
-            $period = now("America/Sao_Paulo")->format('Y-m-01');
+            $period = now('America/Sao_Paulo')->format('Y-m-01');
             $price = $this->prices()->where('period', $period)->value('fixed_price');
 
             return $price ?? '0.00';
@@ -171,7 +170,7 @@ class Unit extends BaseModel
     public function hasPriceTablePeriod(): Attribute
     {
         return Attribute::get(function () {
-            $period = now("America/Sao_Paulo")->format('Y-m-01');
+            $period = now('America/Sao_Paulo')->format('Y-m-01');
 
             return $this->prices()->where('period', $period)->exists();
         });
