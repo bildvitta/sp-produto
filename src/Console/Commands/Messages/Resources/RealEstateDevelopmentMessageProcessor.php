@@ -15,6 +15,8 @@ class RealEstateDevelopmentMessageProcessor
 
     public const UNITS = 'units';
 
+    public const UNIT_PRICE = 'unit_price';
+
     public const CHARACTERISTICS = 'characteristics';
 
     public const REAL_ESTATE_DEVELOPMENT_CHARACTERISTICS = 'real_estate_development_characteristics';
@@ -61,6 +63,9 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::UNITS:
                     $this->processUnit($operation, $messageData);
+                    break;
+                case self::UNIT_PRICE:
+                    $this->processUnitPrice($operation, $messageData);
                     break;
                 case self::CHARACTERISTICS:
                     $this->processCharacteristic($operation, $messageData);
@@ -160,6 +165,21 @@ class RealEstateDevelopmentMessageProcessor
                     break;
                 case self::DELETED:
                     $this->unitDelete($messageData);
+                    break;
+            }
+        }
+    }
+
+    private function processUnitPrice(string $operation, stdClass $messageData): void
+    {
+        if ($this->configHas('units')) {
+            switch ($operation) {
+                case self::CREATED:
+                case self::UPDATED:
+                    $this->unitPriceUpdateOrCreate($messageData);
+                    break;
+                case self::DELETED:
+                    $this->unitPriceDelete($messageData);
                     break;
             }
         }
