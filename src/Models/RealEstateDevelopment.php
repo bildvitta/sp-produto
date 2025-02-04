@@ -12,7 +12,7 @@ use BildVitta\SpProduto\Models\RealEstateDevelopment\Parameter;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Stage;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Typology;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Unit;
-use BildVitta\SpProduto\Scopes\CompanyScope;
+use BildVitta\SpProduto\Scopes\RealEstateDevelopments\CompanyScope;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
