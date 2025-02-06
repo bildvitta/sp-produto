@@ -17,7 +17,7 @@ class CompanyScope implements Scope
 
             $hubCompanyIds = $user->user_companies()
                 ->whereHas('company', function ($query) use ($user) {
-                    $query->where('main_company', $user->main_company_id)
+                    $query->where('main_company_id', $user->main_company_id)
                         ->orWhere('id', $user->main_company_id);
                 })
                 ->pluck('company_id');
