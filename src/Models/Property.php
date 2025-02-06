@@ -3,6 +3,7 @@
 namespace BildVitta\SpProduto\Models;
 
 use BildVitta\SpProduto\Traits\HasStates;
+use BildVitta\SpProduto\Scopes\CompanyScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -154,6 +155,11 @@ class Property extends BaseModel
     {
         parent::__construct($attributes);
         $this->table = config('sp-produto.table_prefix').'properties';
+    }
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new CompanyScope('hub_company', 'hub_company_id'));
     }
 
     public function hub_company(): BelongsTo
