@@ -115,23 +115,6 @@ class Parameter extends BaseModel
     protected $dateFormat = 'Y-m-d';
 
     /**
-     * The storage format of the model's date columns.
-     *
-     * @var string
-     */
-    protected $dates = [
-        'blueprint_definition_deadline',
-        'construction_over_in',
-        'construction_prevision_in',
-        'construction_start_in',
-        'financial_transfer_deadline',
-        'launch_in',
-        'pre_launch_in',
-        'ready_to_live_in',
-        'hand_over_keys_in',
-    ];
-
-    /**
      * The attributes that should be cast.
      *
      * @var array
@@ -147,6 +130,15 @@ class Parameter extends BaseModel
         'commission_real_estate_broker' => 'float',
         'commission_supervisor' => 'float',
         'commission_manager' => 'float',
+        'blueprint_definition_deadline' => 'date',
+        'construction_over_in' => 'date',
+        'construction_prevision_in' => 'date',
+        'construction_start_in' => 'date',
+        'financial_transfer_deadline' => 'date',
+        'launch_in' => 'date',
+        'pre_launch_in' => 'date',
+        'ready_to_live_in' => 'date',
+        'hand_over_keys_in' => 'date',
     ];
 
     public function realEstateDevelopment(): BelongsTo
