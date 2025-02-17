@@ -23,7 +23,7 @@ class Parameter extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix').'parameters';
+        $this->table = config('sp-produto.table_prefix') . 'parameters';
     }
 
     /**
@@ -115,23 +115,6 @@ class Parameter extends BaseModel
     protected $dateFormat = 'Y-m-d';
 
     /**
-     * The storage format of the model's date columns.
-     *
-     * @var string
-     */
-    protected $dates = [
-        'blueprint_definition_deadline',
-        'construction_over_in',
-        'construction_prevision_in',
-        'construction_start_in',
-        'financial_transfer_deadline',
-        'launch_in',
-        'pre_launch_in',
-        'ready_to_live_in',
-        'hand_over_keys_in',
-    ];
-
-    /**
      * The attributes that should be cast.
      *
      * @var array
@@ -147,6 +130,15 @@ class Parameter extends BaseModel
         'commission_real_estate_broker' => 'float',
         'commission_supervisor' => 'float',
         'commission_manager' => 'float',
+        'blueprint_definition_deadline' => 'date',
+        'construction_over_in' => 'date',
+        'construction_prevision_in' => 'date',
+        'construction_start_in' => 'date',
+        'financial_transfer_deadline' => 'date',
+        'launch_in' => 'date',
+        'pre_launch_in' => 'date',
+        'ready_to_live_in' => 'date',
+        'hand_over_keys_in' => 'date',
     ];
 
     public function realEstateDevelopment(): BelongsTo
@@ -159,6 +151,6 @@ class Parameter extends BaseModel
      */
     public function buying_options(): BelongsToMany
     {
-        return $this->belongsToMany(BuyingOption::class, config('sp-produto.prefix_table').'buying_options');
+        return $this->belongsToMany(BuyingOption::class, config('sp-produto.prefix_table') . 'buying_options');
     }
 }
