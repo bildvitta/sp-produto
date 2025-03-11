@@ -94,16 +94,6 @@ class RealEstateDevelopment extends BaseModel
     }
 
     /**
-     * The "booted" method of the model.
-     *
-     * @return void
-     */
-    protected static function booted()
-    {
-        static::addGlobalScope(new CompanyScope);
-    }
-
-    /**
      * Create a new factory instance for the model.
      */
     protected static function newFactory(): Factory
