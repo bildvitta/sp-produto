@@ -1,0 +1,63 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('proposal_model_periodicities');
+    }
+
+    public function up()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->after('add_on_value', function (Blueprint $table) {
+                    if(Schema::hasColumn($this->tableName, 'editable')) {
+                        $table->boolean('editable')->default(true);
+                    }
+                    if(Schema::hasColumn($this->tableName, 'due_date_type')) {
+                        $table->string('due_date_type')->nullable();
+                    }
+                    if(Schema::hasColumn($this->tableName, 'due_dates')) {
+                        $table->unsignedInteger('due_dates')->nullable();
+                    }
+                });
+                $table->dropColumn('periodicity_quantity');
+            });
+        }
+
+        if (Schema::hasColumn($this->tableName, 'periodicity_quantity')) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->dropColumn('periodicity_quantity');
+            });
+        }
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->dropColumn('editable');
+                $table->dropColumn('due_date_type');
+                $table->dropColumn('due_dates');
+            });
+        }
+
+        if (!Schema::hasColumn($this->tableName, 'periodicity_quantity')) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->unsignedBigInteger('periodicity_quantity')->nullable();
+            });
+        }
+    }
+};

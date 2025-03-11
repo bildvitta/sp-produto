@@ -510,11 +510,14 @@ trait SyncTables
             ],
             ['created_at', 'updated_at', 'deleted_at', 'ready_to_live_in']
         );
+    }
 
+    private function units_accessories()
+    {
         $accessories = $this->getDatabase()->table('real_estate_development_accessory_unit as redau')
             ->leftJoin('units as un', 'redau.unit_id', '=', 'un.id')
             ->leftJoin('real_estate_development_accessories as reda', 'redau.accessory_id', '=', 'reda.id')
-            ->select('un.uuid as unit_uuid', 'reda.uuid as accessory_uuid');
+            ->select('reda.uuid as foreign_uuid', 'un.uuid as model_uuid');
 
         $this->syncRelated(
             $accessories,
@@ -528,6 +531,23 @@ trait SyncTables
             ],
             'real_estate_development_accessory_unit',
             'Acessories for Units'
+        );
+    }
+
+    private function units_prices()
+    {
+        $accessories = $this->getDatabase()->table('unit_prices as up')
+            ->leftJoin('units as un', 'up.unit_id', '=', 'un.id')
+            ->select('up.*', 'un.uuid as unit_uuid');
+
+        $this->syncData(
+            $accessories,
+            RealEstateDevelopment\UnitPrice::class,
+            'Prices for Units',
+            [
+                'unit' => RealEstateDevelopment\Unit::class,
+            ],
+            ['created_at', 'updated_at']
         );
     }
 
@@ -619,10 +639,10 @@ trait SyncTables
             ['created_at', 'updated_at', 'deleted_at']
         );
 
-        $environment_personalizations = $this->getDatabase()->table('environment_personalizations', 'ep')
+        $environment_personalizations = $this->getDatabase()->table('environment_personalization', 'ep')
             ->leftJoin('environments as e', 'ep.environment_id', '=', 'e.id')
             ->leftJoin('personalizations as p', 'ep.personalization_id', '=', 'p.id')
-            ->select('e.uuid as environment_uuid', 'p.uuid as personalization_uuid');
+            ->select('e.uuid as foreign_uuid', 'p.uuid as model_uuid');
 
         $this->syncRelated(
             $environment_personalizations,
@@ -634,7 +654,7 @@ trait SyncTables
                 'class' => Environment::class,
                 'field' => 'environment',
             ],
-            'environment_personalizations',
+            'environment_personalization',
             'Environment Personalizations'
         );
     }

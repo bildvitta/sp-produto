@@ -38,11 +38,13 @@ trait ProposalModelHelper
                 'update_installments_quantity' => $periodicity->update_installments_quantity,
                 'installments' => $periodicity->installments,
                 'periodicity' => $periodicity->periodicity,
-                'periodicity_quantity' => $periodicity->periodicity_quantity,
                 'pin_value' => $periodicity->pin_value,
                 'add_on_type' => $periodicity->add_on_type,
                 'add_on_value' => $periodicity->add_on_value,
                 'proposal_model_id' => $proposalModel->id,
+                'editable' => $periodicity->editable,
+                'due_date_type' => $periodicity->due_date_type,
+                'due_dates' => $periodicity->due_dates,
             ]);
             $proposalModelPeriodicityIds[] = $proposalModelPeriodicity->id;
         }

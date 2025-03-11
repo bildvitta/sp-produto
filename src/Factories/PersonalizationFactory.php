@@ -47,4 +47,3 @@ class PersonalizationFactory extends Factory
         });
     }
 }
-}

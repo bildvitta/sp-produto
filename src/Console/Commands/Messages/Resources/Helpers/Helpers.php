@@ -27,4 +27,5 @@ trait Helpers
     use Tools;
     use TypologyHelper;
     use UnitHelper;
+    use UnitPriceHelper;
 }

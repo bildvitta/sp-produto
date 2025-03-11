@@ -45,7 +45,7 @@ trait SyncData
                 }
 
                 if (! $newObj = $newObj->first()) {
-                    $newObj = new $model();
+                    $newObj = new $model;
                 }
 
                 $newObj->fill(collect($item)->toArray());

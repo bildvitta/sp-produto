@@ -73,7 +73,7 @@ trait RealEstateDevelopmentHelper
     {
         $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->uuid)->first();
         if (! $realEstateDevelopment) {
-            $realEstateDevelopment = new RealEstateDevelopment();
+            $realEstateDevelopment = new RealEstateDevelopment;
             $realEstateDevelopment->uuid = $message->uuid;
             $realEstateDevelopment->hub_company_id = $this->getHubCompanyId($message->hub_company_uuid);
             $realEstateDevelopment->save();
