@@ -23,7 +23,7 @@ class Parameter extends BaseModel
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->table = config('sp-produto.table_prefix') . 'parameters';
+        $this->table = config('sp-produto.table_prefix').'parameters';
     }
 
     /**
@@ -151,6 +151,6 @@ class Parameter extends BaseModel
      */
     public function buying_options(): BelongsToMany
     {
-        return $this->belongsToMany(BuyingOption::class, config('sp-produto.prefix_table') . 'buying_options');
+        return $this->belongsToMany(BuyingOption::class, config('sp-produto.prefix_table').'buying_options');
     }
 }

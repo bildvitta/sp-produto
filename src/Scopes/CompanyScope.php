@@ -10,13 +10,14 @@ use Illuminate\Database\Eloquent\Scope;
  * Escopo genérico para filtrar registros por empresa.
  * Filtra registros de acordo com as empresas vinculadas ao usuário autenticado.
  * Caso alguma das empresas vinculadas seja a empresa principal do usuário, o filtro será feito pela empresa principal.
- * 
+ *
  * @arg string $relation Nome do relacionamento com a empresa
  * @arg string $relationField Nome do campo de relacionamento com a empresa
  */
 class CompanyScope implements Scope
 {
     protected string $relation;
+
     protected string $relationField;
 
     public function __construct(string $relation = 'company', string $relationField = 'company_id')
@@ -29,7 +30,6 @@ class CompanyScope implements Scope
     {
         if ($user = auth()->user()) {
             /** @var User $user */
-
             $hubCompanyIds = [];
 
             $hubCompanyIds = $user->user_companies()
