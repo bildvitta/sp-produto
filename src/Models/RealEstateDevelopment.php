@@ -120,6 +120,14 @@ class RealEstateDevelopment extends BaseModel
     }
 
     /**
+     * Real estate developments hub company
+     */
+    public function real_estate_agency(): BelongsTo
+    {
+        return $this->belongsTo(config('sp-produto.model_company'), 'hub_company_real_estate_agency_id');
+    }
+
+    /**
      * Real estate developments proposal models
      */
     public function proposal_models(): BelongsToMany

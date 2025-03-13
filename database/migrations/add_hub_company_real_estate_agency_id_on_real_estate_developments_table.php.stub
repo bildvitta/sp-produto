@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = prefixTableName('real_estate_developments');
+    }
+
+    public function up()
+    {
+        Schema::table($this->tableName, function (Blueprint $table) {
+            $table->foreignId('hub_company_real_estate_agency_id')
+                ->nullable()
+                ->after('hub_company_id')
+                ->constrained('hub_companies')
+                ->index('produto_red_hcrea_id_foreign')
+                ->nullOnDelete();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table($this->tableName, function (Blueprint $table) {
+            $table->dropForeign(['hub_company_real_estate_agency_id']);
+            $table->dropColumn('hub_company_real_estate_agency_id');
+        });
+    }
+};

@@ -159,10 +159,6 @@ class RealEstateDevelopmentImportCommand extends Command
             $tables[] = 'personalizations';
         }
 
-        $tables = [];
-
-        $tables[] = 'units_prices';
-
         return $tables;
     }
 }

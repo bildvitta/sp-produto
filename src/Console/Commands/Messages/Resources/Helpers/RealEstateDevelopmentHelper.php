@@ -76,6 +76,7 @@ trait RealEstateDevelopmentHelper
             $realEstateDevelopment = new RealEstateDevelopment;
             $realEstateDevelopment->uuid = $message->uuid;
             $realEstateDevelopment->hub_company_id = $this->getHubCompanyId($message->hub_company_uuid);
+            $realEstateDevelopment->hub_company_real_estate_agency_id = $this->getHubCompanyId($message->hub_company_real_estate_agency->uuid);
             $realEstateDevelopment->save();
         }
 
@@ -206,6 +207,7 @@ trait RealEstateDevelopmentHelper
         }
 
         $realEstateDevelopment->hub_company_id = $this->getHubCompanyId($message->hub_company_uuid);
+        $realEstateDevelopment->hub_company_real_estate_agency_id = $this->getHubCompanyId($message->hub_company_real_estate_agency->uuid);
 
         $realEstateDevelopment->save();
     }
