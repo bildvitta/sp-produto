@@ -158,6 +158,7 @@ class RealEstateDevelopmentImportCommand extends Command
             $tables[] = 'environments';
             $tables[] = 'personalizations';
         }
+
         return $tables;
     }
 }
