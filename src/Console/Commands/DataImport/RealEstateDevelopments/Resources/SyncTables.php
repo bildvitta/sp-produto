@@ -160,13 +160,17 @@ trait SyncTables
     {
         $realEstateDevelopments = $this->getDatabase()->table('real_estate_developments as red')
             ->leftJoin('hub_companies as hc', 'red.hub_company_id', '=', 'hc.id')
-            ->select('red.*', 'hc.uuid as hub_company_uuid');
+            ->leftJoin('hub_companies as hcrea', 'red.hub_company_real_estate_agency_id', '=', 'hcrea.id')
+            ->select('red.*', 'hc.uuid as hub_company_uuid', 'hcrea.uuid as hub_company_real_estate_agency_uuid');
 
         $this->syncData(
             $realEstateDevelopments,
             RealEstateDevelopment::class,
             'Real Estate Developments',
-            ['hub_company' => HubCompany::class],
+            [
+                'hub_company' => HubCompany::class,
+                'hub_company_real_estate_agency' => HubCompany::class,
+            ],
             ['created_at', 'updated_at', 'deleted_at']
         );
     }

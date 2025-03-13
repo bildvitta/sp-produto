@@ -127,6 +127,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             'add_registration_and_real_estate_development_code_columns_to_real_estate_developments_table',
             'alter_street_number_field_on_real_estate_developments_table',
             'add_segment_field_on_real_estate_developments_table',
+            'add_hub_company_real_estate_agency_id_on_real_estate_developments_table',
         ];
         foreach ($relations as $relation) {
             switch ($relation) {
