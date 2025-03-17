@@ -73,6 +73,7 @@ class RealEstateDevelopment extends BaseModel
         'street_number',
         'has_empty_fields',
         'hub_company_id',
+        'hub_company_real_estate_agency_id',
         'external_code',
         'external_num_code',
         'external_company_code',
