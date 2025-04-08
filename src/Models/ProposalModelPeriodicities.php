@@ -45,6 +45,14 @@ class ProposalModelPeriodicities extends BaseModel
         'conclusion_balance' => 'Saldo Conclusão',
         'final' => 'Final',
         'conclusion_keys' => 'Conclusão Chaves',
+
+        //vendas
+        'signal' => 'Sinal',
+        'periodicity' => 'Periodicidade',
+        'single' => 'Única',
+        'single_financing' => 'Única - Financiamento',
+        'vehicle_exchange' => 'Dação em pagamento - Veículo',
+        'real_estate_development_exchange' => 'Dação em pagamento - Imóvel',
     ];
 
     public const DUE_DATE_TYPE_LIST = [
@@ -57,6 +65,8 @@ class ProposalModelPeriodicities extends BaseModel
         'pre_launch_in' => 'Data de breve lançamento',
         'ready_to_live_in' => 'Data de entrega real',
         'hand_over_keys_in' => 'Data de entrega das chaves',
+
+        'vmd_in' => 'Valor Minimo de Desligamento',
     ];
 
     /**
