@@ -216,13 +216,16 @@ trait RealEstateDevelopmentHelper
         $realEstateDevelopment->save();
     }
 
-    private function getBrandId(string $hubBrandUuid): int
+    private function getBrandId(?string $hubBrandUuid): ?int
     {
-        $hubBrand = HubBrand::withTrashed()
+        if (!$hubBrandUuid) {
+            return null;
+        }
+        
+        return HubBrand::withTrashed()
             ->where('uuid', $hubBrandUuid)
-            ->first();
-
-        return $hubBrand?->id;
+            ->first()
+            ?->id;
     }
 
     private function getHubCompanyId(string $hubCompanyUuid): int
