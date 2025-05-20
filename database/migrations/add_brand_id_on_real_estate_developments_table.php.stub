@@ -17,7 +17,7 @@ return new class extends Migration
     {
         if (Schema::hasTable($this->tableName)) {
             Schema::table($this->tableName, function (Blueprint $table) {
-                $brandModel = app(config('hub.model_brand'));
+                $brandModel = app(config('sp-produto.model_brand'));
                 $table->foreignId('brand_id')
                     ->nullable()
                     ->constrained($brandModel->getTable());
