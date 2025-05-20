@@ -2,6 +2,7 @@
 
 namespace BildVitta\SpProduto\Models;
 
+use BildVitta\SpProduto\Enums\StreetType;
 use BildVitta\SpProduto\Factories\RealEstateDevelopmentFactory;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint;
 use BildVitta\SpProduto\Models\RealEstateDevelopment\Characteristic;
@@ -88,6 +89,10 @@ class RealEstateDevelopment extends BaseModel
         'extract_text',
         'segment',
         'brand_id',
+    ];
+
+    protected $casts = [
+        'construction_address_type' => StreetType::class,
     ];
 
     public function __construct(array $attributes = [])
