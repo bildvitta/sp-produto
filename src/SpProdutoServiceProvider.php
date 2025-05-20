@@ -81,6 +81,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_segment_field_on_real_estate_developments_table',
         'add_hub_company_real_estate_agency_id_on_real_estate_developments_table',
         'add_brand_id_on_real_estate_developments_table',
+        'add_construction_address_type_on_real_estate_developments_table',
         'alter_table_typology_attributes_table',
     ];
 
@@ -131,6 +132,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
             'add_segment_field_on_real_estate_developments_table',
             'add_hub_company_real_estate_agency_id_on_real_estate_developments_table',
             'add_brand_id_on_real_estate_developments_table',
+            'add_construction_address_type_on_real_estate_developments_table',
         ];
         foreach ($relations as $relation) {
             switch ($relation) {

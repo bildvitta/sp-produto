@@ -45,6 +45,7 @@ class RealEstateDevelopment extends BaseModel
         'address',
         'city',
         'complement',
+        'construction_address_type',
         'construction_address',
         'construction_city',
         'construction_complement',
