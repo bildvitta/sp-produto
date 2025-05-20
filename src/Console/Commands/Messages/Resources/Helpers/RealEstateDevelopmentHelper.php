@@ -222,7 +222,7 @@ trait RealEstateDevelopmentHelper
             ->where('uuid', $hubBrandUuid)
             ->first();
 
-        return $hubBrand->id;
+        return $hubBrand?->id;
     }
 
     private function getHubCompanyId(string $hubCompanyUuid): int
