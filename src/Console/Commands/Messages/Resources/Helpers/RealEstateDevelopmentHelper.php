@@ -207,7 +207,7 @@ trait RealEstateDevelopmentHelper
             $realEstateDevelopment->segment = $message->segment;
         }
         if (property_exists($message, 'brand')) {
-            $realEstateDevelopment->brand_id = $message->brand;
+            $realEstateDevelopment->brand_id = $this->getBrandId($message->brand);
         }
 
         $realEstateDevelopment->hub_company_id = $this->getHubCompanyId($message->hub_company_uuid);
