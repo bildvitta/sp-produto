@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    private string $tableName;
+
+    public function __construct()
+    {
+        $this->tableName = config('sp-produto.table_prefix') . 'real_estate_developments';
+    }
+
+    public function up()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->string('construction_address_type')->nullable();
+            });
+        }
+    }
+
+    public function down()
+    {
+        if (Schema::hasTable($this->tableName)) {
+            Schema::table($this->tableName, function (Blueprint $table) {
+                $table->dropColumn('construction_address_type');
+            });
+        }
+    }
+};

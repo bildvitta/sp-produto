@@ -101,6 +101,9 @@ trait RealEstateDevelopmentHelper
         if (property_exists($message, 'construction_address')) {
             $realEstateDevelopment->construction_address = $message->construction_address;
         }
+        if (property_exists($message, 'construction_address_type')) {
+            $realEstateDevelopment->construction_address_type = $message->construction_address_type;
+        }
         if (property_exists($message, 'construction_city')) {
             $realEstateDevelopment->construction_city = $message->construction_city;
         }
