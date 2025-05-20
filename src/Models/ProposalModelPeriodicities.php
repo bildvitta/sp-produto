@@ -46,7 +46,7 @@ class ProposalModelPeriodicities extends BaseModel
         'final' => 'Final',
         'conclusion_keys' => 'Conclusão Chaves',
 
-        //vendas
+        // vendas
         'signal' => 'Sinal',
         'periodicity' => 'Periodicidade',
         'single' => 'Única',

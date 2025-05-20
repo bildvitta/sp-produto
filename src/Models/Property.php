@@ -2,8 +2,8 @@
 
 namespace BildVitta\SpProduto\Models;
 
-use BildVitta\SpProduto\Traits\HasStates;
 use BildVitta\SpProduto\Scopes\CompanyScope;
+use BildVitta\SpProduto\Traits\HasStates;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

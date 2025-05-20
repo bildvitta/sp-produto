@@ -86,12 +86,18 @@ class RealEstateDevelopment extends BaseModel
         'real_estate_development_code',
         'extract_text',
         'segment',
+        'brand_id',
     ];
 
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         $this->table = config('sp-produto.table_prefix').'real_estate_developments';
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(config('sp-produto.model_brand'), 'brand_id', 'id');
     }
 
     /**
