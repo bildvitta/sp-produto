@@ -4,6 +4,7 @@ namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
 use BildVitta\SpProduto\Console\Commands\Messages\Exceptions\MessageProcessorException;
 use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
+use BildVitta\SpProduto\Models\HubBrand;
 use BildVitta\SpProduto\Models\HubCompany;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use stdClass;
@@ -205,11 +206,23 @@ trait RealEstateDevelopmentHelper
         if (property_exists($message, 'segment')) {
             $realEstateDevelopment->segment = $message->segment;
         }
+        if (property_exists($message, 'brand')) {
+            $realEstateDevelopment->brand_id = $this->getBrandId($message->brand);
+        }
 
         $realEstateDevelopment->hub_company_id = $this->getHubCompanyId($message->hub_company_uuid);
         $realEstateDevelopment->hub_company_real_estate_agency_id = $this->getHubCompanyId($message->hub_company_real_estate_agency_uuid);
 
         $realEstateDevelopment->save();
+    }
+
+    private function getBrandId(string $hubBrandUuid): int
+    {
+        $hubBrand = HubBrand::withTrashed()
+            ->where('uuid', $hubBrandUuid)
+            ->first();
+
+        return $hubBrand?->id;
     }
 
     private function getHubCompanyId(string $hubCompanyUuid): int
