@@ -58,7 +58,7 @@ enum StreetType: string
     }
 
     /**
-     * Get the label for each account type.
+     * Get the label for each street type.
      */
     public function getLabel(): ?string
     {
