@@ -230,7 +230,7 @@ trait RealEstateDevelopmentHelper
 
     private function getHubCompanyId(string $hubCompanyUuid): int
     {
-        $hubCompany = HubCompany::withTrashed()
+        return HubCompany::withTrashed()
             ->where('uuid', $hubCompanyUuid)
             ->first()
             ->id;
