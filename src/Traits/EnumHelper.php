@@ -26,7 +26,7 @@ trait EnumHelper
     }
 
     /**
-     * Get all account types as an array.
+     * Get all enum values as an array.
      */
     public static function toArray(): array
     {
