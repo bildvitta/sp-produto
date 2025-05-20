@@ -218,10 +218,10 @@ trait RealEstateDevelopmentHelper
 
     private function getBrandId(?string $hubBrandUuid): ?int
     {
-        if (!$hubBrandUuid) {
+        if (! $hubBrandUuid) {
             return null;
         }
-        
+
         return HubBrand::withTrashed()
             ->where('uuid', $hubBrandUuid)
             ->first()
@@ -232,8 +232,7 @@ trait RealEstateDevelopmentHelper
     {
         $hubCompany = HubCompany::withTrashed()
             ->where('uuid', $hubCompanyUuid)
-            ->first();
-
-        return $hubCompany->id;
+            ->first()
+            ->id;
     }
 }
