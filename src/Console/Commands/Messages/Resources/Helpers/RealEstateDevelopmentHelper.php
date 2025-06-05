@@ -4,6 +4,7 @@ namespace BildVitta\SpProduto\Console\Commands\Messages\Resources\Helpers;
 
 use BildVitta\SpProduto\Console\Commands\Messages\Exceptions\MessageProcessorException;
 use BildVitta\SpProduto\Events\RealEstateDevelopments\RealEstateDevelopmentUpdated;
+use BildVitta\SpProduto\Models\HubBrand;
 use BildVitta\SpProduto\Models\HubCompany;
 use BildVitta\SpProduto\Models\RealEstateDevelopment;
 use stdClass;
@@ -99,6 +100,9 @@ trait RealEstateDevelopmentHelper
         }
         if (property_exists($message, 'construction_address')) {
             $realEstateDevelopment->construction_address = $message->construction_address;
+        }
+        if (property_exists($message, 'construction_address_type')) {
+            $realEstateDevelopment->construction_address_type = $message->construction_address_type;
         }
         if (property_exists($message, 'construction_city')) {
             $realEstateDevelopment->construction_city = $message->construction_city;
@@ -205,6 +209,9 @@ trait RealEstateDevelopmentHelper
         if (property_exists($message, 'segment')) {
             $realEstateDevelopment->segment = $message->segment;
         }
+        if (property_exists($message, 'brand')) {
+            $realEstateDevelopment->brand_id = $this->getBrandId($message->brand);
+        }
 
         $realEstateDevelopment->hub_company_id = $this->getHubCompanyId($message->hub_company_uuid);
         $realEstateDevelopment->hub_company_real_estate_agency_id = $this->getHubCompanyId($message->hub_company_real_estate_agency_uuid);
@@ -212,12 +219,23 @@ trait RealEstateDevelopmentHelper
         $realEstateDevelopment->save();
     }
 
+    private function getBrandId(?string $hubBrandUuid): ?int
+    {
+        if (! $hubBrandUuid) {
+            return null;
+        }
+
+        return HubBrand::withTrashed()
+            ->where('uuid', $hubBrandUuid)
+            ->first()
+            ?->id;
+    }
+
     private function getHubCompanyId(string $hubCompanyUuid): int
     {
-        $hubCompany = HubCompany::withTrashed()
+        return HubCompany::withTrashed()
             ->where('uuid', $hubCompanyUuid)
-            ->first();
-
-        return $hubCompany->id;
+            ->first()
+            ->id;
     }
 }

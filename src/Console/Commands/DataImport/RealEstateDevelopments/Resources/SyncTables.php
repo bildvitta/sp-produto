@@ -7,6 +7,7 @@ use BildVitta\SpProduto\Models\AccessoryCategory;
 use BildVitta\SpProduto\Models\BuyingOption;
 use BildVitta\SpProduto\Models\Characteristic;
 use BildVitta\SpProduto\Models\Environment;
+use BildVitta\SpProduto\Models\HubBrand;
 use BildVitta\SpProduto\Models\HubCompany;
 use BildVitta\SpProduto\Models\Insurance;
 use BildVitta\SpProduto\Models\InsuranceCompany;
@@ -161,7 +162,8 @@ trait SyncTables
         $realEstateDevelopments = $this->getDatabase()->table('real_estate_developments as red')
             ->leftJoin('hub_companies as hc', 'red.hub_company_id', '=', 'hc.id')
             ->leftJoin('hub_companies as hcrea', 'red.hub_company_real_estate_agency_id', '=', 'hcrea.id')
-            ->select('red.*', 'hc.uuid as hub_company_uuid', 'hcrea.uuid as hub_company_real_estate_agency_uuid');
+            ->leftJoin('hub_brands as hb', 'red.brand_id', '=', 'hb.id')
+            ->select('red.*', 'hc.uuid as hub_company_uuid', 'hcrea.uuid as hub_company_real_estate_agency_uuid, hb.uuid as hub_brand_uuid');
 
         $this->syncData(
             $realEstateDevelopments,
@@ -170,6 +172,7 @@ trait SyncTables
             [
                 'hub_company' => HubCompany::class,
                 'hub_company_real_estate_agency' => HubCompany::class,
+                'hub_brand' => HubBrand::class,
             ],
             ['created_at', 'updated_at', 'deleted_at']
         );

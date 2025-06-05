@@ -6,6 +6,7 @@ return [
     'table_prefix' => env('MS_SP_PRODUTO_TABLE_PREFIX', 'produto_'),
 
     'model_company' => env('MS_SP_PRODUTO_COMPANY', HubCompany::class),
+    'model_brand' => \BildVitta\SpProduto\Models\HubBrand::class,
     'model_real_estate_development' => \BildVitta\SpProduto\Models\RealEstateDevelopment::class,
     'model_unit' => \BildVitta\SpProduto\Models\RealEstateDevelopment\Unit::class,
     'model_blueprint' => \BildVitta\SpProduto\Models\RealEstateDevelopment\Blueprint::class,
