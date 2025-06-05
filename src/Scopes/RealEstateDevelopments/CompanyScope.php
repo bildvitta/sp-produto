@@ -30,7 +30,7 @@ class CompanyScope implements Scope
             } else {
                 $builder->whereIn('hub_company_id', $hubCompanyIds)
                     ->orWhereHas('sellable_by', function (Builder $query) use ($hubCompanyIds) {
-                        $query->whereIn('produto_real_estate_development_companies.id', $hubCompanyIds);
+                        $query->whereIn('produto_real_estate_development_companies.hub_company_id', $hubCompanyIds);
                     });
             }
         }
