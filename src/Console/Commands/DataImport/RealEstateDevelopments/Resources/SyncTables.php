@@ -163,7 +163,7 @@ trait SyncTables
             ->leftJoin('hub_companies as hc', 'red.hub_company_id', '=', 'hc.id')
             ->leftJoin('hub_companies as hcrea', 'red.hub_company_real_estate_agency_id', '=', 'hcrea.id')
             ->leftJoin('hub_brands as hb', 'red.brand_id', '=', 'hb.id')
-            ->select('red.*', 'hc.uuid as hub_company_uuid', 'hcrea.uuid as hub_company_real_estate_agency_uuid, hb.uuid as hub_brand_uuid');
+            ->select('red.*', 'hc.uuid as hub_company_uuid', 'hcrea.uuid as hub_company_real_estate_agency_uuid', 'hb.uuid as hub_brand_uuid');
 
         $this->syncData(
             $realEstateDevelopments,
