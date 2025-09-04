@@ -63,6 +63,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_type_column_to_documents_table',
         'add_extract_text_and_itbi_value_to_typologies_table',
         'add_commission_columns_to_parameters_table',
+        'add_column_commission_external_real_estate_on_parameters_table',
 
         'create_sp_automobile_brands_table',
         'create_sp_automobile_models_table',
@@ -145,6 +146,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'create_sp_produto_parameters_table';
                     $migrations[] = 'add_verge_percentages_to_sp_produto_parameters_table';
                     $migrations[] = 'add_commission_columns_to_parameters_table';
+                    $migrations[] = 'add_column_commission_external_real_estate_on_parameters_table';
                     break;
                 case 'insurances':
                     $migrations[] = 'create_sp_produto_insurance_companies_table';

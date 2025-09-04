@@ -42,6 +42,7 @@ trait ParameterHelper
                 'commission_real_estate_broker' => $messageParameter->commission_real_estate_broker,
                 'commission_supervisor' => $messageParameter->commission_supervisor,
                 'commission_manager' => $messageParameter->commission_manager,
+                'commission_external_real_estate' => $messageParameter->commission_external_real_estate,
                 'has_empty_fields' => $messageParameter->has_empty_fields,
                 'real_estate_development_id' => $realEstateDevelopment->id,
             ]);
