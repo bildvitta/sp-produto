@@ -27,8 +27,9 @@ trait UnitPriceHelper
     private function unitPriceDelete(stdClass $unitPrice)
     {
         BaseUnit::whereUuid($unitPrice->unit_uuid)
-            ->first()?->prices()
+            ->firstOrFail()
+            ->prices()
             ->whereUuid($unitPrice->uuid)
-            ->first()?->delete();
+            ->delete();
     }
 }
