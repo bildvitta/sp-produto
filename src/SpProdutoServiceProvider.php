@@ -84,6 +84,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
         'add_brand_id_on_real_estate_developments_table',
         'add_construction_address_type_on_real_estate_developments_table',
         'alter_table_typology_attributes_table',
+        'add_description_to_units_table',
     ];
 
     protected array $commands = [
@@ -203,6 +204,7 @@ class SpProdutoServiceProvider extends PackageServiceProvider
                     $migrations[] = 'add_table_price_to_sp_produto_units_table';
                     $migrations[] = 'add_garage_type_and_furniture_columns_on_units_table';
                     $migrations[] = 'create_sp_produto_unit_prices_table';
+                    $migrations[] = 'add_description_to_units_table';
                     break;
                 case 'documents':
                     $migrations[] = 'create_sp_produto_documents_table';

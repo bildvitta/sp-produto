@@ -61,4 +61,10 @@ return [
     'events' => [
         'real_estate_development_updated' => env('RABBITMQ_EVENT_REAL_ESTATE_DEVELOPMENT_UPDATED', false),
     ],
+
+    'optional_fields' => [
+        'units' => [
+            'description' => true,
+        ],
+    ],
 ];

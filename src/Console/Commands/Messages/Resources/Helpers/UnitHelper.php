@@ -19,9 +19,7 @@ trait UnitHelper
     {
         $realEstateDevelopment = RealEstateDevelopment::where('uuid', $message->real_estate_development_uuid)->first();
 
-        $unit = BaseUnit::updateOrCreate([
-            'uuid' => $message->uuid,
-        ], [
+        $unitData = [
             'uuid'                        => $message->uuid,
             'real_estate_development_id'  => $realEstateDevelopment->id,
             'mirror_id'                   => $this->getUnitMirrorId($message->mirror_uuid),
@@ -48,7 +46,13 @@ trait UnitHelper
             'has_furniture'               => $message->has_furniture ?? null,
             'furniture_value'             => $message->furniture_value ?? null,
             'garage_type'                 => $message->garage_type ?? null,
-        ]);
+        ];
+
+        if (config('sp-produto.optional_fields.units.description', false)) {
+            $unitData['description'] = $message->description ?? null;
+        }
+
+        $unit = BaseUnit::updateOrCreate(['uuid' => $message->uuid], $unitData);
 
         $accessories = Accessory::whereIn('uuid', $message->accessories)->get();
         $unit->accessories()->sync($accessories->pluck('id'));
