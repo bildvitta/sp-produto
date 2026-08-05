@@ -54,6 +54,7 @@ class Unit extends BaseModel
     protected $fillable = [
         'uuid',
         'name',
+        'description',
         'code',
         'unit_type',
         'floor',
